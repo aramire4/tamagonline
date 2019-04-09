@@ -3,22 +3,21 @@
   <head>
       <meta charset="utf-8">
       <title>Tamagonline</title>
-      <link href="style.css" rel="stylesheet" type="text/css">
-      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
   </head>
   <span>
   <body>
     <div height="300"> </div>
     <div>
     <h1>Tamagonline</h1>
-    <a href="playCenter.html"> Enter the Play Zone</a>
+    <a href="playCenter.html" class = "center"> Enter the Play Zone</a>
 
-    <h2>Login Below</h2>
-  	<form action = playCenter method = "get"> <!-- "post" -->
-  		<h3> Username </h3>	<input type="text" name="username" id="usernameBox"><br>
-  		<h3> Password </h3> <input type="password" name="password" id="passwordBox"><br>
+    <h2 class = "center">Login Below</h2>
+  	<form action = playCenter method = "get" class = "center"> <!-- "post" -->
+  		<h3 class = "center"> Username </h3>	<input type="text" name="username" id="usernameBox" class = "center"><br>
+  		<h3 class = "center"> Password </h3> <input type="password" name="password" id="passwordBox" class = "center"><br>
   		<br>
-  		<input type = "submit" name = "Submit" id="submitButton">
+  		<input type = "submit" name = "Submit" id="submitButton" class = "center">
   	</form>
   </div>
   </body>
