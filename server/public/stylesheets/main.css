@@ -1,0 +1,125 @@
+/* Colors
+#FFFFFF
+#F4F4F4
+#444444
+#E8A87C
+#E98074
+ */
+
+/* Styling for Everything */
+* {
+  background-color: #F4F4F4;
+  color: #444444;
+  font-family: 'Open Sans', sans-serif;
+  text-align: left;
+}
+
+a {
+  color: #E98074;
+  font-style: bold;
+}
+
+hr {
+  border-color: #E98074;
+  border-width: 5px;
+}
+
+div {
+  margin-left: 500px;
+  margin-right: 500px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #E98074;
+  font-style: bold;
+}
+
+/* Styling for Headers */
+h1 {
+  font-size: 2em;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.75em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+/* tables */
+th {
+  background-color: #00653A;
+  color: white;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #444444;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0px;
+}
+
+/* Styling for Paragraphs */
+p {
+  font-size: 16px;
+}
+
+/* Styling for Lists */
+ol {
+  font-size: 16px;
+}
+
+canvas {
+  border:1px solid #000000
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+/* Styling for Classes */
+.first {
+  color: green;
+}
+
+.center {
+    text-align: center;
+}
+
+.space {
+  background-image = url(../images/space.gif);
+}
+
+/* Styling for IDs */
+#second {
+  color: black;
+}
+
+input[type=text] {
+  width: 20%;
+  padding: 10px 10px;
+  box-sizing: border-box;
+}
+
+/* Styling for Buttons */
+.button {
+  background-color: #E98074;
+  color: #FFFFFF !important;
+
+  border: 2px solid;
+  border-radius: 2px;
+  border-color: #E98074;
+
+  padding: 5px 5px;
+
+  text-align: center;
+  font-size: 16px;
+
+  cursor: pointer;
+}
