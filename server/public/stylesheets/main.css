@@ -1,36 +1,31 @@
 /* Colors
-#FFFFFF
-#F4F4F4
-#444444
-#E8A87C
-#E98074
+#EFF9F0
+#6B4D57
+#DDC8C4
+#13070C
+#EFF9F0
  */
 
 /* Styling for Everything */
 * {
-  background-color: #F4F4F4;
-  color: #444444;
+  background-color: #EFF9F0;
+  color: #13070C;
   font-family: 'Work Sans', sans-serif;
   text-align: left;
 }
 
 a {
-  color: #E98074;
+  color: #13070C;
   font-style: bold;
 }
 
 hr {
-  border-color: #E98074;
+  border-color: #EFF9F0;
   border-width: 5px;
 }
 
-div {
-  margin-left: 500px;
-  margin-right: 500px;
-}
-
 h1, h2, h3, h4, h5, h6 {
-  color: #E98074;
+  color: #6B4D57;
   font-style: bold;
   text-align: center;
 }
@@ -41,7 +36,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.75em;
+  font-size: 3em;
 }
 
 h3 {
@@ -56,7 +51,7 @@ th {
 
 th, td {
   padding: 10px;
-  border-bottom: 1px solid #444444;
+  border-bottom: 1px solid #13070C;
 }
 
 table {
@@ -75,12 +70,13 @@ ol {
 }
 
 canvas {
-  border:1px solid #000000
+  border:5px solid #896A67 !important;
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;
   margin-right: auto;
   display: block;
+  border-radius: 10px;
 }
 
 /* Styling for Classes */
@@ -92,8 +88,8 @@ canvas {
     text-align: center;
 }
 
-.form-group {
-	float: none;
+.inline {
+	display: inline-block;
 }
 
 input[type=text], input[type=password] {
@@ -102,16 +98,12 @@ input[type=text], input[type=password] {
 	
 	border: 2px solid;
 	border-radius: 2px;
-	border-color: #E98074;
+	border-color: #EFF9F0;
 	
 	width: 300px;
 	height: 30px;
 	
 	padding: 5px 5px;
-}
-
-.space {
-  background-image = url(../images/space.gif);
 }
 
 /* Styling for IDs */
@@ -121,17 +113,47 @@ input[type=text], input[type=password] {
 
 /* Styling for Buttons */
 .button {
-  background-color: #E98074;
-  color: #FFFFFF !important;
+  background-color: #896A67;
+  color: #EFF9F0 !important;
 
-  border: 2px solid;
-  border-radius: 2px;
-  border-color: #E98074;
+  border: 4px solid;
+  border-radius: 10px;
+  border-color: #896A67;
+
+  width: 200px;
+  height: 40px;
 
   padding: 5px 5px;
 
   text-align: center;
   font-size: 16px;
+  font-weight: bold;
 
   cursor: pointer;
+}
+
+.topnav {
+  background-color: #DDC8C4 !important;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #EFF9F0;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  background-color: #DDC8C4;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #EED9D5;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #13070C;
 }

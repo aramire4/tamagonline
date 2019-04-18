@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <title>Tamagonline</title>
-      <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-      <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-  <span>
-  <body>
-    <h1>Tamagonline</h1>
-    <canvas id="petCenter" width="1400" height="600" style="border:3px solid"></canvas>
-    <br>
-    <div class = "center">
-    <form action="battlePage" method = "get" class = "center">
-    	<input type = "submit" value = "Battle" class = "button"></input>
-    </form>
-    <form action = "trainPage" method = "get" class = "center">
-    	<input type = "submit" value = "Train" class = "button"></input>
-    </form>
-    <form action = "carePage" method = "get" class = "center">
-    	<input type = "submit" value = "Care" class = "button"></input>
-    </form>
-    <form action = "frolickPage" method = "get" class = "center">
-    	<input type = "submit" value = "Frolick" class = "button"></input>
-    </form>
-    </div>
-    <script type = "text/javascript" src = "scripts/petScript.js"></script>
-  </body>
+<head>
+<meta charset="utf-8">
+<title>Tamagonline</title>
+<link href="https://fonts.googleapis.com/css?family=Work+Sans"
+	rel="stylesheet">
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+<span>
+	<body>
+		<div class="topnav">
+			<a class="active" href="#home">Home</a> 
+			<a href="#news">Shop</a> 
+			<a href="#contact">Contact</a> 
+			<a href="#about">About</a>
+		</div>
+		<h2>Pet Name Here</h2>
+		<canvas id="petCenter" width="1400" height="600"></canvas>
+		<br>
+		<br>
+		<div class="center">
+			<form action="battlePage" method="get" class="center inline">
+				<input type="submit" value="Battle" class="button"></input>
+			</form>
+			<form action="trainPage" method="get" class="center inline">
+				<input type="submit" value="Train" class="button"></input>
+			</form>
+			<form action="carePage" method="get" class="center inline">
+				<input type="submit" value="Care" class="button"></input>
+			</form>
+			<form action="frolickPage" method="get" class="center inline">
+				<input type="submit" value="Frolic" class="button"></input>
+			</form>
+		</div>
+		<script type="text/javascript" src="scripts/petScript.js"></script>
+	</body>
 </span>
 </html>
 
