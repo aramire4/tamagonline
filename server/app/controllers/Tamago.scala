@@ -8,16 +8,19 @@ import play.api.mvc._
 @Singleton
 class Tamago @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-  def login = Action {
-    Ok(views.html.login())
+   def battle = Action {
+    Ok(views.html.battle())
   }
   
-  def playCenter = Action {
-    Ok(views.html.playCenter())
+  def care = Action {
+    Ok(views.html.care())
   }
   
-  def profile = Action {
-    Ok(views.html.profile())
+  def train = Action {
+    Ok(views.html.train())
   }
-
+  
+  def frolic = Action {
+    Ok(views.html.frolic())
+  }
 }

@@ -19,5 +19,13 @@ class Application @Inject()(cc: ControllerComponents) extends AbstractController
   def profile = Action {
     Ok(views.html.profile())
   }
+  
+  def help = Action {
+    Ok(views.html.help())
+  }
+  
+  def shop = Action {
+    Ok(views.html.shop())
+  }
 
 }

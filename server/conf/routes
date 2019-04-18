@@ -6,13 +6,17 @@
 GET		   /								 edu.trinity.webapps.controllers.Login.login
 GET        /login                            edu.trinity.webapps.controllers.Login.login
 
-# Profile
+# Pages
 GET		   /profile							 edu.trinity.webapps.controllers.Application.profile
+GET        /playCenter					     edu.trinity.webapps.controllers.Application.playCenter
+GET		   /help							 edu.trinity.webapps.controllers.Application.help
+GET		   /shop							 edu.trinity.webapps.controllers.Application.shop
 
-# Individual Tamago
-GET        /playCenter					     edu.trinity.webapps.controllers.Tamago.playCenter
-
-
+# Tamago Functions
+GET		   /battle							 edu.trinity.webapps.controllers.Tamago.battle
+GET		   /frolic							 edu.trinity.webapps.controllers.Tamago.frolic
+GET		   /care							 edu.trinity.webapps.controllers.Tamago.care
+GET		   /train							 edu.trinity.webapps.controllers.Tamago.train
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
