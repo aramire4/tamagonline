@@ -1,159 +1,130 @@
 /* Colors
-#EFF9F0
-#6B4D57
-#DDC8C4
-#13070C
-#EFF9F0
+#05668D (sea blue)
+#028090 (seaweed)
+#00A896 (dark green)
+#02C39A (light green)
+#F0F3BD (yellow)
+#EDEDF4 (white)
+#0F1108 (black)
+#EF8354 (red-orange)
  */
 
 /* Styling for Everything */
 * {
-  background-color: #EFF9F0;
-  color: #13070C;
-  font-family: 'Work Sans', sans-serif;
-  text-align: left;
+	background-color: #028090;
+	color: #13070C;
+	font-family: 'Work Sans', sans-serif;
+	text-align: left;
+	padding: 0;
+	margin: 0;
 }
 
 a {
-  color: #13070C;
-  font-style: bold;
-}
-
-hr {
-  border-color: #EFF9F0;
-  border-width: 5px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: #6B4D57;
-  font-style: bold;
-  text-align: center;
+	color: #13070C;
+	font-style: bold;
 }
 
 /* Styling for Headers */
+h1, h2, h3, h4, h5, h6 {
+	color: #EDEDF4;
+	font-family: 'Work Sans', sans-serif;
+	font-style: bold;
+	text-align: center;
+}
+
 h1 {
-  font-size: 6em;
+	font-size: 6em;
+	padding: 30px;
 }
 
 h2 {
-  font-size: 3em;
+	font-size: 3em;
+	padding: 30px;
 }
 
 h3 {
-  font-size: 1.25em;
+	font-size: 1.25em;
 }
 
-/* tables */
-th {
-  background-color: #00653A;
-  color: white;
+/* Spacing */
+hr {
+	border-color: #EDEDF4;
+	border-width: 5px;
 }
 
-th, td {
-  padding: 10px;
-  border-bottom: 1px solid #13070C;
-}
-
-table {
-  width: 100%;
-  border-spacing: 0px;
-}
-
-/* Styling for Paragraphs */
 p {
-  font-size: 16px;
+	color: #EDEDF4;
+	
+}
+#topDivPush {
+	height: 200px;
+	width: 100%;
 }
 
-/* Styling for Lists */
-ol {
-  font-size: 16px;
-}
-
+/* Canvas */
 canvas {
-  border:5px solid #896A67 !important;
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  border-radius: 10px;
+	border: 5px solid #F0F3BD !important;
+	background-color: #F0F3BD;
+	display: block;
+	width: 100%;
+	height: 600px;
 }
 
-/* Styling for Classes */
-.first {
-  color: green;
-}
-
-.center {
-    text-align: center;
-}
-
-.inline {
-	display: inline-block;
-}
-
+/* Input Boxes */
 input[type=text], input[type=password] {
 	text-align: center;
 	font-family: 'Work Sans', sans-serif;
-	
 	border: 2px solid;
 	border-radius: 2px;
-	border-color: #EFF9F0;
-	
+	border-color: #EDEDF4;
 	width: 300px;
 	height: 30px;
-	
 	padding: 5px 5px;
 }
 
-/* Styling for IDs */
-#second {
-  color: black;
-}
-
-/* Styling for Buttons */
+/* Buttons */
 .button {
-  background-color: #896A67;
-  color: #EFF9F0 !important;
-
-  border: 4px solid;
-  border-radius: 10px;
-  border-color: #896A67;
-
-  width: 200px;
-  height: 40px;
-
-  padding: 5px 5px;
-
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-
-  cursor: pointer;
+	background-color: #EDEDF4;
+	color: #028090 !important;
+	border: 4px solid;
+	border-radius: 10px;
+	border-color: #EDEDF4;
+	width: 200px;
+	height: 40px;
+	padding: 5px 5px;
+	text-align: center;
+	font-size: 20px;
+	cursor: pointer;
 }
 
+.button a:hover {
+	background-color: #02C39A;
+}
+
+/* Navigation Bar */
 .topnav {
-  background-color: #DDC8C4 !important;
-  overflow: hidden;
+	background-color: #00A896 !important;
+	overflow: hidden;
 }
 
-/* Style the links inside the navigation bar */
 .topnav a {
-  float: left;
-  color: #EFF9F0;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-  background-color: #DDC8C4;
+	float: left;
+	color: #EDEDF4;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+	background-color: #00A896;
 }
 
-/* Change the color of links on hover */
 .topnav a:hover {
-  background-color: #EED9D5;
+	background-color: #02C39A;
 }
 
-/* Add a color to the active/current link */
 .topnav a.active {
-  background-color: #13070C;
+	background-color: #EF8354;
 }
+
+/* Classes */
+.center { text-align: center; }
+.inline { display: inline-block; }
