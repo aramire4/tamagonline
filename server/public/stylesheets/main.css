@@ -33,17 +33,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-	font-size: 6em;
+	font-size: 60px;
 	padding: 30px;
 }
 
 h2 {
-	font-size: 3em;
-	padding: 30px;
+	font-size: 40px;
+	padding: 10px;
 }
 
 h3 {
-	font-size: 1.25em;
+	font-size: 20px;
 }
 
 /* Spacing */
@@ -54,7 +54,7 @@ hr {
 
 p {
 	color: #EDEDF4;
-	
+	font-size: 20px;
 }
 #topDivPush {
 	height: 200px;
