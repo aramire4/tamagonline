@@ -10,7 +10,7 @@
 * {
   background-color: #F4F4F4;
   color: #444444;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   text-align: left;
 }
 
@@ -32,12 +32,12 @@ div {
 h1, h2, h3, h4, h5, h6 {
   color: #E98074;
   font-style: bold;
+  text-align: center;
 }
 
 /* Styling for Headers */
 h1 {
-  font-size: 2em;
-  text-align: center;
+  font-size: 6em;
 }
 
 h2 {
@@ -92,6 +92,24 @@ canvas {
     text-align: center;
 }
 
+.form-group {
+	float: none;
+}
+
+input[type=text], input[type=password] {
+	text-align: center;
+	font-family: 'Work Sans', sans-serif;
+	
+	border: 2px solid;
+	border-radius: 2px;
+	border-color: #E98074;
+	
+	width: 300px;
+	height: 30px;
+	
+	padding: 5px 5px;
+}
+
 .space {
   background-image = url(../images/space.gif);
 }
@@ -99,12 +117,6 @@ canvas {
 /* Styling for IDs */
 #second {
   color: black;
-}
-
-input[type=text] {
-  width: 20%;
-  padding: 10px 10px;
-  box-sizing: border-box;
 }
 
 /* Styling for Buttons */

@@ -6,7 +6,7 @@ import edu.trinity.webapps.shared.SharedMessages
 import play.api.mvc._
 
 @Singleton
-class Application @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class Tamago @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
   def login = Action {
     Ok(views.html.login())

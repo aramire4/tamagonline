@@ -2,9 +2,17 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET        /login                            edu.trinity.webapps.controllers.Application.login
-GET        /playCenter					     edu.trinity.webapps.controllers.Application.playCenter
+# Login
+GET		   /								 edu.trinity.webapps.controllers.Login.login
+GET        /login                            edu.trinity.webapps.controllers.Login.login
+
+# Profile
+GET		   /profile							 edu.trinity.webapps.controllers.Application.profile
+
+# Individual Tamago
+GET        /playCenter					     edu.trinity.webapps.controllers.Tamago.playCenter
+
+
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
