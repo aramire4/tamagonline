@@ -43,7 +43,7 @@ h2 {
 }
 
 h3 {
-	font-size: 20px;
+	font-size: 30px;
 }
 
 /* Spacing */
@@ -54,7 +54,7 @@ hr {
 
 p {
 	color: #EDEDF4;
-	font-size: 20px;
+	font-size: 26px;
 }
 #topDivPush {
 	height: 200px;
@@ -129,3 +129,7 @@ input[type=text], input[type=password] {
 /* Classes */
 .center { text-align: center; }
 .inline { display: inline-block; }
+div.ex1 {
+  width:700px;
+  margin:auto;
+}
