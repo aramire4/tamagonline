@@ -8,6 +8,12 @@ import Tables._
 import scala.concurrent.ExecutionContext
 
 
-class DatabaseQueries  {
-  def tamagosOfPlayer(db: Database)(implicit ec: ExecutionContext): Future[Seq[  
+
+//should this be a class or an object?
+object DatabaseQueries  {
+  def tamagosOfPlayerID(db: Database, pid:Int)(implicit ec: ExecutionContext):Future[Seq[TamagoRow]] =  {
+   db.run {
+     (for (t <- Tamago; if t.ownerid === pid) yield t).result
+   }
+  }
 }

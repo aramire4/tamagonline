@@ -12,11 +12,11 @@ GET        /playCenter					     edu.trinity.webapps.controllers.Application.play
 GET		   /help							 edu.trinity.webapps.controllers.Application.help
 GET		   /shop							 edu.trinity.webapps.controllers.Application.shop
 
-# Tamago Functions
-GET		   /battle							 edu.trinity.webapps.controllers.Tamago.battle
-GET		   /frolic							 edu.trinity.webapps.controllers.Tamago.frolic
-GET		   /care							 edu.trinity.webapps.controllers.Tamago.care
-GET		   /train							 edu.trinity.webapps.controllers.Tamago.train
+# DBController Functions
+GET		   /battle							 edu.trinity.webapps.controllers.DBController.battle
+GET		   /frolic							 edu.trinity.webapps.controllers.DBController.frolic
+GET		   /care							 edu.trinity.webapps.controllers.DBController.care
+GET		   /train							 edu.trinity.webapps.controllers.DBController.train
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
