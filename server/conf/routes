@@ -17,6 +17,7 @@ GET		   /battle							 edu.trinity.webapps.controllers.DBController.battle
 GET		   /frolic							 edu.trinity.webapps.controllers.DBController.frolic
 GET		   /care							 edu.trinity.webapps.controllers.DBController.care
 GET		   /train							 edu.trinity.webapps.controllers.DBController.train
+GET			/printData						 edu.trinity.webapps.controllers.DBController.testTamagos
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)

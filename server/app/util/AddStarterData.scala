@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 
 
 object AddStarterData extends App {
-  val db = Database.forURL("jdbc:mysql://localhost/sales?user=mlewis&password=password&nullNamePatternMatchesAll=true&serverTimezone=UTC", user="mlewis", password="password", driver="com.mysql.cj.jdbc.Driver")
+  val db = Database.forURL("jdbc:mysql://localhost/tamagonline?user=tamagonline&password=BreakTheLegs&nullNamePatternMatchesAll=true&serverTimezone=UTC", user="tamagonline", password="BreakTheLegs", driver="com.mysql.cj.jdbc.Driver")
     Await.result(db.run(DBIO.seq(
       Player.delete,
       Tamago.delete,
