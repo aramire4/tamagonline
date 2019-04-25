@@ -126,6 +126,27 @@ input[type=text], input[type=password] {
 	background-color: #EF8354;
 }
 
+.stats {
+	text-align: right;
+	color: #EDEDF4;
+	font-family: 'Work Sans', sans-serif;
+	font-style: bold;
+	font-size: 20px;
+}
+
+.tomago {
+	text-align: left;
+	color: #EDEDF4;
+	font-family: 'Work Sans', sans-serif;
+	font-style: bold;
+	font-size: 20px;
+}
+
+.tomago:hover{
+	color: #EF8354;
+}
+
+
 /* Classes */
 .center { text-align: center; }
 .inline { display: inline-block; }
