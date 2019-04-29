@@ -30,9 +30,12 @@ object AddStarterData extends App {
         Player += PlayerRow(2, "dijon", "mustard", 30, 0, 0, 0, 0, 0, 0), 
 
         Tamago ++= Seq(
-          TamagoRow(1, "bingo", 1, 10, 10, 10, 10, false, 1, true, true, LocalDateTime.now().toString(), 1, 1, 0),
-          TamagoRow(1, "gizmo", 2, 10, 10, 10, 10, false, 1, true, true, LocalDateTime.now().toString(), 1, 1, 0),
-          TamagoRow(1, "sophie", 1, 10, 10, 10, 10, false, 1, true, true, LocalDateTime.now().toString(),1, 1, 0))
+          TamagoRow(1, "bingo", 1, 10, 10, 10, 10, false, 1, true, true, 
+              java.sql.Timestamp.valueOf(LocalDateTime.now()), 1, 1, 0),
+          TamagoRow(1, "gizmo", 2, 10, 10, 10, 10, false, 1, true, true, 
+              java.sql.Timestamp.valueOf(LocalDateTime.now()), 1, 1, 0),
+          TamagoRow(1, "sophie", 1, 10, 10, 10, 10, false, 1, true, true, 
+              java.sql.Timestamp.valueOf(LocalDateTime.now()),1, 1, 0))
     )), Duration.Inf)
     db.close()
 }

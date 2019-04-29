@@ -1,7 +1,7 @@
 package models
 // AUTO-GENERATED Slick data model
+import edu.trinity.webapps.shared.SharedTables._
 
-//import edu.trinity.webapps.shared.SharedTables._
 /** Stand-alone Slick data model for immediate use */
 object Tables extends {
   val profile = slick.jdbc.MySQLProfile
@@ -56,7 +56,7 @@ trait Tables {
   /** Collection-like TableQuery object for table Player */
   lazy val Player = new TableQuery(tag => new Player(tag))
 
- 
+  
   /** GetResult implicit for fetching PostRow objects using plain SQL queries */
   implicit def GetResultPostRow(implicit e0: GR[Int], e1: GR[java.sql.Timestamp], e2: GR[String]): GR[PostRow] = GR{
     prs => import prs._
@@ -116,9 +116,9 @@ trait Tables {
 
   
   /** GetResult implicit for fetching TamagoRow objects using plain SQL queries */
-  implicit def GetResultTamagoRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Boolean]): GR[TamagoRow] = GR{
+  implicit def GetResultTamagoRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Boolean], e3: GR[java.sql.Timestamp]): GR[TamagoRow] = GR{
     prs => import prs._
-    TamagoRow.tupled((<<[Int], <<[String], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Boolean], <<[Int], <<[Boolean], <<[Boolean], <<[String], <<[Int], <<[Int], <<[Int]))
+    TamagoRow.tupled((<<[Int], <<[String], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Boolean], <<[Int], <<[Boolean], <<[Boolean], <<[java.sql.Timestamp], <<[Int], <<[Int], <<[Int]))
   }
   /** Table description of table tamago. Objects of this class serve as prototypes for rows in queries. */
   class Tamago(_tableTag: Tag) extends profile.api.Table[TamagoRow](_tableTag, Some("tamagonline"), "tamago") {
@@ -148,8 +148,8 @@ trait Tables {
     val isclean: Rep[Boolean] = column[Boolean]("isClean")
     /** Database column isAlive SqlType(BIT) */
     val isalive: Rep[Boolean] = column[Boolean]("isAlive")
-    /** Database column lastfed SqlType(CHAR), Length(23,false) */
-    val lastfed: Rep[String] = column[String]("lastfed", O.Length(23,varying=false))
+    /** Database column lastfed SqlType(TIMESTAMP) */
+    val lastfed: Rep[java.sql.Timestamp] = column[java.sql.Timestamp]("lastfed")
     /** Database column age SqlType(INT) */
     val age: Rep[Int] = column[Int]("age")
     /** Database column respect SqlType(INT) */
