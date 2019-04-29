@@ -19,7 +19,7 @@ GET		   /care							 edu.trinity.webapps.controllers.DBController.care
 GET		   /train							 edu.trinity.webapps.controllers.DBController.train
 GET			/printData						 edu.trinity.webapps.controllers.DBController.testTamagos
 GET			/testPlayers					 edu.trinity.webapps.controllers.DBController.testPlayers
-
+GET			/testTime						 edu.trinity.webapps.controllers.DBController.tesTime
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)

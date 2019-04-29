@@ -11,6 +11,7 @@ import Tables._
 import java.util.Date
 import java.time.LocalDateTime
 import java.time.LocalDateTime._
+import edu.trinity.webapps.shared.SharedTables._
 
 object AddStarterData extends App {
   LocalDateTime.now().toString()
