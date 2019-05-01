@@ -8,7 +8,6 @@ import Tables._
 import scala.concurrent.ExecutionContext
 import edu.trinity.webapps.shared.SharedTables._
 
-//should this be a class or an object?
 object DatabaseQueries {
   
   
