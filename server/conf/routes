@@ -20,7 +20,11 @@ GET		   /train							 edu.trinity.webapps.controllers.DBController.train
 GET			/printData						 edu.trinity.webapps.controllers.DBController.testTamagos
 GET			/testPlayers					 edu.trinity.webapps.controllers.DBController.testPlayers
 GET			/testTime						 edu.trinity.webapps.controllers.DBController.tesTime
+GET			/tamagos/:pid                    edu.trinity.webapps.controllers.DBController.tamagoInfo(pid: Int)
+GET			/player/:uname				     edu.trinity.webapps.controllers.DBController.playerInfo(uname:String)
+GET			/startApp					     edu.trinity.webapps.controllers.DBController.startApp
 
+# is having the customer id unsafe? Ask lewis -note to dillon
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
 GET        /versionedAssets/*file        controllers.Assets.versioned(path="/public", file: Asset)

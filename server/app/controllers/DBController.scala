@@ -45,6 +45,10 @@ class DBController @Inject() (protected val dbConfigProvider: DatabaseConfigProv
     res.map(t => Ok(Json.toJson(t)))
   }
   
+  def startApp = Action { 
+    Ok(views.html.scalajsTest())
+  }
+  
   //Don't worry about this
   def testPlayers = Action.async { implicit request =>
     val res = DatabaseQueries.playerOfUsername(db, "barnabus")
