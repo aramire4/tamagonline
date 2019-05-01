@@ -11,25 +11,10 @@ import java.text.SimpleDateFormat
 
 object SharedTables {
   
-   /** Entity class storing rows of table Tamago
-   *  @param id Database column id SqlType(INT), AutoInc, PrimaryKey
-   *  @param name Database column name SqlType(VARCHAR), Length(20,true)
-   *  @param ownerid Database column ownerID SqlType(INT)
-   *  @param attack Database column attack SqlType(INT)
-   *  @param defense Database column defense SqlType(INT)
-   *  @param speed Database column speed SqlType(INT)
-   *  @param health Database column health SqlType(INT)
-   *  @param kneesbroken Database column kneesBroken SqlType(BIT)
-   *  @param level Database column level SqlType(INT)
-   *  @param isclean Database column isClean SqlType(BIT)
-   *  @param isalive Database column isAlive SqlType(BIT)
-   *  @param lastfed Database column lastfed SqlType(TIMESTAMP)
-   *  @param age Database column age SqlType(INT)
-   *  @param respect Database column respect SqlType(INT)
-   *  @param timeskneesbroken Database column timesKneesBroken SqlType(INT) */
-  case class TamagoRow(id: Int, name: String, ownerid: Int, attack: Int, 
-      defense: Int, speed: Int, health: Int, kneesbroken: Boolean, level: Int, isclean: Boolean, 
-      isalive: Boolean, lastfed: java.sql.Timestamp, age: Int, respect: Int, timeskneesbroken: Int)
+  case class TamagoData(name: String, attack: Int, defense: Int, 
+      speed: Int, health: Int, 
+      kneesbroken: Boolean, level: Int, isclean: Boolean, 
+      isalive: Boolean, age: Int, respect: Int, timeskneesbroken: Int)
   
        /** Entity class storing rows of table Player
    *  @param id Database column id SqlType(INT), AutoInc, PrimaryKey
@@ -42,15 +27,16 @@ object SharedTables {
    *  @param globalrank Database column globalRank SqlType(INT)
    *  @param score Database column score SqlType(INT)
    *  @param numberoftamagos Database column numberOfTamagos SqlType(INT) */
-  case class PlayerRow(id: Int, username: String, password: String, coins: Int, 
-      debt: Int, kills: Int, deaths: Int, globalrank: Int, score: Int, numberoftamagos: Int)
+  case class PlayerData(id: Int, username: String, password: String, coins: Int, 
+      debt: Int, kills: Int, deaths: Int, 
+      globalrank: Int, score: Int, numberoftamagos: Int)
       
   /** Entity class storing rows of table Post
    *  @param id Database column id SqlType(INT), AutoInc, PrimaryKey
    *  @param playerid Database column playerID SqlType(INT)
    *  @param time Database column time SqlType(TIMESTAMP)
    *  @param messsage Database column messsage SqlType(VARCHAR), Length(240,true) */
-  case class PostRow(id: Int, playerid: Int, time: java.sql.Timestamp, messsage: String)
+  case class PostData(id:Int, uname:String, time: String, messsage: String)
   
   /** Entity class storing rows of table Postcomment
    *  @param id Database column id SqlType(INT), AutoInc, PrimaryKey
@@ -58,7 +44,7 @@ object SharedTables {
    *  @param time Database column time SqlType(TIMESTAMP)
    *  @param playerid Database column playerID SqlType(INT)
    *  @param postid Database column postID SqlType(INT) */
-  case class PostcommentRow(id: Int, message: String, time: java.sql.Timestamp, playerid: Int, postid: Int)
+  case class PostcommentData(uname:String, message: String, time: String, postid: Int)
   
    /**
    * This allows for the reading of option types.
@@ -76,7 +62,7 @@ object SharedTables {
     val format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SS'Z'")
     def reads(json: JsValue) = {
       val str = json.as[String]
-      JsSuccess(new Timestamp(format.parse(str).getTime))
+      JsSuccess((new Timestamp(format.parse(str).getTime)))
     }
     def writes(ts: Timestamp) = JsString(format.format(ts))
   }
@@ -95,7 +81,7 @@ object SharedTables {
   implicit val playerReads = Json.reads[PlayerRow]
   implicit val playerWrites = Json.writes[PlayerRow]
 */
-  implicit val playerRowWrites: Writes[PlayerRow] = (
+  implicit val playerRowWrites: Writes[PlayerData] = (
     (JsPath \ "id").write[Int] and
     (JsPath \ "username").write[String] and
     (JsPath \ "password").write[String] and
@@ -105,9 +91,9 @@ object SharedTables {
     (JsPath \ "deaths").write[Int] and
     (JsPath \ "globalrank").write[Int] and
     (JsPath \ "score").write[Int] and
-    (JsPath \ "numberoftamagos").write[Int])(unlift(PlayerRow.unapply))
+    (JsPath \ "numberoftamagos").write[Int])(unlift(PlayerData.unapply))
 
-  implicit val playerRowReads: Reads[PlayerRow] = (
+  implicit val playerRowReads: Reads[PlayerData] = (
     (JsPath \ "id").read[Int] and
     (JsPath \ "username").read[String] and
     (JsPath \ "password").read[String] and
@@ -117,12 +103,10 @@ object SharedTables {
     (JsPath \ "deaths").read[Int] and
     (JsPath \ "globalrank").read[Int] and
     (JsPath \ "score").read[Int] and
-    (JsPath \ "numberoftamagos").read[Int])(PlayerRow.apply _)
+    (JsPath \ "numberoftamagos").read[Int])(PlayerData.apply _)
 
-  implicit val tamagoRowWrites: Writes[TamagoRow] = (
-    (JsPath \ "id").write[Int] and
+  implicit val tamagoRowWrites: Writes[TamagoData] = (
     (JsPath \ "name").write[String] and
-    (JsPath \ "ownerId").write[Int] and
     (JsPath \ "attack").write[Int] and
     (JsPath \ "defense").write[Int] and
     (JsPath \ "speed").write[Int] and
@@ -131,15 +115,12 @@ object SharedTables {
     (JsPath \ "level").write[Int] and
     (JsPath \ "isclean").write[Boolean] and
     (JsPath \ "isalive").write[Boolean] and
-    (JsPath \ "lastfed").write[java.sql.Timestamp] and
     (JsPath \ "age").write[Int] and
     (JsPath \ "respect").write[Int] and
-    (JsPath \ "timeskneesbroken").write[Int])(unlift(TamagoRow.unapply))
+    (JsPath \ "timeskneesbroken").write[Int])(unlift(TamagoData.unapply))
 
-  implicit val tamagoRowReads: Reads[TamagoRow] = (
-    (JsPath \ "id").read[Int] and
+  implicit val tamagoRowReads: Reads[TamagoData] = (
     (JsPath \ "name").read[String] and
-    (JsPath \ "ownerId").read[Int] and
     (JsPath \ "attack").read[Int] and
     (JsPath \ "defense").read[Int] and
     (JsPath \ "speed").read[Int] and
@@ -148,10 +129,9 @@ object SharedTables {
     (JsPath \ "level").read[Int] and
     (JsPath \ "isclean").read[Boolean] and
     (JsPath \ "isalive").read[Boolean] and
-    (JsPath \ "lastfed").read[java.sql.Timestamp] and
     (JsPath \ "age").read[Int] and
     (JsPath \ "respect").read[Int] and
-    (JsPath \ "timeskneesbroken").read[Int])(TamagoRow.apply _)
+    (JsPath \ "timeskneesbroken").read[Int])(TamagoData.apply _)
     
 
 }

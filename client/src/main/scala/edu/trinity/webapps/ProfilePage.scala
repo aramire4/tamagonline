@@ -8,9 +8,7 @@ import scala.scalajs.js.annotation._
 import play.api.libs.json._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
-import edu.trinity.webapps.shared.SharedTables.PlayerRow
-import edu.trinity.webapps.shared.SharedTables.playerRowReads
-import edu.trinity.webapps.shared.SharedTables.playerRowWrites
+import edu.trinity.webapps.shared.SharedTables._
 
 
 //note to self - query stuff is a post/get, meaning you can keep sessions with that?!!??
@@ -31,7 +29,7 @@ object ProfilePage {
   def addPlayer(uname:String): Unit = {
     println("printing the tamagos")
     $.getJSON("/player/"+uname, success = (o, s, j) => {
-      for (t <- Json.parse(js.JSON.stringify(o)).as[Array[PlayerRow]]) {
+      for (t <- Json.parse(js.JSON.stringify(o)).as[Array[PlayerData]]) {
         val playerPar = $(s"<p>${t.username}, ${t.id}, ${t.password}</p>")
         $("#profile-page").append(playerPar)
       }

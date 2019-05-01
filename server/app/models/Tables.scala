@@ -1,7 +1,5 @@
 package models
 // AUTO-GENERATED Slick data model
-import edu.trinity.webapps.shared.SharedTables._
-
 /** Stand-alone Slick data model for immediate use */
 object Tables extends {
   val profile = slick.jdbc.MySQLProfile
@@ -20,7 +18,18 @@ trait Tables {
   @deprecated("Use .schema instead of .ddl", "3.0")
   def ddl = schema
 
- 
+  /** Entity class storing rows of table Player
+   *  @param id Database column id SqlType(INT), AutoInc, PrimaryKey
+   *  @param username Database column username SqlType(VARCHAR), Length(200,true)
+   *  @param password Database column password SqlType(VARCHAR), Length(200,true)
+   *  @param coins Database column coins SqlType(INT)
+   *  @param debt Database column debt SqlType(INT)
+   *  @param kills Database column kills SqlType(INT)
+   *  @param deaths Database column deaths SqlType(INT)
+   *  @param globalrank Database column globalRank SqlType(INT)
+   *  @param score Database column score SqlType(INT)
+   *  @param numberoftamagos Database column numberOfTamagos SqlType(INT) */
+  case class PlayerRow(id: Int, username: String, password: String, coins: Int, debt: Int, kills: Int, deaths: Int, globalrank: Int, score: Int, numberoftamagos: Int)
   /** GetResult implicit for fetching PlayerRow objects using plain SQL queries */
   implicit def GetResultPlayerRow(implicit e0: GR[Int], e1: GR[String]): GR[PlayerRow] = GR{
     prs => import prs._
@@ -56,7 +65,12 @@ trait Tables {
   /** Collection-like TableQuery object for table Player */
   lazy val Player = new TableQuery(tag => new Player(tag))
 
-  
+  /** Entity class storing rows of table Post
+   *  @param id Database column id SqlType(INT), AutoInc, PrimaryKey
+   *  @param playerid Database column playerID SqlType(INT)
+   *  @param time Database column time SqlType(TIMESTAMP)
+   *  @param messsage Database column messsage SqlType(VARCHAR), Length(240,true) */
+  case class PostRow(id: Int, playerid: Int, time: java.sql.Timestamp, messsage: String)
   /** GetResult implicit for fetching PostRow objects using plain SQL queries */
   implicit def GetResultPostRow(implicit e0: GR[Int], e1: GR[java.sql.Timestamp], e2: GR[String]): GR[PostRow] = GR{
     prs => import prs._
@@ -83,7 +97,13 @@ trait Tables {
   /** Collection-like TableQuery object for table Post */
   lazy val Post = new TableQuery(tag => new Post(tag))
 
-  
+  /** Entity class storing rows of table Postcomment
+   *  @param id Database column id SqlType(INT), AutoInc, PrimaryKey
+   *  @param message Database column message SqlType(VARCHAR), Length(240,true)
+   *  @param time Database column time SqlType(TIMESTAMP)
+   *  @param playerid Database column playerID SqlType(INT)
+   *  @param postid Database column postID SqlType(INT) */
+  case class PostcommentRow(id: Int, message: String, time: java.sql.Timestamp, playerid: Int, postid: Int)
   /** GetResult implicit for fetching PostcommentRow objects using plain SQL queries */
   implicit def GetResultPostcommentRow(implicit e0: GR[Int], e1: GR[String], e2: GR[java.sql.Timestamp]): GR[PostcommentRow] = GR{
     prs => import prs._
@@ -114,7 +134,23 @@ trait Tables {
   /** Collection-like TableQuery object for table Postcomment */
   lazy val Postcomment = new TableQuery(tag => new Postcomment(tag))
 
-  
+  /** Entity class storing rows of table Tamago
+   *  @param id Database column id SqlType(INT), AutoInc, PrimaryKey
+   *  @param name Database column name SqlType(VARCHAR), Length(20,true)
+   *  @param ownerid Database column ownerID SqlType(INT)
+   *  @param attack Database column attack SqlType(INT)
+   *  @param defense Database column defense SqlType(INT)
+   *  @param speed Database column speed SqlType(INT)
+   *  @param health Database column health SqlType(INT)
+   *  @param kneesbroken Database column kneesBroken SqlType(BIT)
+   *  @param level Database column level SqlType(INT)
+   *  @param isclean Database column isClean SqlType(BIT)
+   *  @param isalive Database column isAlive SqlType(BIT)
+   *  @param lastfed Database column lastfed SqlType(TIMESTAMP)
+   *  @param age Database column age SqlType(INT)
+   *  @param respect Database column respect SqlType(INT)
+   *  @param timeskneesbroken Database column timesKneesBroken SqlType(INT) */
+  case class TamagoRow(id: Int, name: String, ownerid: Int, attack: Int, defense: Int, speed: Int, health: Int, kneesbroken: Boolean, level: Int, isclean: Boolean, isalive: Boolean, lastfed: java.sql.Timestamp, age: Int, respect: Int, timeskneesbroken: Int)
   /** GetResult implicit for fetching TamagoRow objects using plain SQL queries */
   implicit def GetResultTamagoRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Boolean], e3: GR[java.sql.Timestamp]): GR[TamagoRow] = GR{
     prs => import prs._
