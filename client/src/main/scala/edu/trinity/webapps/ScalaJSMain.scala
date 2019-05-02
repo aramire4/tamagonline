@@ -5,7 +5,10 @@ import org.scalajs.dom
 
 object ScalaJSMain {
   def main(args: Array[String]): Unit = {
-    if (dom.document.getElementById("profile-page") != null) ProfilePage.pageSetup()
+    
+    //if (dom.document.getElementById("login-page") != null) 
+    Login.pageSetup()
+    //else if (dom.document.getElementById("profile-page") != null) ProfilePage.pageSetup()
 
   }
 }

@@ -37,6 +37,8 @@ class DBController @Inject() (protected val dbConfigProvider: DatabaseConfigProv
   
   def playerInfo(uname:String) = Action.async { implicit request =>
     val res = DatabaseQueries.playerOfUsername(db, uname)
+    println(uname)
+    println("HEHREYE")
     res.map(p => Ok(Json.toJson(p)))
   }
   

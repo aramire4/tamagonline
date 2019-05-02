@@ -15,7 +15,26 @@ import edu.trinity.webapps.shared.SharedTables._
 
 object ProfilePage {
   def pageSetup(): Unit = {
-    println("Setup the bootyhole")
+
+    val str = """<span>
+	<body>
+		<div class="topnav">
+			<a href="profile" class="active">Profile</a> 
+			<a href="playCenter">Current Pet</a> 
+			<a href="shop">Shop</a> 
+			<a href="help">Help</a>
+
+		</div>
+		<h2>Profile</h2>
+		<p class = "center"> HEY BRUH BRUH heard u wanna see some of your lil virtual pets. if u want that dumb shit go check out b spears group project. we here to break knees and fuck toma-chads</p>
+		<canvas id="petCenter" width="1400" height="600"
+			style="border: 3px solid"></canvas>
+		<br>
+		<script type="text/javascript" src="scripts/petScript.js"></script>
+	</body>
+</span>"""
+    
+    $("#profile-page").append($(str))
     addPlayer("barnabus") //don't know where I would get this parameter. Through post session?
   }
  
