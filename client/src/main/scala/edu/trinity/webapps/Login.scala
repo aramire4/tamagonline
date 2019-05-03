@@ -15,8 +15,19 @@ import scala.collection.mutable.ArrayBuffer
 object Login {
  
   def pageSetup():Unit = {
-   
-   val str = """
+   $("#login-page").append($(str))
+   $("#button").click(() => func()) 
+  }
+  
+ def func():Unit = {
+     $.getJSON("/player/"+$("#usernameBox").value(), success = (o,s,j) => {
+       for (p <- Json.parse(js.JSON.stringify(o)).as[Array[PlayerData]]) {
+         if (p.password == $("#passwordBox").value()) ProfilePage.pageSetup(p.username, p.id)
+         //else $("#login-page").append("<h1>Idiot</h1>")
+       }
+     })} 
+
+  val str = """
     <span>  
       <body>
 		<div id="topDivPush"></div>
@@ -34,25 +45,11 @@ object Login {
 					<input type="password" name="password" id="passwordBox"
 						class="inline"><br>
 				</div>
-				<br> <input type="submit" name="Submit" id="submitButton"
-					class="button inline">
+				<br> 
 			</form>
-      <button type="button" class="button inline" id="button">Click here</button>
+      <button type="button" class="button inline" id="button">Submit</button>
 		</div>
 	  </body>
   </span>"""    
-   def func():Unit = {
-     $.getJSON("/player/"+$("#usernameBox").value(), success = (o,s,j) => {
-       for (p <- Json.parse(js.JSON.stringify(o)).as[Array[PlayerData]]) {
-         if (p.password == $("#passwordBox").value()) ProfilePage.pageSetup()//$("#topDivPush").append("<div>HEHEHEHE</div>")
-         else $("#login-page").append("<h1>Idiot</h1>")
-       }
-     }) $.j
-     
-   }
-   
-   $("#login-page").append($(str))
-   $("#button").click(() => func()) 
-  }
   
 }
