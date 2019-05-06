@@ -18,6 +18,7 @@ object ProfilePage {
     $("#main-body").empty()
     $("#main-body").append($("<div id=\"profile-page\"></div>"))
     $("#profile-page").append($(str))
+    $("#store").click(() => Store.pageSetup())
     addPlayer()
     getTamagos()
   }
@@ -50,7 +51,7 @@ object ProfilePage {
 		<div class="topnav">
 			<a href="profile" class="active">Profile</a> 
 			<a href="playCenter">Current Pet</a> 
-			<a href="shop">Shop</a> 
+			<button id="store">Shop</button> 
 			<a href="help">Help</a>
 
 		<h2>Profile</h2>
