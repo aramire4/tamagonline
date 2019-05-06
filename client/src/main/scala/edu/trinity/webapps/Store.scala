@@ -20,6 +20,7 @@ object Store {
   
   def loanWindow():Unit = {
     $("#main-body").prepend()
+    
   }
   
   //<canvas id="petCenter" width="1400" height="600"style="border: 3px solid"></canvas>
