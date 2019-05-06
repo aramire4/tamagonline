@@ -11,21 +11,29 @@ import play.api.libs.functional.syntax._
 import edu.trinity.webapps.shared.SharedTables._
 import scala.collection.mutable.ArrayBuffer
 
-
 object Login {
- 
-  def pageSetup():Unit = {
-   $("#login-page").append($(str))
-   $("#button").click(() => func()) 
+
+  def pageSetup(): Unit = {
+    $("#login-page").append($(str))
+    $("#login").click(() => checkLogin())
+    $("#create").click(() => createPlayer())
   }
-  
- def func():Unit = {
-     $.getJSON("/player/"+$("#usernameBox").value(), success = (o,s,j) => {
-       for (p <- Json.parse(js.JSON.stringify(o)).as[Array[PlayerData]]) {
-         if (p.password == $("#passwordBox").value()) ProfilePage.pageSetup(p.username, p.id)
-         //else $("#login-page").append("<h1>Idiot</h1>")
-       }
-     })} 
+
+  def checkLogin(): Unit = {
+    $.getJSON("/checkLogin/" + $("#usernameBox").value() + "/" + $("#passwordBox").value(), success = (o, s, j) => {
+      val isValid = Json.parse(js.JSON.stringify(o)).as[Boolean]
+      if (isValid) ProfilePage.pageSetup()
+      else $("#main-body").append($("<p class=\"center\">Incorrect username or password</p>"))
+    })
+  }
+
+   def createPlayer():Unit = {
+      $.getJSON("/newPlayer/" + $("#usernameBox").value() + "/" + $("#passwordBox").value, success = (o, s, j) => {
+      val b = Json.parse(js.JSON.stringify(o)).as[Boolean]
+      if (b) ProfilePage.pageSetup()
+      else $("#main-body").append("<p class=\"center\">Sorry, that username is already in use.</p>")
+    }) 
+   }
 
   val str = """
     <span>  
@@ -47,9 +55,10 @@ object Login {
 				</div>
 				<br> 
 			</form>
-      <button type="button" class="button inline" id="button">Submit</button>
+      <button type="button" class="button inline" id="login">Login</button>
+      <button type="button" class="button inline" id="create">Create New Account</button>
 		</div>
 	  </body>
-  </span>"""    
-  
+  </span>"""
+
 }

@@ -14,18 +14,18 @@ import edu.trinity.webapps.shared.SharedTables._
 
 object ProfilePage {
 
-  def pageSetup(uname: String, uid: Int): Unit = {
+  def pageSetup(): Unit = {
     $("#main-body").empty()
     $("#main-body").append($("<div id=\"profile-page\"></div>"))
     $("#profile-page").append($(str))
-    addPlayer(uname)
-    getTamagos(uid)
+    addPlayer()
+    getTamagos()
   }
 
-  def getTamagos(uid: Int): Unit = {
+  def getTamagos(): Unit = {
     val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
-    $.getJSON("/tamagos/" + uid, success = (o, s, j) => {
+    $.getJSON("/tamagos", success = (o, s, j) => {
       for (t <- Json.parse(js.JSON.stringify(o)).as[Array[TamagoData]]) {
         val tamaPar = $(s"<p>name: ${t.name}, age: ${t.age}, health: ${t.health}</p>")
         $("#profile-page").append(tamaPar)
@@ -35,8 +35,8 @@ object ProfilePage {
     })
   }
 
-  def addPlayer(uname: String): Unit = {
-    $.getJSON("/player/" + uname, success = (o, s, j) => {
+  def addPlayer(): Unit = {
+    $.getJSON("/player", success = (o, s, j) => {
       for (t <- Json.parse(js.JSON.stringify(o)).as[Array[PlayerData]]) {
         val playerPar = $(s"<p>${t.username}, ${t.id}, ${t.password}</p>")
         $("#profile-page").append(playerPar)
