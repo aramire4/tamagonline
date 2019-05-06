@@ -35,14 +35,31 @@ class DBController @Inject() (protected val dbConfigProvider: DatabaseConfigProv
     Ok(views.html.frolic())
   }
   
-  def playerInfo(uname:String) = Action.async { implicit request =>
-    val res = DatabaseQueries.playerOfUsername(db, uname)
-    res.map(p => Ok(Json.toJson(p)))
+  def checkLogin(uname:String, pword:String) = Action.async { implicit request =>
+    DatabaseQueries.checkLogin(db, uname, pword).map(opt => opt match {
+      case Some(pid) => Ok(Json.toJson(true)).withSession("pid" -> pid.toString)
+      case None => Ok(Json.toJson(false))
+    })
   }
   
-  def tamagoInfo(pid:Int) = Action.async { implicit request =>
-    val res = DatabaseQueries.tamagosOfPlayerID(db, pid)
-    res.map(t => Ok(Json.toJson(t)))
+  def playerInfo() = Action.async { implicit request =>
+       
+    //val res = DatabaseQueries.playerOfUsername(db, uname)
+//    res.map(p => Ok(Json.toJson(p)))
+   Future(Ok)
+  }
+  
+  def newPlayer(uname:String, pword:String) = Action.async { implicit request =>
+    DatabaseQueries.newPlayer(db, uname, pword).map(opt => opt match {
+      case Some(newId) => Ok(Json.toJson(true)).withSession("uid" -> newId.toString)
+      case None => Ok(Json.toJson(false))
+    })
+  }
+  
+  def tamagoInfo() = Action.async { implicit request =>
+    request.session.get("pid").map{ pid =>
+      DatabaseQueries.tamagosOfPlayerID(db, pid.toInt).map(trs => Ok(Json.toJson(trs)))
+    }.getOrElse(Future(Ok(views.html.disconnected())))
   }
   
   def startApp = Action { 
