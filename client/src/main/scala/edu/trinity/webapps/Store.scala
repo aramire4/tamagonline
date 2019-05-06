@@ -15,9 +15,14 @@ object Store {
   def pageSetup():Unit = {
     $("#main-body").empty()
     $("#main-body").append($(str))
+    $("#loadButt").click(() => loanWindow())
   }
   
+  def loanWindow():Unit = {
+    $("#main-body").prepend()
+  }
   
+  //<canvas id="petCenter" width="1400" height="600"style="border: 3px solid"></canvas>
   
   val str = """<body>
 		<div class="topnav">
@@ -26,9 +31,8 @@ object Store {
 			<a href="shop" class="active">Shop</a> 
 			<a href="help">Help</a>
 		</div>
-		<h2>Shop</h2>
-		<canvas id="petCenter" width="1400" height="600"
-			style="border: 3px solid"></canvas>
+		<h2>Store</h2>
+		<button id="loanButt">Get Loan</button>
 		<br>
 	</body>"""
 }

@@ -51,7 +51,7 @@ object ProfilePage {
 		<div class="topnav">
 			<a href="profile" class="active">Profile</a> 
 			<a href="playCenter">Current Pet</a> 
-			<button id="store">Shop</button> 
+			<button id="store">Store</button> 
 			<a href="help">Help</a>
 
 		<h2>Profile</h2>
