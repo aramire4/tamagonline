@@ -12,18 +12,15 @@ import edu.trinity.webapps.shared.SharedTables._
 
 //note to self - query stuff is a post/get, meaning you can keep sessions with that?!!??
 
-
-
 object Help {
 
-  
   def pageSetup(): Unit = {
     $("#main-body").empty()
     $("#main-body").append($(str))
     $("#profile").click(() => ProfilePage.pageSetup())
     $("#store").click(() => Store.pageSetup())
   }
-  
+
   val str = """
 <span>
 	<body>

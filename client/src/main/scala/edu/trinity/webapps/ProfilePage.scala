@@ -60,6 +60,7 @@ object ProfilePage {
 			<a id="store">Store</a> 
 			<a id="help">Help</a>
     </div>
+
 		<h2>Profile</h2>
 		<p class = "center">  </p>
 		<canvas id="petCenter" width="1400" height="600"

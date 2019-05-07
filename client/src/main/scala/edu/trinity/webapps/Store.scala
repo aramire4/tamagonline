@@ -60,15 +60,16 @@ object Store {
   //<canvas id="petCenter" width="1400" height="600"style="border: 3px solid"></canvas>
 
   val loanStr = """
-    <div id="window">
+    <div id="window center">
+      <h3> Loan Shark </h3>
       <p>Need some money, eh? Well you've come to the right place.</p>
       <p>I'm the loan shark, fucc wit me and I'll break your legs!</p>
-      <p>Hopefully load a loan shark img inside here.</p>
+      <p>Hopefully load a loan shark img inside here.</p> <br>
       <p>How many coins shall I loan you? $<input type="text" id="loanAmount"></input></p>
-      <p><button type="button" id="submitLoan">Confirm Loan</button></p>
+      <p><button type="button" id="submitLoan" class="button">Confirm Loan</button></p>
       <p id="totalCoins"></p>
       <p id="totalDebt"></p>
-      <button id="closeWindow">Close</button>
+      <button id="closeWindow" class="button">Close</button>
     </div>"""
 
   val str = """<body>
@@ -78,7 +79,7 @@ object Store {
 			<a id="help">Help</a>
     </div>
 		<h2>Store</h2>
-		<button id="loanButt">Get Loan</button>
+		<button id="loanButt" class="button center">Get Loan</button>
 		<br>
 	</body>"""
 }
