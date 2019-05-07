@@ -61,6 +61,12 @@ p {
 	width: 100%;
 }
 
+ul {
+	padding-left: 0; 
+	text-align:center; 
+	list-style-type:none;
+}
+
 /* Canvas */
 canvas {
 	border: 5px solid #F0F3BD !important;
@@ -169,8 +175,12 @@ input[type=text], input[type=password] {
 }
 
 /* Classes */
-.center { text-align: center; }
+.center { text-align: center !important; }
 .inline { display: inline-block; }
+.half { width: 50%; }
+.left { float: left; }
+.right { float: right; }
+
 div.ex1 {
   width:700px;
   margin:auto;

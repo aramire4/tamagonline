@@ -18,6 +18,9 @@ object Store {
     $("#loanButt").click(() => openLoanWindow())
     $("#payLoanButt").click(() => openPayLoanWindow())
     $("#buyTamago").click(() => openBuyTamagoWindow())
+    $("#profile").click(() => ProfilePage.pageSetup())
+    $("#help").click(() => Help.pageSetup())
+
   }
 
   def openBuyTamagoWindow(): Unit = {
@@ -124,28 +127,28 @@ object Store {
     </div>"""
 
   val loanStr = """
-    <div id="window">
+    <div id="window" class="center">
+      <h3> Loan Shark </h3>
       <p>Need some money, eh? Well you've come to the right place.</p>
       <p>I'm the loan shark, fucc wit me and I'll break your legs!</p>
-      <p>Hopefully load a loan shark img inside here.</p>
+      <p>Hopefully load a loan shark img inside here.</p> <br>
       <p>How many coins shall I loan you? $<input type="text" id="loanAmount"></input></p>
-      <p><button type="button" id="submitLoan">Confirm Loan</button></p>
+      <p><button type="button" id="submitLoan" class="button">Confirm Loan</button></p>
       <p id="totalCoins"></p>
       <p id="totalDebt"></p>
-      <button id="closeWindow">Close</button>
+      <button id="closeWindow" class="button">Close</button>
     </div>"""
 
-  val str = """<body>
-		<div class="topnav">
-			<a href="profile">Profile</a> 
-			<a href="playCenter">Current Pet</a> 
-			<a href="shop" class="active">Shop</a> 
-			<a href="help">Help</a>
-		</div>
+  val str = """
+	<div class="topnav">
+			<a id="profile">Profile</a> 
+			<a id="store" class="active">Store</a> 
+			<a id="help">Help</a>
+    </div>
 		<h2>Store</h2>
-		<button id="loanButt">Get Loan</button>
     <button id="payLoanButt">Pay Off Loan</button>
     <button id="buyTamago">Adopt <s>slave</s> Tamago</button>
-		<br>
-	</body>"""
+    <button id="loanButt" class="button center">Get Loan</button>
+	<br>
+	"""
 }
