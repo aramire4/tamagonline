@@ -9,6 +9,8 @@ import play.api.libs.json._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 import edu.trinity.webapps.shared.SharedTables._
+import org.scalajs.dom.html.Canvas
+import org.scalajs.dom.raw.HTMLImageElement
 
 //note to self - query stuff is a post/get, meaning you can keep sessions with that?!!??
 
@@ -28,19 +30,24 @@ object ProfilePage {
     val context = canvas.getContext("2d")
     $.getJSON("/tamagos", success = (o, s, j) => {
       for (t <- Json.parse(js.JSON.stringify(o)).as[Array[TamagoData]]) {
+        /*
         val tamaPar = $(s"<p>name: ${t.name}, age: ${t.age}, health: ${t.health}</p>")
         $("#profile-page").append(tamaPar)
-        context.fillRect(50,50,50,50)
-        context.fillText("name: "+t.name, 200, 200)
+        context.fillRect(50, 50, 50, 50)
+        context.fillText("name: " + t.name, 200, 200)
+        */
+        
       }
     })
+    var image = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
+    context.drawImage(image, 50, 50)
   }
 
   def addPlayer(): Unit = {
     $.getJSON("/player", success = (o, s, j) => {
       val t = Json.parse(js.JSON.stringify(o)).as[PlayerData]
-        val playerPar = $(s"<p>${t.username}, ${t.id}, debt: ${t.debt}</p>")
-        $("#profile-page").append(playerPar)
+      val playerPar = $(s"<p>${t.username}, ${t.id}, debt: ${t.debt}</p>")
+      $("#profile-page").append(playerPar)
     })
   }
 
@@ -54,7 +61,7 @@ object ProfilePage {
 			<a href="help">Help</a>
 
 		<h2>Profile</h2>
-		<p class = "center"> HEY BRUH BRUH heard u wanna see some of your lil virtual pets. if u want that dumb shit go check out b spears group project. we here to break knees and fuck toma-chads</p>
+		<p class = "center"> This is a heehee</p>
 		<canvas id="petCenter" width="1400" height="600"
 			style="border: 3px solid"></canvas>
 		<br>
