@@ -27,7 +27,7 @@ object SharedTables {
    *  @param globalrank Database column globalRank SqlType(INT)
    *  @param score Database column score SqlType(INT)
    *  @param numberoftamagos Database column numberOfTamagos SqlType(INT) */
-  case class PlayerData(id: Int, username: String, password: String, coins: Int, 
+  case class PlayerData(id: Int, username: String, coins: Int, 
       debt: Int, kills: Int, deaths: Int, 
       globalrank: Int, score: Int, numberoftamagos: Int)
       
@@ -84,7 +84,6 @@ object SharedTables {
   implicit val playerRowWrites: Writes[PlayerData] = (
     (JsPath \ "id").write[Int] and
     (JsPath \ "username").write[String] and
-    (JsPath \ "password").write[String] and
     (JsPath \ "coins").write[Int] and
     (JsPath \ "debt").write[Int] and
     (JsPath \ "kills").write[Int] and
@@ -96,7 +95,6 @@ object SharedTables {
   implicit val playerRowReads: Reads[PlayerData] = (
     (JsPath \ "id").read[Int] and
     (JsPath \ "username").read[String] and
-    (JsPath \ "password").read[String] and
     (JsPath \ "coins").read[Int] and
     (JsPath \ "debt").read[Int] and
     (JsPath \ "kills").read[Int] and

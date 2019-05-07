@@ -38,10 +38,9 @@ object ProfilePage {
 
   def addPlayer(): Unit = {
     $.getJSON("/player", success = (o, s, j) => {
-      for (t <- Json.parse(js.JSON.stringify(o)).as[Array[PlayerData]]) {
-        val playerPar = $(s"<p>${t.username}, ${t.id}, ${t.password}</p>")
+      val t = Json.parse(js.JSON.stringify(o)).as[PlayerData]
+        val playerPar = $(s"<p>${t.username}, ${t.id}, debt: ${t.debt}</p>")
         $("#profile-page").append(playerPar)
-      }
     })
   }
 
