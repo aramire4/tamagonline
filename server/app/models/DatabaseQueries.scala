@@ -7,8 +7,11 @@ import scala.concurrent.Future
 import Tables._
 import scala.concurrent.ExecutionContext
 import edu.trinity.webapps.shared.SharedTables._
+import java.time.LocalDateTime
 
 object DatabaseQueries {
+
+  val tamagoCost = 100
 
   //make a function that converts rows to datas, make sure the model only spits out shareable data
   def rowToData(tr: TamagoRow): TamagoData = {
@@ -20,10 +23,10 @@ object DatabaseQueries {
     PlayerData(pr.id, pr.username, pr.coins, pr.debt, pr.kills, pr.deaths,
       pr.globalrank, pr.score, pr.numberoftamagos)
   }
-  
-  def fetchPlayerData(db:Database, field:String, uid:Int)(implicit ec:ExecutionContext):Future[String] = {
-    val futP = db.run((for(p <- Player; if p.id === uid) yield p).result.head)
-        
+
+  def fetchPlayerData(db: Database, field: String, uid: Int)(implicit ec: ExecutionContext): Future[String] = {
+    val futP = db.run((for (p <- Player; if p.id === uid) yield p).result.head)
+
     val res = futP.map(p => field match {
       case "coins" => p.coins
       case "debt" => p.debt
@@ -32,25 +35,51 @@ object DatabaseQueries {
     res
   }
 
-  def submitLoan(db:Database, amt:Int, pid:Int)(implicit ec:ExecutionContext):Future[Int] = {
-    val currentDebt = db.run { 
-      (for (p<-Player; if p.id===pid) yield p.debt).result.head
+  def submitLoan(db: Database, amt: Int, pid: Int)(implicit ec: ExecutionContext): Future[Int] = {
+    val currentDebt = db.run {
+      (for (p <- Player; if p.id === pid) yield (p.debt, p.coins)).result.head
     }
-    currentDebt.map(cd => {
-      val newDebt = cd + ((amt*1.40).ceil).toInt
-      db.run{
-        val pd = (for (p<-Player; if p.id===pid) yield p.debt)
+    currentDebt.map(tup => {
+      val newDebt = tup._1 + ((amt * 1.40).ceil).toInt
+      val newCoins = tup._2 + (amt)
+      db.run {
+        val pd = (for (p <- Player; if p.id === pid) yield p.debt)
         pd.update(newDebt)
+      }
+      db.run {
+        val pc = (for (p <- Player; if p.id === pid) yield p.coins)
+        pc.update(newCoins)
       }
       newDebt
     })
   }
-  
-  def coins(db:Database, uid:Int)(implicit ec:ExecutionContext):Future[Int] = {
-    val c = db.run((for(p <- Player; if p.id === uid) yield p.coins).result.head)
+
+  def submitLoanPayment(db: Database, amt: Int, pid: Int)(implicit ec: ExecutionContext): Future[Boolean] = {
+    val currentDebt = db.run {
+      (for (p <- Player; if p.id === pid) yield (p.debt, p.coins)).result.head
+    }
+    currentDebt.map(tup => {
+      if (amt <= tup._2) {
+        val newDebt = tup._1 - amt
+        val newCoins = tup._2 - amt
+        db.run {
+          val pd = (for (p <- Player; if p.id === pid) yield p.debt)
+          pd.update(newDebt)
+        }
+        db.run {
+          val pc = (for (p <- Player; if p.id === pid) yield p.coins)
+          pc.update(newCoins)
+        }
+        true
+      } else false
+    })
+  }
+
+  def coins(db: Database, uid: Int)(implicit ec: ExecutionContext): Future[Int] = {
+    val c = db.run((for (p <- Player; if p.id === uid) yield p.coins).result.head)
     c
   }
-  
+
   def tamagosOfPlayerID(db: Database, pid: Int)(implicit ec: ExecutionContext): Future[Seq[TamagoData]] = {
     db.run {
       (for (t <- Tamago; if t.ownerid === pid) yield t).result.map(_.map(tr => rowToData(tr)))
@@ -87,7 +116,23 @@ object DatabaseQueries {
     })
   }
 
-  def playerOfID(db: Database, pid:Int)(implicit ec: ExecutionContext): Future[PlayerData] = {
+  def newTamago(db: Database, pid: Int, name: String)(implicit ec: ExecutionContext): Future[Boolean] = {
+    val coins = db.run {
+      (for (p <- Player; if p.id === pid) yield p.coins).result.head
+    }
+    coins.map(c => {
+      if (c < tamagoCost) false
+      else {
+        db.run {
+          Tamago += TamagoRow(0, name, 1, 10, 10, 10, 10, false, 1, true, true,
+            java.sql.Timestamp.valueOf(LocalDateTime.now()), 1+scala.util.Random.nextInt(12), 1, 0)
+        }
+        true
+      }
+    })
+  }
+
+  def playerOfID(db: Database, pid: Int)(implicit ec: ExecutionContext): Future[PlayerData] = {
     db.run {
       (for (p <- Player; if p.id === pid) yield p).result.head
     }.map(pr => rowToData(pr))

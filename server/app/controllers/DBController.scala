@@ -67,9 +67,21 @@ class DBController @Inject() (protected val dbConfigProvider: DatabaseConfigProv
     })
   }
   
+  def newTamago(name:String) = Action.async { implicit request =>
+    request.session.get("pid").map(pid => {
+      DatabaseQueries.newTamago(db, pid.toInt, name).map(b => Ok(Json.toJson(b)))
+    }).getOrElse(Future(Ok(views.html.disconnected())))
+  }
+  
   def submitLoan(amt:Int) = Action.async { implicit request =>
     request.session.get("pid").map(pid => {
       DatabaseQueries.submitLoan(db, amt, pid.toInt).map(debt => Ok(Json.toJson(debt)))
+    }).getOrElse(Future(Ok(views.html.disconnected())))
+  }
+  
+  def submitLoanPayment(amt:Int) = Action.async { implicit request =>
+    request.session.get("pid").map(pid => {
+      DatabaseQueries.submitLoanPayment(db, amt, pid.toInt).map(valid => Ok(Json.toJson(valid)))
     }).getOrElse(Future(Ok(views.html.disconnected())))
   }
   
