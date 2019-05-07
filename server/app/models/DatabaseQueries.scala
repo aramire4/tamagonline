@@ -17,10 +17,40 @@ object DatabaseQueries {
   }
 
   def rowToData(pr: PlayerRow): PlayerData = {
-    PlayerData(pr.id, pr.username, pr.password, pr.coins, pr.deaths, pr.kills, pr.deaths,
+    PlayerData(pr.id, pr.username, pr.coins, pr.debt, pr.kills, pr.deaths,
       pr.globalrank, pr.score, pr.numberoftamagos)
   }
+  
+  def fetchPlayerData(db:Database, field:String, uid:Int)(implicit ec:ExecutionContext):Future[String] = {
+    val futP = db.run((for(p <- Player; if p.id === uid) yield p).result.head)
+        
+    val res = futP.map(p => field match {
+      case "coins" => p.coins
+      case "debt" => p.debt
+      case _ => println("error in fetchPlayerData field matching")
+    }).map(_.toString)
+    res
+  }
 
+  def submitLoan(db:Database, amt:Int, pid:Int)(implicit ec:ExecutionContext):Future[Int] = {
+    val currentDebt = db.run { 
+      (for (p<-Player; if p.id===pid) yield p.debt).result.head
+    }
+    currentDebt.map(cd => {
+      val newDebt = cd + ((amt*1.40).ceil).toInt
+      db.run{
+        val pd = (for (p<-Player; if p.id===pid) yield p.debt)
+        pd.update(newDebt)
+      }
+      newDebt
+    })
+  }
+  
+  def coins(db:Database, uid:Int)(implicit ec:ExecutionContext):Future[Int] = {
+    val c = db.run((for(p <- Player; if p.id === uid) yield p.coins).result.head)
+    c
+  }
+  
   def tamagosOfPlayerID(db: Database, pid: Int)(implicit ec: ExecutionContext): Future[Seq[TamagoData]] = {
     db.run {
       (for (t <- Tamago; if t.ownerid === pid) yield t).result.map(_.map(tr => rowToData(tr)))
@@ -57,10 +87,10 @@ object DatabaseQueries {
     })
   }
 
-  def playerOfUsername(db: Database, uname: String)(implicit ec: ExecutionContext): Future[Seq[PlayerData]] = {
+  def playerOfID(db: Database, pid:Int)(implicit ec: ExecutionContext): Future[PlayerData] = {
     db.run {
-      (for (p <- Player; if p.username === uname) yield p).result.map(_.map(pr => rowToData(pr)))
-    }
+      (for (p <- Player; if p.id === pid) yield p).result.head
+    }.map(pr => rowToData(pr))
   }
 
   def timetest(db: Database)(implicit ec: ExecutionContext): Future[Seq[java.sql.Timestamp]] = {

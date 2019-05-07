@@ -126,6 +126,28 @@ input[type=text], input[type=password] {
 	background-color: #EF8354;
 }
 
+
+/* Pop-ups, dimmers and related */
+#page-mask {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#window {
+  position: fixed;
+  left: 20%;
+  right: 20%;
+  bottom: 20%;
+  top: 20%;
+  background-color: white;
+  border: solid 2px gray;
+}
+
+
 .stats {
 	text-align: right;
 	color: #EDEDF4;
@@ -145,7 +167,6 @@ input[type=text], input[type=password] {
 .tomago:hover{
 	color: #EF8354;
 }
-
 
 /* Classes */
 .center { text-align: center; }
