@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat
 
 object SharedTables {
   
-  case class TamagoData(name: String, attack: Int, defense: Int, 
+  case class TamagoData(id:Int, name: String, attack: Int, defense: Int, 
       speed: Int, health: Int, 
       kneesbroken: Boolean, level: Int, isclean: Boolean, 
       isalive: Boolean, age: Int, respect: Int, timeskneesbroken: Int)
@@ -104,6 +104,7 @@ object SharedTables {
     (JsPath \ "numberoftamagos").read[Int])(PlayerData.apply _)
 
   implicit val tamagoRowWrites: Writes[TamagoData] = (
+    (JsPath \ "id").write[Int] and
     (JsPath \ "name").write[String] and
     (JsPath \ "attack").write[Int] and
     (JsPath \ "defense").write[Int] and
@@ -118,6 +119,7 @@ object SharedTables {
     (JsPath \ "timeskneesbroken").write[Int])(unlift(TamagoData.unapply))
 
   implicit val tamagoRowReads: Reads[TamagoData] = (
+    (JsPath \ "id").read[Int] and
     (JsPath \ "name").read[String] and
     (JsPath \ "attack").read[Int] and
     (JsPath \ "defense").read[Int] and
