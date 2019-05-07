@@ -22,6 +22,7 @@ object ProfilePage {
     $("#main-body").append($("<div id=\"profile-page\"></div>"))
     $("#profile-page").append($(str))
     $("#store").click(() => Store.pageSetup())
+    $("#help").click(() => Help.pageSetup())
     addPlayer()
     getTamagos()
   }
@@ -55,11 +56,10 @@ object ProfilePage {
 <span>
 	<body>
 		<div class="topnav">
-			<a href="profile" class="active">Profile</a> 
-			<a href="playCenter">Current Pet</a> 
-			<button id="store">Store</button> 
-			<a href="help">Help</a>
-
+			<a id="profile" class="active">Profile</a> 
+			<a id="store">Store</a> 
+			<a id="help">Help</a>
+    </div>
 		<h2>Profile</h2>
 		<p class = "center">  </p>
 		<canvas id="petCenter" width="1400" height="600"

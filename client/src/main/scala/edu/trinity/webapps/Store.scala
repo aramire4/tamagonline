@@ -21,6 +21,8 @@ object Store {
     $("#main-body").empty()
     $("#main-body").append($(str))
     $("#loanButt").click(() => openLoanWindow())
+    $("#profile").click(() => ProfilePage.pageSetup())
+    $("#help").click(() => Help.pageSetup())
   }
 
   def openLoanWindow(): Unit = {
@@ -70,12 +72,11 @@ object Store {
     </div>"""
 
   val str = """<body>
-		<div class="topnav">
-			<a href="profile">Profile</a> 
-			<a href="playCenter">Current Pet</a> 
-			<a href="shop" class="active">Shop</a> 
-			<a href="help">Help</a>
-		</div>
+	<div class="topnav">
+			<a id="profile">Profile</a> 
+			<a id="store" class="active">Store</a> 
+			<a id="help">Help</a>
+    </div>
 		<h2>Store</h2>
 		<button id="loanButt">Get Loan</button>
 		<br>
