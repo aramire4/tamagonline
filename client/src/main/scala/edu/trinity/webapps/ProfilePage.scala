@@ -30,25 +30,42 @@ object ProfilePage {
     val context = canvas.getContext("2d")
     $.getJSON("/tamagos", success = (o, s, j) => {
       for (t <- Json.parse(js.JSON.stringify(o)).as[Array[TamagoData]]) {
-        /*
         val tamaPar = $(s"<p>name: ${t.name}, age: ${t.age}, health: ${t.health}</p>")
         $("#profile-page").append(tamaPar)
-        context.fillRect(50, 50, 50, 50)
-        context.fillText("name: " + t.name, 200, 200)
+        Player.tamagos ::= t
+        /*
+        context.fillRect(50,50,50,50)
+        context.fillText("name: "+t.name, 200, 200)
         */
-        
       }
     })
-    var image = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
-    context.drawImage(image, 50, 50)
+    var count = 0
+    for (t <- Player.tamagos) {
+      t.age match {
+        case 1 => {
+          //val img = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
+          val clone = $("tomahat").clone()
+          $(clone).attr("id", "pic" + count.toString)
+          $("pic" + count.toString).removeAttr("style")
+          $("#profile-page").append($(clone))
+          clone.click(() => CurrentPet.pageSetup(t))
+        }
+
+      }
+      count += 1
+    }
+    //var image = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
+    //context.drawImage(image, 50, 50)
   }
 
   def addPlayer(): Unit = {
     $.getJSON("/player", success = (o, s, j) => {
-      val t = Json.parse(js.JSON.stringify(o)).as[PlayerData]
-      val playerPar = $(s"<p>${t.username}, ${t.id}, debt: ${t.debt}</p>")
+      val p = Json.parse(js.JSON.stringify(o)).as[PlayerData]
+      Player.addData(p)
+      val playerPar = $(s"<p>${Player.username}, coins ${Player.coins}, debt: ${Player.debt}</p>")
       $("#profile-page").append(playerPar)
     })
+
   }
 
   val str = """

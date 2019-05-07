@@ -12,7 +12,7 @@ object DatabaseQueries {
 
   //make a function that converts rows to datas, make sure the model only spits out shareable data
   def rowToData(tr: TamagoRow): TamagoData = {
-    TamagoData(tr.name, tr.attack, tr.defense, tr.speed, tr.health, tr.kneesbroken, tr.level,
+    TamagoData(tr.id, tr.name, tr.attack, tr.defense, tr.speed, tr.health, tr.kneesbroken, tr.level,
       tr.isclean, tr.isalive, tr.age, tr.respect, tr.timeskneesbroken)
   }
 
