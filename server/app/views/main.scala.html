@@ -24,8 +24,8 @@
     <img src=@routes.Assets.versioned("images/toma-mystery.png") id="tomamystery" style="display:none"></img>
     <img src=@routes.Assets.versioned("images/toma-skitters.png") id="tomaskitters" style="display:none"></img>
    	<div id="main-body">
+   		@content
    	</div>
-   	@content
     @scalajs.html.scripts("csci3345-s19-client-project", routes.Assets.versioned(_).toString, name => getClass.getResource(s"/public/$name") != null)
   </body>
 </html>

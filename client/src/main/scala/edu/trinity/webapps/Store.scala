@@ -12,6 +12,9 @@ import edu.trinity.webapps.shared.SharedTables._
 
 object Store {
 
+  val maxNumOfTamagos = 18
+  val tamagoCost = 100
+
   def pageSetup(): Unit = {
     $("#main-body").empty()
     $("#main-body").append($(str))
@@ -92,21 +95,27 @@ object Store {
   }
 
   def submitAdopt(): Unit = {
-    val name = $("#tamagoName").value()
-    $.getJSON("/newTamago/" + name.trim(), success = (o, s, j) => {
-      val isValid = Json.parse(js.JSON.stringify(o)).as[Boolean]
-      if (isValid) {
-        $("#window").append($("<p>Congrats on your new baby.</p>"))
-        //TODO MAKE SURE THIS CHANGES THE DATABASE
-        $("#window").append($("<p>30 coins have been removed from you account</p>"))
-      } else $("#window").append($("<p>You're too poor to buy a tamago! Try getting a loan :)</p>"))
-    })
+    if (Player.numberOfTamagos > 18) $("#window").append($("<p>You own too many tamagos already! Try getting one killed  :p</p>"))
+    else {
+      val name = $("#tamagoName").value()
+      $.getJSON("/newTamago/" + name.trim(), success = (o, s, j) => {
+        val isValid = Json.parse(js.JSON.stringify(o)).as[Option[TamagoData]]
+        isValid match {
+          case Some(td) => {
+            $("#window").append($("<p>Congrats on your new baby.</p>"))
+            $("#window").append($(s"<p>${tamagoCost} coins have been removed from you account</p>"))
+            Player.tamagos ::= td
+          }
+          case None => $("#window").append($("<p>You're too poor to buy a tamago! Try getting a loan :)</p>"))
+        }
+      })
+    }
   }
 
   val adoptStr = """
     <div id="window">
       <h3> Adopt Tamago </h3> <br>
-      <p>Bring home a new tamago! New Tamagos cost 30 coins</p> <br>
+      <p>Bring home a new tamago! New Tamagos cost """ + tamagoCost + """ coins</p> <br>
       <p>What will you name it? $<input type="text" id="tamagoName"></input></p>
       <br>
 

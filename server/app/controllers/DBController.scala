@@ -69,7 +69,7 @@ class DBController @Inject() (protected val dbConfigProvider: DatabaseConfigProv
   
   def newTamago(name:String) = Action.async { implicit request =>
     request.session.get("pid").map(pid => {
-      DatabaseQueries.newTamago(db, pid.toInt, name).map(b => Ok(Json.toJson(b)))
+      DatabaseQueries.newTamago(db, pid.toInt, name).map(opt => Ok(Json.toJson(opt)))
     }).getOrElse(Future(Ok(views.html.disconnected())))
   }
   

@@ -11,8 +11,13 @@ object Player {
   var deaths = 0
   var globalrank = 0
   var score = 0
-  var numberOfTamagos = 0
+  def numberOfTamagos = tamagos.length
   var tamagos:List[TamagoData] = List()
+  
+  //clears player data, for any instance where client data might get out of sync with the client
+  def clearData():Unit = {
+    tamagos = List()
+  }
   
   def kd:Int = kills/deaths
   
@@ -25,6 +30,5 @@ object Player {
     this.deaths = pd.deaths
     this.globalrank = pd.globalrank
     this.score = pd.score
-    this.numberOfTamagos = pd.numberoftamagos
   }
 }
