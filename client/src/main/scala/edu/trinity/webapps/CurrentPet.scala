@@ -13,14 +13,49 @@ import org.scalajs.dom.html.Canvas
 import org.scalajs.dom.raw.HTMLImageElement
 
 object CurrentPet {
-  def pageSetup(t:TamagoData): Unit = {
+  var tamagoX = 0
+  var tamagoY = 0
+  var img = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
+  var moveTimer = 50
+  
+  def pageSetup(t: TamagoData): Unit = {
     $("#main-body").empty()
     $("#main-body").append($("<div id=\"CurrentPet\"></div>"))
     $("#CurrentPet").append($(str))
     $("#petName").text(t.name)
     $("#store").click(() => Store.pageSetup())
     addPlayer()
-    getTamago()
+    getTamago(t)
+  }
+
+  js.timers.setInterval(50) {
+    drawImage();
+    update();
+    
+  }
+
+  def drawImage(): Unit = {
+    val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
+    val context = canvas.getContext("2d")
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(img, tamagoX, tamagoY)
+  }
+
+  def update(): Unit = {
+    val r = scala.util.Random
+    val num = r.nextInt(4)+1
+    if(num == 1){
+      if(tamagoX < 1300)tamagoX += 5
+    }
+    else if(num == 2){
+      if(tamagoX > 50)tamagoX -= 5
+    }
+    else if(num == 3){
+      if(tamagoY < 500)tamagoY += 5
+    }
+    else{
+      if(tamagoY > 50)tamagoY -= 5
+    }
   }
 
   def addPlayer(): Unit = {
@@ -33,21 +68,70 @@ object CurrentPet {
 
   }
 
-  def getTamago(): Unit = {
+  def getTamago(t: TamagoData): Unit = {
     val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
     $.getJSON("/tamagos", success = (o, s, j) => {
-      for (t <- Json.parse(js.JSON.stringify(o)).as[Array[TamagoData]]) {
-        val tamaPar = $(s"<p>name: ${t.name}, age: ${t.age}, health: ${t.health}</p>")
-        $("#profile-page").append(tamaPar)
-        Player.tamagos ::= t
-        context.fillRect(50, 50, 50, 50)
-        context.fillText("name: " + t.name, 200, 200)
-
-      }
+      val tamaPar = $(s"<p>name: ${t.name}, age: ${t.age}, health: ${t.health}</p>")
+      $("#CurrentPet").append(tamaPar)
     })
+    showTamago(t)
+  }
+
+  def showTamago(t: TamagoData): Unit = {
+    val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
+    val context = canvas.getContext("2d")
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    val r = scala.util.Random
+    var x = r.nextInt(900) + 50
+    var y = r.nextInt(400) + 50
     var image = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
-    context.drawImage(image, 50, 50)
+    t.age match {
+      case 1 => {
+        image = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
+      }
+      case 2 => {
+        image = dom.document.getElementById("tomaflap").asInstanceOf[HTMLImageElement]
+      }
+      case 3 => {
+        image = dom.document.getElementById("tomamuscle").asInstanceOf[HTMLImageElement]
+      }
+      case 4 => {
+        image = dom.document.getElementById("tomamark").asInstanceOf[HTMLImageElement]
+      }
+      case 5 => {
+        image = dom.document.getElementById("tomasad").asInstanceOf[HTMLImageElement]
+      }
+      case 6 => {
+        image = dom.document.getElementById("tomastache").asInstanceOf[HTMLImageElement]
+      }
+      case 7 => {
+        image = dom.document.getElementById("tomagib").asInstanceOf[HTMLImageElement]
+      }
+      case 8 => {
+        image = dom.document.getElementById("tomagusta").asInstanceOf[HTMLImageElement]
+      }
+      case 9 => {
+        image = dom.document.getElementById("tomahawk").asInstanceOf[HTMLImageElement]
+      }
+      case 10 => {
+        image = dom.document.getElementById("tomasprout").asInstanceOf[HTMLImageElement]
+      }
+      case 11 => {
+        image = dom.document.getElementById("tomamystery").asInstanceOf[HTMLImageElement]
+      }
+      case 12 => {
+        image = dom.document.getElementById("tomaskitters").asInstanceOf[HTMLImageElement]
+      }
+      case _ => {
+        println("This is an error")
+      }
+    }
+    img = image
+    tamagoX = x
+    tamagoY = y
+
+    context.drawImage(image, x, y)
   }
 
   val str = """
@@ -60,7 +144,7 @@ object CurrentPet {
 
 		</div>
     <h2 id="petName"></h2>
-		<canvas id="petCenter"></canvas>
+		<canvas id="petCenter" width="1400" height="600"></canvas>
 		<br>
 		<br>
 		<div class="center">

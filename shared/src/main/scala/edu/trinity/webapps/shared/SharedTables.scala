@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat
 
 object SharedTables {
   
+  
   case class TamagoData(id:Int, name: String, attack: Int, defense: Int, 
       speed: Int, health: Int, 
       kneesbroken: Boolean, level: Int, isclean: Boolean, 
