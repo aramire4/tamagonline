@@ -68,6 +68,17 @@ ul {
 	list-style-type:none;
 }
 
+li {
+	color: #EDEDF4;
+	font-size: 26px;
+	text-align: center;
+}
+
+li:hover {
+	color:#EF8354;
+	cursor: pointer;
+}
+
 /* Canvas */
 canvas {
 	border: 5px solid #F0F3BD !important;
@@ -110,6 +121,7 @@ input[type=text], input[type=password] {
 
 .button a:hover {
 	background-color: #02C39A;
+	cursor: pointer;
 }
 
 /* Navigation Bar */
@@ -131,6 +143,7 @@ input[type=text], input[type=password] {
 
 .topnav a:hover {
 	background-color: #02C39A;
+	cursor: pointer;
 }
 
 .topnav a.active {
@@ -156,10 +169,6 @@ input[type=text], input[type=password] {
   top: 25%;
   background-color: #028090;
   padding: 20px;
-}
-
-.tomago:hover{
-	color: #EF8354;
 }
 
 /* Classes */
