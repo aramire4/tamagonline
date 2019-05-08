@@ -62,7 +62,7 @@ object ProfilePage {
     </div>
 
 		<h2>Profile</h2>
-		<p class = "center">  </p>
+		<p class = "center"> Below are all of your tamagos! Click on one to interact with it. </p>
 		<canvas id="petCenter" width="1400" height="600"
 			style="border: 3px solid"></canvas>
 		<br>

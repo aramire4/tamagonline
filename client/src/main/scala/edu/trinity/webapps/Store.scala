@@ -107,36 +107,51 @@ object Store {
 
   val adoptStr = """
     <div id="window">
-      <p>Bring home a new tamago!</p>
-      <p>Costs 30 coins</p>
+      <h3> Adopt Tamago </h3> <br>
+      <p>Bring home a new tamago! New Tamagos cost 30 coins</p> <br>
       <p>What will you name it? $<input type="text" id="tamagoName"></input></p>
-      <p><button type="button" id="submitAdopt">Confirm Adoption</button></p>
-      <button id="closeWindow">Close</button>
+      <br>
+
+      <div class ="center">
+        <button type="button" class="button inline" id="submitAdopt">Confirm Adoption</button>
+        <button id="closeWindow" class="button inline">Close</button>
+      </div>
     </div>"""
 
   val payLoanStr = """
     <div id="window">
+      <h3> Pay Off Loan </h3> <br>
       <p>Finally ready to pay me back, eh?</p>
       <p>I'm the loan shark, fucc wit me and I'll break your legs!</p>
       <p>Hopefully load a loan shark img inside here.</p>
       <p>How much of your debt shall you repay? $<input type="text" id="payAmount"></input></p>
-      <p><button type="button" id="submitLoan">Confirm Payment</button></p>
+      
       <p id="totalCoins"></p>
       <p id="totalDebt"></p>
-      <button id="closeWindow">Close</button>
+      <br>
+
+      <div class ="center">
+        <button type="button" class="button inline" id="submitLoan">Confirm Payment</button>
+        <button id="closeWindow" class="button inline">Close</button>
+      </div>
     </div>"""
 
   val loanStr = """
     <div id="window" class="center">
-      <h3> Loan Shark </h3>
+      <h3> Get Loan </h3> <br>
       <p>Need some money, eh? Well you've come to the right place.</p>
       <p>I'm the loan shark, fucc wit me and I'll break your legs!</p>
       <p>Hopefully load a loan shark img inside here.</p> <br>
       <p>How many coins shall I loan you? $<input type="text" id="loanAmount"></input></p>
-      <p><button type="button" id="submitLoan" class="button">Confirm Loan</button></p>
+      
       <p id="totalCoins"></p>
       <p id="totalDebt"></p>
-      <button id="closeWindow" class="button">Close</button>
+      <br>
+
+      <div class ="center">
+        <button type="button" id="submitLoan" class="button inline">Confirm Loan</button>
+        <button id="closeWindow" class="button inline">Close</button>
+      </div>
     </div>"""
 
   val str = """
@@ -146,9 +161,12 @@ object Store {
 			<a id="help">Help</a>
     </div>
 		<h2>Store</h2>
-    <button id="payLoanButt">Pay Off Loan</button>
-    <button id="buyTamago">Adopt <s>slave</s> Tamago</button>
-    <button id="loanButt" class="button center">Get Loan</button>
+    <canvas id="petCenter" width="1400" height="600" style="border: 3px solid"></canvas> <br>
+    <div class="center">
+      <button id="payLoanButt" class="button inline">Pay Off Loan</button>
+      <button id="buyTamago" class="button inline">Adopt Tamago</button>
+      <button id="loanButt" class="button inline">Get Loan</button>
+    </div>
 	<br>
 	"""
 }
