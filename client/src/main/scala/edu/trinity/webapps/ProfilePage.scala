@@ -33,9 +33,9 @@ object ProfilePage {
     $.getJSON("/tamagos", success = (o, s, j) => {
       var count = 1
       for (t <- Json.parse(js.JSON.stringify(o)).as[Array[TamagoData]]) {
-        val tamaPar = $(s"<p id = 't$count'>name: ${t.name}, age: ${t.age}, health: ${t.health}</p>")
+        val tamaPar = $(s"<li id = 't$count' class='hoverPet'> ${t.name} (health: ${t.health}) </li>")
         //put a link on name to CurrentPet
-        $("#profile-page").append(tamaPar)
+        $("#pets").append(tamaPar)
         $("#t"+count).click(() => {
           CurrentPet.pageSetup(t)
         })
@@ -51,8 +51,9 @@ object ProfilePage {
     val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
     context.clearRect(0, 0, canvas.width, canvas.height);
-    var x = 50;
+    var x = 100;
     var y = 50;
+    var count = 0;
     for (t <- Player.tamagos) {
       var image = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
       t.age match {
@@ -100,11 +101,13 @@ object ProfilePage {
       context.font = "30px Arial";
       context.fillText(t.name, x + 15, y);
 
+      count+=1
       x += 200
-      if (x > 1400) {
-        x = 50
+      if (count % 6 == 0) {
+        x = 100
         y += 200
-      }
+        count = 0
+      } 
     }
   }
 
@@ -132,6 +135,7 @@ object ProfilePage {
 		<canvas id="petCenter" width="1400" height="600"
 			style="border: 3px solid"></canvas>
 		<br>
+  <ul id="pets" class="center"> <h3> Tamago List </h3> </ul>
 	</body>
 </span>"""
 
