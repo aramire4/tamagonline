@@ -49,8 +49,9 @@ object CurrentPet {
     val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
     context.clearRect(0, 0, canvas.width, canvas.height);
-    var x = 50;
-    var y = 50;
+    val r = scala.util.Random
+    var x = r.nextInt(900)+50
+    var y = r.nextInt(400)+50
       var image = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
       t.age match {
         case 1 => {
@@ -94,8 +95,6 @@ object CurrentPet {
         }
       }
       context.drawImage(image, x, y)
-      context.font = "30px Arial";
-      context.fillText(t.name, x + 15, y);
   }
 
   val str = """
@@ -108,7 +107,7 @@ object CurrentPet {
 
 		</div>
     <h2 id="petName"></h2>
-		<canvas id="petCenter"></canvas>
+		<canvas id="petCenter" width="1400" height="600"></canvas>
 		<br>
 		<br>
 		<div class="center">
