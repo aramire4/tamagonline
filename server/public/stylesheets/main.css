@@ -79,6 +79,7 @@ canvas {
 /* Input Boxes */
 input[type=text], input[type=password] {
 	text-align: center;
+    color: #EDEDF4;
 	font-family: 'Work Sans', sans-serif;
 	border: 2px solid;
 	border-radius: 2px;
@@ -145,12 +146,12 @@ input[type=text], input[type=password] {
 
 #window {
   position: fixed;
-  left: 30%;
-  right: 30%;
-  bottom: 30%;
-  top: 30%;
+  left: 25%;
+  right: 25%;
+  bottom: 25%;
+  top: 25%;
   background-color: #028090;
-  border: solid 2px gray;
+  padding: 10px;
 }
 
 
