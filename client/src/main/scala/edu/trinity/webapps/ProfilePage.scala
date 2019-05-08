@@ -29,23 +29,28 @@ object ProfilePage {
   def getTamagos(): Unit = {
     val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
+    context.clearRect(0, 0, canvas.width, canvas.height);
     $.getJSON("/tamagos", success = (o, s, j) => {
-      //println("1")
+      var count = 1
       for (t <- Json.parse(js.JSON.stringify(o)).as[Array[TamagoData]]) {
-        val tamaPar = $(s"<p>name: ${t.name}, age: ${t.age}, health: ${t.health}</p>")
+        val tamaPar = $(s"<p id = 't$count'>name: ${t.name}, age: ${t.age}, health: ${t.health}</p>")
         //put a link on name to CurrentPet
         $("#profile-page").append(tamaPar)
+        $("#t"+count).click(() => {
+          CurrentPet.pageSetup(t)
+        })
+        
         Player.tamagos ::= t
+        count+=1
       }
-      showTamago();
+      showTamago()
     })
-    //var image = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
-    //context.drawImage(image, 50, 50)
   }
 
   def showTamago(): Unit = {
     val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
+    context.clearRect(0, 0, canvas.width, canvas.height);
     var x = 50;
     var y = 50;
     for (t <- Player.tamagos) {
@@ -63,28 +68,28 @@ object ProfilePage {
         case 4 => {
           image = dom.document.getElementById("tomamark").asInstanceOf[HTMLImageElement]
         }
-        case 5 =>{
+        case 5 => {
           image = dom.document.getElementById("tomasad").asInstanceOf[HTMLImageElement]
         }
-        case 6 =>{
+        case 6 => {
           image = dom.document.getElementById("tomastache").asInstanceOf[HTMLImageElement]
         }
-        case 7 =>{
+        case 7 => {
           image = dom.document.getElementById("tomagib").asInstanceOf[HTMLImageElement]
         }
-        case 8 =>{
+        case 8 => {
           image = dom.document.getElementById("tomagusta").asInstanceOf[HTMLImageElement]
         }
-        case 9 =>{
+        case 9 => {
           image = dom.document.getElementById("tomahawk").asInstanceOf[HTMLImageElement]
         }
-        case 10 =>{
+        case 10 => {
           image = dom.document.getElementById("tomasprout").asInstanceOf[HTMLImageElement]
         }
-        case 11 =>{
+        case 11 => {
           image = dom.document.getElementById("tomamystery").asInstanceOf[HTMLImageElement]
         }
-        case 12 =>{
+        case 12 => {
           image = dom.document.getElementById("tomaskitters").asInstanceOf[HTMLImageElement]
         }
         case _ => {
@@ -94,9 +99,9 @@ object ProfilePage {
       context.drawImage(image, x, y)
       context.font = "30px Arial";
       context.fillText(t.name, x + 15, y);
-      
+
       x += 200
-      if(x > 1400){
+      if (x > 1400) {
         x = 50
         y += 200
       }
