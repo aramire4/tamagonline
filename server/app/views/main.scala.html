@@ -10,7 +10,21 @@
 	<link href="https://fonts.googleapis.com/css?family=Chewy|Open+Sans" rel="stylesheet">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
-  <body id="main-body">
+  <body>
+    <img src=@routes.Assets.versioned("images/Toma-hat.png") id="tomahat" style="display:none"></img>
+    <img src=@routes.Assets.versioned("images/Toma-flap.png") id="tomaflap" style="display:none"></img>
+    <img src=@routes.Assets.versioned("images/Tom-muscle.png") id="tomamuscle" style="display:none"></img>
+    <img src=@routes.Assets.versioned("images/Tom-mark-lewis.png") id="tomamark" style="display:none"></img>
+    <img src=@routes.Assets.versioned("images/toma-sad.png") id="tomasad" style="display:none"></img>
+    <img src=@routes.Assets.versioned("images/toma-stache.png") id="tomastache" style="display:none"></img>
+    <img src=@routes.Assets.versioned("images/Toma-gib.png") id="tomagib" style="display:none"></img>
+    <img src=@routes.Assets.versioned("images/Toma-gusta.png") id="tomagusta" style="display:none"></img>
+    <img src=@routes.Assets.versioned("images/Toma-hawk.png") id="tomahawk" style="display:none"></img>
+    <img src=@routes.Assets.versioned("images/Toma-sprout.png") id="tomasprout" style="display:none"></img>
+    <img src=@routes.Assets.versioned("images/toma-mystery.png") id="tomamystery" style="display:none"></img>
+    <img src=@routes.Assets.versioned("images/toma-skitters.png") id="tomaskitters" style="display:none"></img>
+   	<div id="main-body">
+   	</div>
    	@content
     @scalajs.html.scripts("csci3345-s19-client-project", routes.Assets.versioned(_).toString, name => getClass.getResource(s"/public/$name") != null)
   </body>
