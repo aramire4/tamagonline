@@ -54,7 +54,7 @@ hr {
 
 p {
 	color: #EDEDF4;
-	font-size: 26px;
+	font-size: 20px;
 }
 #topDivPush {
 	height: 200px;
@@ -145,11 +145,11 @@ input[type=text], input[type=password] {
 
 #window {
   position: fixed;
-  left: 20%;
-  right: 20%;
-  bottom: 20%;
-  top: 20%;
-  background-color: white;
+  left: 30%;
+  right: 30%;
+  bottom: 30%;
+  top: 30%;
+  background-color: #028090;
   border: solid 2px gray;
 }
 

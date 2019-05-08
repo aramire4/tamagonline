@@ -56,7 +56,7 @@ object Login {
 				<br> 
 			</form>
       <button type="button" class="button inline" id="login">Login</button>
-      <button type="button" class="button inline" id="create">Create New Account</button>
+      <button type="button" class="button inline" id="create">Create Account</button>
 		</div>
 	  </body>
   </span>"""
