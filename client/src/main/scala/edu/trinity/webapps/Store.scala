@@ -103,8 +103,6 @@ object Store {
     })
   }
 
-  //<canvas id="petCenter" width="1400" height="600"style="border: 3px solid"></canvas>
-
   val adoptStr = """
     <div id="window">
       <h3> Adopt Tamago </h3> <br>
@@ -155,13 +153,15 @@ object Store {
     </div>"""
 
   val str = """
-	<div class="topnav">
+	  <div class="topnav">
 			<a id="profile">Profile</a> 
 			<a id="store" class="active">Store</a> 
 			<a id="help">Help</a>
     </div>
+
 		<h2>Store</h2>
     <canvas id="petCenter" width="1400" height="600" style="border: 3px solid"></canvas> <br>
+    
     <div class="center">
       <button id="payLoanButt" class="button inline">Pay Off Loan</button>
       <button id="buyTamago" class="button inline">Adopt Tamago</button>

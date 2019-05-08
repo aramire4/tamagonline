@@ -13,7 +13,7 @@
 * {
 	background-color: #028090;
 	color: #13070C;
-	font-family: 'Work Sans', sans-serif;
+	font-family: 'Chewy', cursive;
 	text-align: left;
 	padding: 0;
 	margin: 0;
@@ -27,7 +27,7 @@ a {
 /* Styling for Headers */
 h1, h2, h3, h4, h5, h6 {
 	color: #EDEDF4;
-	font-family: 'Work Sans', sans-serif;
+	font-family: 'Chewy', cursive;
 	font-style: bold;
 	text-align: center;
 }
@@ -54,7 +54,8 @@ hr {
 
 p {
 	color: #EDEDF4;
-	font-size: 20px;
+	font-size: 26px;
+	font-family: 'Chewy', cursive;
 }
 #topDivPush {
 	height: 200px;
@@ -79,7 +80,9 @@ canvas {
 /* Input Boxes */
 input[type=text], input[type=password] {
 	text-align: center;
-	font-family: 'Work Sans', sans-serif;
+	
+    color: #EDEDF4;
+	font-family: 'Open Sans', sans-serif;
 	border: 2px solid;
 	border-radius: 2px;
 	border-color: #EDEDF4;
@@ -87,6 +90,7 @@ input[type=text], input[type=password] {
 	height: 30px;
 	padding: 5px 5px;
 	margin-left: 20px;
+	font-size: 20px;
 }
 
 /* Buttons */
@@ -122,6 +126,7 @@ input[type=text], input[type=password] {
 	text-decoration: none;
 	font-size: 17px;
 	background-color: #00A896;
+	font-family: 'Open Sans', sans-serif;
 }
 
 .topnav a:hover {
@@ -145,29 +150,12 @@ input[type=text], input[type=password] {
 
 #window {
   position: fixed;
-  left: 30%;
-  right: 30%;
-  bottom: 30%;
-  top: 30%;
+  left: 25%;
+  right: 25%;
+  bottom: 25%;
+  top: 25%;
   background-color: #028090;
-  border: solid 2px gray;
-}
-
-
-.stats {
-	text-align: right;
-	color: #EDEDF4;
-	font-family: 'Work Sans', sans-serif;
-	font-style: bold;
-	font-size: 20px;
-}
-
-.tomago {
-	text-align: left;
-	color: #EDEDF4;
-	font-family: 'Work Sans', sans-serif;
-	font-style: bold;
-	font-size: 20px;
+  padding: 20px;
 }
 
 .tomago:hover{
