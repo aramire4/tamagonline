@@ -19,7 +19,9 @@ object Frolic {
   def pageSetup(): Unit = {
     Player.clearData()
     $("#main-body").empty()
-    $("#main-body").append($("<div id=\"profile-page\"></div>"))
+    //$("#main-body").append($("<div id=\"profile-page\"></div>"))
+    $("#main-body").append($("<div id=\"Frolic\"></div>"))
+    $("#Frolic").append($(str))
     $("#profile").click(() => ProfilePage.pageSetup())
     $("#store").click(() => Store.pageSetup())
     $("#help").click(() => Help.pageSetup())
@@ -35,11 +37,12 @@ object Frolic {
     </div>
 
 		<h2>Frolic</h2>
-		<canvas id="petCenter" width="1400" height="600"
+		<canvas id="FrolicZone" width="1400" height="600"
 			style="border: 3px solid"></canvas>
 		<br>
-  <ul id="pets" class="center"> <h3> Tamago List </h3> </ul>
 	</body>
 </span>"""
 
+  
+  
 }
