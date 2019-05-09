@@ -15,6 +15,11 @@ import org.scalajs.dom.raw.HTMLImageElement
 //note to self - query stuff is a post/get, meaning you can keep sessions with that?!!??
 
 object Frolic {
+  var wsRoute = null //document.getElementById("ws-route");
+  var socket = null //new WebSocket(wsRoute.value.replace("http", "ws"));
+
+  var canvas = dom.document.getElementById("FrolicZone").asInstanceOf[dom.raw.HTMLCanvasElement]
+  var context = canvas.getContext("2d")
 
   def pageSetup(t: TamagoData): Unit = {
     Player.clearData()
@@ -25,6 +30,15 @@ object Frolic {
     $("#profile").click(() => ProfilePage.pageSetup())
     $("#store").click(() => Store.pageSetup())
     $("#help").click(() => Help.pageSetup())
+
+    wsRoute = document.getElementById("ws-route");
+    socket = new WebSocket(wsRoute.value.replace("http", "ws"));
+    
+    addTamago(t)
+  }
+
+  def addTamago(t: TamagoData): Unit = {
+
   }
 
   val str = """
@@ -37,12 +51,11 @@ object Frolic {
     </div>
 
 		<h2>Frolic</h2>
+	  <input type="hidden" id="ws-route" value="@routes.WebSocket.socket.absoluteURL()"></input>
 		<canvas id="FrolicZone" width="1400" height="600"
 			style="border: 3px solid"></canvas>
 		<br>
 	</body>
 </span>"""
 
-  
-  
 }
