@@ -17,25 +17,28 @@ object CurrentPet {
   var tamagoY = 0
   var img = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
   var moveTimer = 50
+  var pageActive = false
   
   def pageSetup(t: TamagoData): Unit = {
     $("#main-body").empty()
     $("#main-body").append($("<div id=\"CurrentPet\"></div>"))
     $("#CurrentPet").append($(str))
     $("#petName").text(t.name)
-    $("#profile").click(() => ProfilePage.pageSetup())
-    $("#store").click(() => Store.pageSetup())
-    $("#help").click(() => Help.pageSetup())
-    $("#battle").click(() => Battle.pageSetup(t))
-    $("#frolic").click(() => Frolic.pageSetup(t))
+    $("#profile").click(() => {pageActive = false ; ProfilePage.pageSetup()})
+    $("#store").click(() => { pageActive = false ; Store.pageSetup()})
+    $("#help").click(() => { pageActive = false ; Help.pageSetup()})
+    $("#battle").click(() => { pageActive = false; Battle.pageSetup(t)})
+    $("#frolic").click(() => { pageActive = false ; Frolic.pageSetup(t)})
     addPlayer()
     getTamago(t)
+    pageActive = true
   }
 
   js.timers.setInterval(50) {
+   if(pageActive) {
     drawImage();
     update();
-    
+   }
   }
 
   def drawImage(): Unit = {
