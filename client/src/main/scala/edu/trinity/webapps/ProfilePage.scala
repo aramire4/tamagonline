@@ -17,6 +17,7 @@ import org.scalajs.dom.raw.HTMLImageElement
 object ProfilePage {
 
   def pageSetup(): Unit = {
+    Player.clearData()
     $("#main-body").empty()
     $("#main-body").append($("<div id=\"profile-page\"></div>"))
     $("#profile-page").append($(str))
@@ -115,7 +116,7 @@ object ProfilePage {
     $.getJSON("/player", success = (o, s, j) => {
       val p = Json.parse(js.JSON.stringify(o)).as[PlayerData]
       Player.addData(p)
-      val playerPar = $(s"<p>${Player.username}, coins ${Player.coins}, debt: ${Player.debt}</p>")
+      val playerPar = $(s"<p>${Player.username}, coins ${Player.coins}, debt: ${Player.debt}, kills: ${Player.kills}, deaths: ${Player.deaths}</p>")
       $("#profile-page").append(playerPar)
     })
 

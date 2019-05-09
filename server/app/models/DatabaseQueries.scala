@@ -35,11 +35,24 @@ object DatabaseQueries {
     res
   }
 
+  def updateCoins(db:Database, amt:Int, pid:Int)(implicit ec:ExecutionContext) = {
+    val currentCoins = db.run {
+      (for (p <- Player; if p.id === pid) yield p.coins).result.head
+    }
+    currentCoins.map(c => {
+      val newCoins = c - amt
+      db.run {
+        val pc = (for (p <- Player; if p.id === pid) yield p.coins)
+        pc.update(newCoins)
+      }
+    })
+  }
+  
   def submitLoan(db: Database, amt: Int, pid: Int)(implicit ec: ExecutionContext): Future[Int] = {
-    val currentDebt = db.run {
+    val currentData = db.run {
       (for (p <- Player; if p.id === pid) yield (p.debt, p.coins)).result.head
     }
-    currentDebt.map(tup => {
+    currentData.map(tup => {
       val newDebt = tup._1 + ((amt * 1.40).ceil).toInt
       val newCoins = tup._2 + (amt)
       db.run {
@@ -106,7 +119,7 @@ object DatabaseQueries {
         case Some(_) => Future(None)
         case None => {
           val id = db.run {
-            val p = PlayerRow(0, uname, pword, 30, 30, 0, 0, 0, 0, 0)
+            val p = PlayerRow(0, uname, pword, tamagoCost, tamagoCost, 0, 0, 0, 0, 0)
             val id = (Player returning Player.map(_.id)) += p
             id
           }
@@ -116,18 +129,20 @@ object DatabaseQueries {
     })
   }
 
-  def newTamago(db: Database, pid: Int, name: String)(implicit ec: ExecutionContext): Future[Boolean] = {
+  def newTamago(db: Database, pid: Int, name: String)(implicit ec: ExecutionContext): Future[Option[TamagoData]] = {
     val coins = db.run {
       (for (p <- Player; if p.id === pid) yield p.coins).result.head
     }
-    coins.map(c => {
-      if (c < tamagoCost) false
+    coins.flatMap(c => {
+      if (c < tamagoCost) Future(None.asInstanceOf[Option[TamagoData]])
       else {
-        db.run {
-          Tamago += TamagoRow(0, name, 1, 10, 10, 10, 10, false, 1, true, true,
-            java.sql.Timestamp.valueOf(LocalDateTime.now()), 1+scala.util.Random.nextInt(12), 1, 0)
-        }
-        true
+          updateCoins(db, tamagoCost, pid)
+          val tid = db.run { (Tamago returning Tamago.map(_.id)) += TamagoRow(0, name, pid, 10, 10, 10, 10, false, 1, true, true,
+            java.sql.Timestamp.valueOf(LocalDateTime.now()), 1+scala.util.Random.nextInt(12), 1, 0) }
+          val tr = tid.flatMap(id => db.run {
+            (for (t <- Tamago; if t.id === id) yield t).result.head
+          })
+        tr.map(tr => Some(rowToData(tr)))
       }
     })
   }
