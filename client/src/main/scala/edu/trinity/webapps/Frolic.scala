@@ -16,7 +16,7 @@ import org.scalajs.dom.raw.HTMLImageElement
 
 object Frolic {
 
-  def pageSetup(): Unit = {
+  def pageSetup(t: TamagoData): Unit = {
     Player.clearData()
     $("#main-body").empty()
     $("#main-body").append($("<div id=\"profile-page\"></div>"))

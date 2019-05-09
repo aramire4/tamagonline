@@ -26,8 +26,8 @@ object CurrentPet {
     $("#profile").click(() => ProfilePage.pageSetup())
     $("#store").click(() => Store.pageSetup())
     $("#help").click(() => Help.pageSetup())
-    $("#battle").click(() => Battle.pageSetup())
-    $("#frolic").click(() => Frolic.pageSetup())
+    $("#battle").click(() => Battle.pageSetup(t))
+    $("#frolic").click(() => Frolic.pageSetup(t))
     addPlayer()
     getTamago(t)
   }
@@ -39,7 +39,7 @@ object CurrentPet {
   }
 
   def drawImage(): Unit = {
-    val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
+    val canvas = dom.document.getElementById("currentPet").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.drawImage(img, tamagoX, tamagoY)
@@ -73,7 +73,7 @@ object CurrentPet {
   }
 
   def getTamago(t: TamagoData): Unit = {
-    val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
+    val canvas = dom.document.getElementById("currentPet").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
     $.getJSON("/tamagos", success = (o, s, j) => {
       val stats = $(s"<p class='center'>Health: ${t.health}, Attack: ${t.attack}, Defense: ${t.defense}, Speed: ${t.speed}</p>")
@@ -85,7 +85,7 @@ object CurrentPet {
   }
 
   def showTamago(t: TamagoData): Unit = {
-    val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
+    val canvas = dom.document.getElementById("currentPet").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
     context.clearRect(0, 0, canvas.width, canvas.height);
     val r = scala.util.Random
@@ -152,18 +152,14 @@ object CurrentPet {
     <h2 id="petName"></h2>
     <p id ="petStats"> </p>
     <p id ="petInfo"> </p>
-		<canvas id="petCenter" width="1400" height="600"></canvas>
+		<canvas id="currentPet" width="1400" height="600"></canvas>
 		<br>
 		<br>
 		<div class="center">
       <button type="button" class="button inline" id="battle">Battle</button>
       <button type="button" class="button inline" id="frolic">Frolic</button>
-			<form action="train" method="get" class="center inline">
-				<input type="submit" value="Train" class="button"></input>
-			</form>
-			<form action="care" method="get" class="center inline">
-				<input type="submit" value="Care" class="button"></input>
-			</form>
+      <button type="button" class="button inline" id="care">Care</button>
+      <button type="button" class="button inline" id="train">Train</button>
 		</div>
 </span>
   """
