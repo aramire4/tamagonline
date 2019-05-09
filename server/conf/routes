@@ -12,10 +12,7 @@ GET        /playCenter					     edu.trinity.webapps.controllers.Application.play
 GET		   /help							 edu.trinity.webapps.controllers.Application.help
 GET		   /shop							 edu.trinity.webapps.controllers.Application.shop
 
-#Socket Stuff
-GET			/socket					    controllers.WebSocket.index
-GET			/gameSocket				    controllers.WebSocket.socket
-GET			/clear					    controllers.WebSocket.clear
+
 
 # DBController Functions
 GET		   /battle							 edu.trinity.webapps.controllers.DBController.battle
