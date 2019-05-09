@@ -119,7 +119,6 @@ object ProfilePage {
       val playerPar = $(s"<p>${Player.username}, coins ${Player.coins}, debt: ${Player.debt}, kills: ${Player.kills}, deaths: ${Player.deaths}</p>")
       $("#profile-page").append(playerPar)
     })
-
   }
 
   val str = """
