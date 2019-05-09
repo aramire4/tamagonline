@@ -28,6 +28,7 @@ object CurrentPet {
     $("#help").click(() => Help.pageSetup())
     $("#battle").click(() => Battle.pageSetup(t))
     $("#frolic").click(() => Frolic.pageSetup(t))
+    $("#train").click(() => Train.pageSetup(t))
     addPlayer()
     getTamago(t)
   }
