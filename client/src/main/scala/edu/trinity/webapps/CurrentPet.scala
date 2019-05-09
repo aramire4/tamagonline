@@ -81,9 +81,7 @@ object CurrentPet {
     val context = canvas.getContext("2d")
     $.getJSON("/tamagos", success = (o, s, j) => {
       val stats = $(s"<p class='center'>Health: ${t.health}, Attack: ${t.attack}, Defense: ${t.defense}, Speed: ${t.speed}</p>")
-      val info = $(s"<p class='center'>How Much dis Fucker Respect Me: ${t.respect}</p>")
       $("#petStats").append(stats)
-      //$("#petInfo").append(info)
     })
     showTamago(t)
   }
@@ -162,7 +160,6 @@ object CurrentPet {
 		<div class="center">
       <button type="button" class="button inline" id="battle">Battle</button>
       <button type="button" class="button inline" id="frolic">Frolic</button>
-      <button type="button" class="button inline" id="care">Care</button>
       <button type="button" class="button inline" id="train">Train</button>
 		</div>
 </span>

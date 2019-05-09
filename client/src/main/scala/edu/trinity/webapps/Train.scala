@@ -23,7 +23,6 @@ object Train {
     $("#trainAttack").click(() => openTrainAttack(t))
     $("#trainDefense").click(() => openTrainDefense(t))
     $("#trainSpeed").click(() => openTrainSpeed(t))
-    $("#backToProfile").click(() => ProfilePage.pageSetup)
   }
   
   //attack game homepage
@@ -639,11 +638,6 @@ object Train {
   
   //homepage html
   val str = """
-	<div class="topnav">
-			<a id="profile">Profile</a> 
-			<a id="store">Store</a>
-			<a id="help">Help</a>
-  </div>
   <h2 id="header">Train</h2>
     <div id="window" class="center">
       <button id="trainAttack" class="button" style="margin: 20px;">Train Attack</button>

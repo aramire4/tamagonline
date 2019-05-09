@@ -20,9 +20,6 @@ object Battle {
     Player.clearData()
     $("#main-body").empty()
     $("#main-body").append($(str))
-    $("#profile").click(() => ProfilePage.pageSetup())
-    $("#store").click(() => Store.pageSetup())
-    $("#help").click(() => Help.pageSetup())
     $("#toma-chad").click(() => fightNight.pageSetup(t, 1,"Toma-Chad"))
     $("#toma-mark").click(() => fightNight.pageSetup(t, 2,"Toma-Mark Lewis"))
     $("#toma-champ").click(() => fightNight.pageSetup(t, 3, "Toma-Champ"))
@@ -35,11 +32,6 @@ object Battle {
   val str = """
 <span>
 	<body>
-		<div class="topnav">
-			<a id="profile">Profile</a> 
-			<a id="store">Store</a> 
-			<a id="help">Help</a>
-    </div>
     <div id="topDivPush"></div>
 
 		<h2>CHOOSE YOUR OPPONENT</h2>
