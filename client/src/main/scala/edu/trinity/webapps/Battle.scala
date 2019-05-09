@@ -19,10 +19,17 @@ object Battle {
   def pageSetup(t: TamagoData): Unit = {
     Player.clearData()
     $("#main-body").empty()
-    $("#main-body").append($("<div id=\"profile-page\"></div>"))
+    $("#main-body").append($(str))
     $("#profile").click(() => ProfilePage.pageSetup())
     $("#store").click(() => Store.pageSetup())
     $("#help").click(() => Help.pageSetup())
+    $("#toma-chad").click(() => fightNight.pageSetup(t, 1,"Toma-Chad"))
+    $("#toma-mark").click(() => fightNight.pageSetup(t, 2,"Toma-Mark Lewis"))
+    $("#toma-champ").click(() => fightNight.pageSetup(t, 3, "Toma-Champ"))
+    $("#storeKeeper").click(() => fightNight.pageSetup(t, 4, "The Store Keeper"))
+    $("#LoanShark").click(() => fightNight.pageSetup(t, 5, "Loan Shark"))
+    
+        
   }
   
   val str = """
@@ -33,13 +40,17 @@ object Battle {
 			<a id="store">Store</a> 
 			<a id="help">Help</a>
     </div>
+    <div id="topDivPush"></div>
 
-		<h2>Profile</h2>
-		<p class = "center"> Below are all of your tamagos! Click on one to interact with it. </p>
-		<canvas id="petCenter" width="1400" height="600"
-			style="border: 3px solid"></canvas>
-		<br>
-  <ul id="pets" class="center"> <h3> Tamago List </h3> </ul>
+		<h2>CHOOSE YOUR OPPONENT</h2>
+
+		<ul class = "center">
+      <li id = "toma-chad"> toma-chad </li>
+      <li id = "toma-mark"> toma-mark </li>
+      <li id = "storeKeeper"> The Store Keeper </li>
+      <li id = "toma-champ"> Toma-Champ </li>
+      <li id = "LoanShark"> Loan Shark </li>
+    </ul>
 	</body>
 </span>"""
 
