@@ -116,8 +116,10 @@ object ProfilePage {
     $.getJSON("/player", success = (o, s, j) => {
       val p = Json.parse(js.JSON.stringify(o)).as[PlayerData]
       Player.addData(p)
-      val playerPar = $(s"<p>${Player.username}, coins ${Player.coins}, debt: ${Player.debt}, kills: ${Player.kills}, deaths: ${Player.deaths}</p>")
-      $("#profile-page").append(playerPar)
+      var playerHead = $(s"<h2>${Player.username}'s Profile</h2>")
+      val playerPar = $(s"<p class ='center'>Coins: ${Player.coins}, Debt: ${Player.debt}, Kills: ${Player.kills}, Deaths: ${Player.deaths}</p>")
+      $("#profHeader").append(playerHead)
+      $("#profHeader").append(playerPar)
     })
   }
 
@@ -130,12 +132,11 @@ object ProfilePage {
 			<a id="help">Help</a>
     </div>
 
-		<h2>Profile</h2>
-		<p class = "center"> Below are all of your tamagos! Click on one to interact with it. </p>
+		<div id="profHeader"></div>
 		<canvas id="petCenter" width="1400" height="600"
 			style="border: 3px solid"></canvas>
 		<br>
-  <ul id="pets" class="center"> <h3> Tamago List </h3> </ul>
+  <ul id="pets" class="center"> <h3> Tamago List (Click to Interact) </h3> </ul>
 	</body>
 </span>"""
 
