@@ -17,6 +17,8 @@ object Login {
     $("#login-page").append($(str))
     $("#login").click(() => checkLogin())
     $("#create").click(() => createPlayer())
+    $("#login-page").append($("<button id=\"kendra\">Game</button>"))
+    $("#kendra").click(() => Train.pageSetup())
   }
 
   def checkLogin(): Unit = {
