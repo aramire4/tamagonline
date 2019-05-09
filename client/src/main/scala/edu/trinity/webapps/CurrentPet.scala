@@ -23,7 +23,11 @@ object CurrentPet {
     $("#main-body").append($("<div id=\"CurrentPet\"></div>"))
     $("#CurrentPet").append($(str))
     $("#petName").text(t.name)
+    $("#profile").click(() => ProfilePage.pageSetup())
     $("#store").click(() => Store.pageSetup())
+    $("#help").click(() => Help.pageSetup())
+    $("#battle").click(() => Battle.pageSetup())
+    $("#frolic").click(() => Frolic.pageSetup())
     addPlayer()
     getTamago(t)
   }
@@ -72,8 +76,10 @@ object CurrentPet {
     val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
     $.getJSON("/tamagos", success = (o, s, j) => {
-      val tamaPar = $(s"<p>name: ${t.name}, age: ${t.age}, health: ${t.health}</p>")
-      $("#CurrentPet").append(tamaPar)
+      val stats = $(s"<p class='center'>Health: ${t.health}, Attack: ${t.attack}, Defense: ${t.defense}, Speed: ${t.speed}</p>")
+      val info = $(s"<p class='center'>How Much dis Fucker Respect Me: ${t.respect}</p>")
+      $("#petStats").append(stats)
+      $("#petInfo").append(info)
     })
     showTamago(t)
   }
@@ -137,28 +143,26 @@ object CurrentPet {
   val str = """
     <span>
 		<div class="topnav">
-			<a href="profile">Profile</a> 
-			<a href="playCenter" class="active">Current Pet</a> 
-			<a href="shop">Shop</a> 
-			<a href="help">Help</a>
+			<a id="profile">Profile</a> 
+			<a id="store">Store</a> 
+			<a id="help">Help</a>
+    </div>
 
 		</div>
     <h2 id="petName"></h2>
+    <p id ="petStats"> </p>
+    <p id ="petInfo"> </p>
 		<canvas id="petCenter" width="1400" height="600"></canvas>
 		<br>
 		<br>
 		<div class="center">
-			<form action="battle" method="get" class="center inline">
-				<input type="submit" value="Battle" class="button"></input>
-			</form>
+      <button type="button" class="button inline" id="battle">Battle</button>
+      <button type="button" class="button inline" id="frolic">Frolic</button>
 			<form action="train" method="get" class="center inline">
 				<input type="submit" value="Train" class="button"></input>
 			</form>
 			<form action="care" method="get" class="center inline">
 				<input type="submit" value="Care" class="button"></input>
-			</form>
-			<form action="frolic" method="get" class="center inline">
-				<input type="submit" value="Frolic" class="button"></input>
 			</form>
 		</div>
 </span>
