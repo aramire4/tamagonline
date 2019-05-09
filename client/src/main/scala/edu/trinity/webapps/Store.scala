@@ -134,7 +134,7 @@ object Store {
       <p>How much of your debt shall you repay? $<input type="text" id="payAmount"></input></p>
       
       <p id="totalCoins"></p>
-      <p id="totalDebt"></p>
+      <p id="totalDebt"></p>  
       <br>
 
       <div class ="center">

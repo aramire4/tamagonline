@@ -29,6 +29,7 @@ object CurrentPet {
     $("#help").click(() => { pageActive = false ; Help.pageSetup()})
     $("#battle").click(() => { pageActive = false; Battle.pageSetup(t)})
     $("#frolic").click(() => { pageActive = false ; Frolic.pageSetup(t)})
+    $("#train").click(() => Train.pageSetup(t))
     addPlayer()
     getTamago(t)
     pageActive = true
@@ -82,7 +83,7 @@ object CurrentPet {
       val stats = $(s"<p class='center'>Health: ${t.health}, Attack: ${t.attack}, Defense: ${t.defense}, Speed: ${t.speed}</p>")
       val info = $(s"<p class='center'>How Much dis Fucker Respect Me: ${t.respect}</p>")
       $("#petStats").append(stats)
-      $("#petInfo").append(info)
+      //$("#petInfo").append(info)
     })
     showTamago(t)
   }
