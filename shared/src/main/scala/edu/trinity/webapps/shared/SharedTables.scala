@@ -11,6 +11,9 @@ import java.text.SimpleDateFormat
 
 object SharedTables {
   
+  case class DisplayData(name:String, imageID:Int, x:Int, y:Int)
+  implicit val displayWrites = Json.writes[DisplayData]
+  implicit val displayReads = Json.reads[DisplayData]
   
   case class TamagoData(id:Int, name: String, attack: Int, defense: Int, 
       speed: Int, health: Int, 

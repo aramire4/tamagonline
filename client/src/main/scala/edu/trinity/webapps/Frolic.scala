@@ -13,6 +13,7 @@ import org.scalajs.dom.html.Canvas
 import org.scalajs.dom.raw.HTMLImageElement
 import org.scalajs.dom.raw.WebSocket
 import org.scalajs.dom.raw.KeyboardEvent
+import org.scalajs.dom.raw.Event
 
 //note to self - query stuff is a post/get, meaning you can keep sessions with that?!!??
 
@@ -31,16 +32,26 @@ object Frolic {
   def pageSetup(t: TamagoData): Unit = {
     Player.clearData()
     $("#main-body").empty()
-    //$("#main-body").append($("<div id=\"profile-page\"></div>"))
     $("#main-body").append($("<div id=\"Frolic\"></div>"))
     $("#Frolic").append($(str))
     $("#profile").click(() => ProfilePage.pageSetup())
     $("#store").click(() => Store.pageSetup())
     $("#help").click(() => Help.pageSetup())
-
-    //val wsRoute = dom.document.getElementById("ws-route");
-    //val socket = new WebSocket(wsRoute.value.replace("http", "ws"));
-    /*
+    
+    //Sockety cockety stuff
+    val wsRoute = dom.document.getElementById("ws-route").asInstanceOf[dom.raw.HTMLInputElement]
+    val socket = new WebSocket(wsRoute.value.replace("http", "ws"))
+    
+    val starterData = DisplayData(t.name, t.age, x, y)
+    def sendStartData(e:Event) = {
+      socket.send(Json.stringify(Json.toJson(starterData)))
+    }
+    socket.addEventListener("open", (e:Event) => {
+      socket.send(Json.stringify(Json.toJson(starterData)))
+    })
+    
+    
+    
     dom.window.onkeydown = (e: dom.KeyboardEvent) => {
       if (e.keyCode == 38) {
         //up
@@ -63,7 +74,6 @@ object Frolic {
         socket.send(x + ", " + y)
       }
     }
-		*/
     addTamago(t)
   }
   

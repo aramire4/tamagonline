@@ -8,9 +8,13 @@ class frolicGameActor(out: ActorRef, manager: ActorRef) extends Actor {
   import frolicGameActor._
 
   manager ! frolicManager.NewPlayer(self)
+  private var isSetup = false
 
   def receive = {
     case s: String => {
+      //if (isSetup)
+      println(s)  
+      //else 
       //println("receive Actor: " + s)
       manager ! frolicManager.NewMove(self, s)
     }

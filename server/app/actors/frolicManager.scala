@@ -4,16 +4,17 @@ import akka.actor.Actor
 import akka.actor.ActorRef
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Map
+import edu.trinity.webapps.shared.SharedTables._
 
-class frolicManager extends Actor{
+class frolicManager extends Actor {
   import frolicManager._
 
   var moves = List[String]()
-  var players = Map[ActorRef, (Int, Int)]()
+  var players = Map[ActorRef, (Int,Int)]()
 
   def receive = {
     case NewPlayer(np) => {
-      players += (np -> (400, 300));
+      //players += (np -> DisplayData();
       self ! Send
     }
 
