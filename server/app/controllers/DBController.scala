@@ -93,7 +93,13 @@ class DBController @Inject() (protected val dbConfigProvider: DatabaseConfigProv
   
   def updateCoins(amt:Int) = Action.async { implicit request =>
     request.session.get("pid").map { pid =>
-      DatabaseQueries.updateCoins(db, amt, pid.toInt).map(s => Ok)
+      DatabaseQueries.updateCoins(db, amt, pid.toInt).map(s => Ok(Json.toJson("")))
+    }.getOrElse(Future(Ok(views.html.disconnected())))
+  }
+  
+  def removeCoins(amt:Int) = Action.async { implicit request =>
+    request.session.get("pid").map { pid =>
+      DatabaseQueries.updateCoins(db, amt, pid.toInt).map(s => Ok(Json.toJson("")))
     }.getOrElse(Future(Ok(views.html.disconnected())))
   }
   
@@ -112,6 +118,18 @@ class DBController @Inject() (protected val dbConfigProvider: DatabaseConfigProv
    def updateDefense(tid:Int, amt:Int) = Action.async { implicit request => 
     request.session.get("pid").map{pid => 
       DatabaseQueries.updateDefense(db, pid.toInt, tid, amt).map(s => Ok(Json.toJson("")))
+    }.getOrElse(Future(Ok(views.html.disconnected())))
+  }
+   
+  def breakLegs(tid:Int) = Action.async { implicit request =>
+    request.session.get("pid").map{ pid =>
+      DatabaseQueries.breakLegs(db, pid.toInt, tid).map(b => Ok(Json.toJson(b)))
+    }.getOrElse(Future(Ok(views.html.disconnected())))
+  }
+  
+  def heal(tid:Int) = Action.async { implicit request =>
+    request.session.get("pid").map{ pid =>
+      DatabaseQueries.heal(db, pid.toInt, tid).map(b => Ok(Json.toJson(b)))
     }.getOrElse(Future(Ok(views.html.disconnected())))
   }
   

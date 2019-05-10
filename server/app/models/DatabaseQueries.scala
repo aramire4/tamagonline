@@ -8,6 +8,7 @@ import Tables._
 import scala.concurrent.ExecutionContext
 import edu.trinity.webapps.shared.SharedTables._
 import java.time.LocalDateTime
+import edu.trinity.webapps.shared.SharedTables
 
 object DatabaseQueries {
 
@@ -35,7 +36,7 @@ object DatabaseQueries {
     res
   }
 
-  def updateCoins(db:Database, amt:Int, pid:Int)(implicit ec:ExecutionContext) = {
+  def updateCoins(db:Database, amt:Int, pid:Int)(implicit ec:ExecutionContext):Future[Boolean] = {
     val currentCoins = db.run {
       (for (p <- Player; if p.id === pid) yield p.coins).result.head
     }
@@ -45,6 +46,21 @@ object DatabaseQueries {
         val pc = (for (p <- Player; if p.id === pid) yield p.coins)
         pc.update(newCoins)
       }
+      true
+    })
+  }
+  
+   def removeCoins(db:Database, amt:Int, pid:Int)(implicit ec:ExecutionContext):Future[Boolean] = {
+    val currentCoins = db.run {
+      (for (p <- Player; if p.id === pid) yield p.coins).result.head
+    }
+    currentCoins.map(c => {
+      val newCoins = c - amt
+      db.run {
+        val pc = (for (p <- Player; if p.id === pid) yield p.coins)
+        pc.update(newCoins)
+      }
+      true
     })
   }
   
@@ -175,7 +191,7 @@ object DatabaseQueries {
     coins.flatMap(c => {
       if (c < tamagoCost) Future(None.asInstanceOf[Option[TamagoData]])
       else {
-          updateCoins(db, tamagoCost, pid)
+          updateCoins(db, -tamagoCost, pid)
           val tid = db.run { (Tamago returning Tamago.map(_.id)) += TamagoRow(0, name, pid, 10, 10, 10, 10, false, 1, true, true,
             java.sql.Timestamp.valueOf(LocalDateTime.now()), 1+scala.util.Random.nextInt(12), 1, 0) }
           val tr = tid.flatMap(id => db.run {
@@ -183,6 +199,35 @@ object DatabaseQueries {
           })
         tr.map(tr => Some(rowToData(tr)))
       }
+    })
+  }
+  
+  def breakLegs(db:Database, pid:Int, tid:Int)(implicit ec:ExecutionContext):Future[Boolean] = {
+    val legStatus = db.run {
+      (for (t <- Tamago; if t.id === tid; if t.ownerid === pid) yield t.kneesbroken).result.head
+    }
+    legStatus.flatMap(b => {
+      val newB = !b
+      db.run {
+        val ls = (for (t <- Tamago; if t.id === tid) yield t.kneesbroken)
+        ls.update(newB)
+      }
+      Future(newB)
+    })
+  }
+  
+   def heal(db:Database, pid:Int, tid:Int)(implicit ec:ExecutionContext):Future[Boolean] = {
+    val health = db.run {
+      (for (t <- Tamago; if t.id === tid; if t.ownerid === pid) yield t.health).result.head
+    }
+    health.flatMap(h => {
+      val newH = h + SharedTables.healEffect
+      db.run {
+        val ls = (for (t <- Tamago; if t.id === tid) yield t.health)
+        ls.update(newH)
+      }
+      removeCoins(db, SharedTables.healCost, pid)
+      Future(true)
     })
   }
 

@@ -11,6 +11,10 @@ import java.text.SimpleDateFormat
 
 object SharedTables {
   
+  val kneeSurgeryCost = 100
+  val healEffect = 1
+  val healCost = 75
+  val debtThresh = 200
   
   case class TamagoData(id:Int, name: String, attack: Int, defense: Int, 
       speed: Int, health: Int, 
