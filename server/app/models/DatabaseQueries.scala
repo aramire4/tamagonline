@@ -40,10 +40,49 @@ object DatabaseQueries {
       (for (p <- Player; if p.id === pid) yield p.coins).result.head
     }
     currentCoins.map(c => {
-      val newCoins = c - amt
+      val newCoins = c + amt
       db.run {
         val pc = (for (p <- Player; if p.id === pid) yield p.coins)
         pc.update(newCoins)
+      }
+    })
+  }
+  
+  def updateAttack(db:Database, pid:Int, tid:Int, amt:Int)(implicit ec:ExecutionContext) = {
+    val currentAtk = db.run {
+      (for (t <- Tamago; if t.id === tid && t.ownerid === pid) yield t.attack).result.head
+    }
+    currentAtk.map(a => {
+      val newAtk = a + amt
+      db.run {
+        val pc = (for (t <- Tamago; if t.id === tid) yield t.attack)
+        pc.update(newAtk)
+      }
+    })
+  }
+  
+   def updateSpeed(db:Database, pid:Int, tid:Int, amt:Int)(implicit ec:ExecutionContext) = {
+    val currentSpd = db.run {
+      (for (t <- Tamago; if t.id === tid && t.ownerid === pid) yield t.speed).result.head
+    }
+    currentSpd.map(a => {
+      val newSpd = a + amt
+      db.run {
+        val pc = (for (t <- Tamago; if t.id === tid) yield t.speed)
+        pc.update(newSpd)
+      }
+    })
+  }
+   
+   def updateDefense(db:Database, pid:Int, tid:Int, amt:Int)(implicit ec:ExecutionContext) = {
+    val currentDef = db.run {
+      (for (t <- Tamago; if t.id === tid && t.ownerid === pid) yield t.defense).result.head
+    }
+    currentDef.map(a => {
+      val newDef = a + amt
+      db.run {
+        val pc = (for (t <- Tamago; if t.id === tid) yield t.defense)
+        pc.update(newDef)
       }
     })
   }
