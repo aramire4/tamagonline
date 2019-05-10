@@ -70,8 +70,10 @@ object Train {
   
   var intervalCount = 1
   
+  var canJump = true
+  
   dom.window.onkeydown = (e: dom.KeyboardEvent) => {
-	    if ((e.keyCode == 32) && (playAttack == true)) {  
+	    if ((e.keyCode == 32) && (playAttack == true) && (canJump == true)) {  
         space = true
 	      up = true
 	    }
@@ -234,7 +236,9 @@ object Train {
   	  
   	  //tamago
 	    showTamago(t, 50, tamaY)
-  	  if (space == true && up == true && tamaY <= 675 && tamaY > 575) { tamaY -= 1 } 
+  	  if (space == true && up == true && tamaY <= 675 && tamaY > 575) { 
+  	    tamaY -= 1 
+  	  } 
     	else if (tamaY == 575) {
     		up = false
     		tamaY += 1
@@ -244,6 +248,9 @@ object Train {
     		tamaY = 675
   		  space = false
   	  }	
+	    
+	    if (tamaY > 670) { canJump = true }
+	    else canJump = false 
   	  
   	  //obstacle one
   	  ctx.beginPath
@@ -302,11 +309,11 @@ object Train {
   var dObsOneXTwo = r.nextInt(rMax-rMin)+rMin
   var dObsOneDead = false
   
-  var dObsTwoY = -30.0
+  var dObsTwoY = -100.0
   var dObsTwoXTwo = r.nextInt(rMax-rMin)+rMin
   var dObsTwoDead = false
   
-  var dObsThreeY = -50.0
+  var dObsThreeY = -150.0
   var dObsThreeXTwo = r.nextInt(rMax-rMin)+rMin
   var dObsThreeDead = false
   
@@ -324,9 +331,9 @@ object Train {
     dObsOneDead = false
     dObsOneY = -10.0
     dObsTwoDead = false
-    dObsTwoY = -30.0
+    dObsTwoY = -100.0
     dObsThreeDead = false
-    dObsThreeY = -50.0
+    dObsThreeY = -150.0
     dom.window.setInterval(() => defense(t), 3)
   }
   
