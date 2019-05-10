@@ -648,11 +648,14 @@ object Train {
   val str = """
   <h2 id="header">Train</h2>
     <div id="window" class="center">
+      <div class="smallTop"> </div>
       <h3> Select a Stat to Train </h3> <br>
       
-      <button id="trainAttack" class="button">Train Attack</button> <br> <br>
-      <button id="trainDefense" class="button">Train Defense</button> <br> <br>
-      <button id="trainSpeed" class="button">Train Speed</button> <br> <br>
+      <div class="center">
+        <button id="trainAttack" class="button inline">Train Attack</button>
+        <button id="trainDefense" class="button inline">Train Defense</button>
+        <button id="trainSpeed" class="button inline">Train Speed</button>
+      </div> <br>
       <button id="backToPet" class="button">Back to Profile</button>
     </div>
 	<br>
@@ -702,8 +705,8 @@ object Train {
   
   val gameOverStr = """
     <div id="window" class="center">
-    <h3>Game Over</h3>
-    <p id="gameOver" class="center"></p>
+    <div class="smallTop"> </div>
+    <h3>Game Over</h3> <br>
 
     <div class="center">
       <button id="play" class="button inline">Play Again</button>

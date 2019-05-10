@@ -24,11 +24,11 @@ object CurrentPet {
     $("#main-body").append($("<div id=\"CurrentPet\"></div>"))
     $("#CurrentPet").append($(str))
     $("#petName").text(t.name)
-    $("#profile").click(() => {pageActive = false ; ProfilePage.pageSetup()})
-    $("#store").click(() => { pageActive = false ; Store.pageSetup()})
-    $("#help").click(() => { pageActive = false ; Help.pageSetup()})
+    $("#profile").click(() => {pageActive = false; ProfilePage.pageSetup()})
+    $("#store").click(() => { pageActive = false; Store.pageSetup()})
+    $("#help").click(() => { pageActive = false; Help.pageSetup()})
     $("#battle").click(() => { pageActive = false; Battle.pageSetup(t)})
-    $("#frolic").click(() => { pageActive = false ; Frolic.pageSetup(t)})
+    $("#frolic").click(() => { pageActive = false; Frolic.pageSetup(t)})
     $("#train").click(() => Train.pageSetup(t))
     addPlayer()
     getTamago(t)
@@ -53,16 +53,16 @@ object CurrentPet {
     val r = scala.util.Random
     val num = r.nextInt(4)+1
     if(num == 1){
-      if(tamagoX < 1300)tamagoX += 5
+      if(tamagoX < 1300)tamagoX += 10
     }
     else if(num == 2){
-      if(tamagoX > 50)tamagoX -= 5
+      if(tamagoX > 50)tamagoX -= 10
     }
     else if(num == 3){
-      if(tamagoY < 500)tamagoY += 5
+      if(tamagoY < 500)tamagoY += 10
     }
     else{
-      if(tamagoY > 50)tamagoY -= 5
+      if(tamagoY > 50)tamagoY -= 10
     }
   }
 

@@ -25,7 +25,7 @@ object Battle {
     $("#toma-champ").click(() => fightNight.pageSetup(t, 3, "Toma-Champ"))
     $("#storeKeeper").click(() => fightNight.pageSetup(t, 4, "The Store Keeper"))
     $("#LoanShark").click(() => fightNight.pageSetup(t, 5, "Loan Shark"))
-    
+    $("#backToPet").click(() => CurrentPet.pageSetup(t))
         
   }
   
@@ -42,7 +42,8 @@ object Battle {
       <li id = "storeKeeper"> The Store Keeper </li>
       <li id = "toma-champ"> Toma-Champ </li>
       <li id = "LoanShark"> Loan Shark </li>
-    </ul>
+    </ul> <br>
+    <button id="backToPet" class="button center">Back to Profile</button>
 	</body>
 </span>"""
 

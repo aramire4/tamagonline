@@ -66,13 +66,17 @@ object Store {
           Player.coins -= amt.toInt
           $("#totalDebt").text("Total debt: " + Player.debt)
           $("#totalCoins").text("Total coins: " + Player.coins)
-          $("#window").append {
-            s"<p>Congrats, you've paid off ${amt.toInt} coins.</p>"
-          }
-          $("#window").append($(s"<p>${amt} coins have been removed from your account.</p>"))
-        } else $("#window").append($("<p> You don't have enough money for that!</p>"))
+          $("#payMssg").replaceWith($(s"<p>Congrats, you've paid off ${amt.toInt} coins.</p>"))
+          $("#amntPaid").replaceWith($(s"<p>${amt} coins have been removed from your account.</p>"))
+        } else {
+          $("#payMssg").replaceWith($("<p> You don't have enough money for that!</p>"))
+          $("#amntPaid").replaceWith($(s"<p></p>"))
+        }
       })
-    } else $("#window").append("<p>Give me a positive integer value or get lost!</p>")
+    } else {
+      $("#payMssg").replaceWith("<p>Give me a positive integer value or get lost!</p>")
+      $("#amntPaid").replaceWith($(s"<p></p>"))
+    }
     $("#payAmount").value("")
   }
 
@@ -85,28 +89,35 @@ object Store {
         Player.coins += amt.toInt
         $("#totalDebt").text("Total debt: " + Player.debt)
         $("#totalCoins").text("Total coins: " + Player.coins)
-        $("#window").append {
-          s"<p>Congrats, you now owe me ${(amt.toInt * 1.40).ceil.toInt} coins (40% interest rate).</p>"
-        }
-        $("#window").append($(s"<p>${amt} coins have been added to you account.</p>"))
+        $("#amntOwed").replaceWith($(s"<p>Congrats, you now owe me ${(amt.toInt * 1.40).ceil.toInt} coins (40% interest rate).</p>"))
+        $("#amntAdded").replaceWith($(s"<p>${amt} coins have been added to you account.</p>"))
       })
-    } else $("#window").append("<p>Give me a positive integer value or get lost!</p>")
+    } else {
+      $("#amntOwed").replaceWith("<p>Give me a positive integer value or get lost!</p>")
+      $("#amntAdded").replaceWith($(s"<p></p>"))
+    }
     $("#loanAmount").value("")
   }
 
   def submitAdopt(): Unit = {
-    if (Player.numberOfTamagos > 18) $("#window").append($("<p>You own too many tamagos already! Try getting one killed  :p</p>"))
+    if (Player.numberOfTamagos >= 18) {
+      $("#succAdopt").replaceWith($("<p>You own too many tamagos already! Try getting one killed.</p>"))
+      $("#costAdopt").replaceWith($("<p></p>"))
+    }
     else {
       val name = $("#tamagoName").value()
       $.getJSON("/newTamago/" + name.trim(), success = (o, s, j) => {
         val isValid = Json.parse(js.JSON.stringify(o)).as[Option[TamagoData]]
         isValid match {
           case Some(td) => {
-            $("#window").append($("<p>Congrats on your new baby.</p>"))
-            $("#window").append($(s"<p>${tamagoCost} coins have been removed from you account</p>"))
+            $("#succAdopt").replaceWith($("<p>Congrats on your new baby.</p>"))
+            $("#costAdopt").replaceWith($(s"<p>${tamagoCost} coins have been removed from you account</p>"))
             Player.tamagos ::= td
           }
-          case None => $("#window").append($("<p>You're too poor to buy a tamago! Try getting a loan :)</p>"))
+          case None => {
+            $("#succAdopt").replaceWith($("<p>You're too poor to buy a tamago! Try getting a loan!</p>"))
+            $("#costAdopt").replaceWith($("<p></p>"))
+          }
         }
       })
     }
@@ -123,6 +134,8 @@ object Store {
         <button type="button" class="button inline" id="submitAdopt">Confirm Adoption</button>
         <button id="closeWindow" class="button inline">Close</button>
       </div>
+      <p id="succAdopt"></p>
+      <p id="costAdopt"></p>
     </div>"""
 
   val payLoanStr = """
@@ -141,6 +154,8 @@ object Store {
         <button type="button" class="button inline" id="submitLoan">Confirm Payment</button>
         <button id="closeWindow" class="button inline">Close</button>
       </div>
+      <p id="payMssg"></p>
+      <p id="amntPaid"></p>
     </div>"""
 
   val loanStr = """
@@ -159,6 +174,9 @@ object Store {
         <button type="button" id="submitLoan" class="button inline">Confirm Loan</button>
         <button id="closeWindow" class="button inline">Close</button>
       </div>
+
+       <p id="amntOwed"></p>
+      <p id="amntAdded"></p>
     </div>"""
 
   val str = """
