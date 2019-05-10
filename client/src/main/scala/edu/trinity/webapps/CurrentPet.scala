@@ -195,17 +195,23 @@ object CurrentPet {
   }
 
   val healStr = s"""<div id="window" class="center">
-      <h3> Heal Your Tamago </h3> <br>
-      <p>Fix up your broken pet!</p>
+      <div class="smallTop"> </div>
+      <h3> Heal Your Tamago </h3>
+      <p class="center">Fix up your broken pet!</p>
       <br>
-
       <div class ="center">
-        <p><button type="button" id="health" class="button">Health</button> Cost:${shared.SharedTables.healCost}, heals your tamago by ${shared.SharedTables.healEffect}</p> 
-        <p><button type="button" id="knee" class="button">Knee Surgery</button> Cost:${shared.SharedTables.kneeSurgeryCost}, repair your tamago's poor broken little knees :'( </p>
-        <button id="closeWindow" class="button inline">Close</button>
+        <button type="button" id="health" class="button inline left center">Health</button> 
+        <p class ="inline half right center"> Cost:${shared.SharedTables.healCost}, Heals your tamago by ${shared.SharedTables.healEffect}</p> 
       </div>
-      
-       <p id="msg1"></p>
+      <br><br>
+      <div class ="center">
+        <button type="button" id="knee" class="button inline left center">Knee Surgery</button> 
+        <p class ="inline half right center">Cost:${shared.SharedTables.kneeSurgeryCost}, Repair your tamago's broken knees</p>
+      </div>
+      <br> <br> <br>
+      <button id="closeWindow" class="button">Close</button>      
+
+      <p id="msg1"></p>
       <p id="msg2"></p>
       <p id="msg3"></p>
     </div>"""

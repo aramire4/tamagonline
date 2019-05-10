@@ -143,8 +143,7 @@ object Store {
     <div id="window">
       <h3> Pay Off Loan </h3> <br>
       <p>Finally ready to pay me back, eh?</p>
-      <p>I'm the loan shark, fucc wit me and I'll break your legs!</p>
-      <p>Hopefully load a loan shark img inside here.</p>
+      <p>I'm the loan shark, mess wit me and I'll break your legs!</p>
       <p>How much of your debt shall you repay? $<input type="text" id="payAmount"></input></p>
       
       <p id="totalCoins"></p>
@@ -163,8 +162,7 @@ object Store {
     <div id="window" class="center">
       <h3> Get Loan </h3> <br>
       <p>Need some money, eh? Well you've come to the right place.</p>
-      <p>I'm the loan shark, fucc wit me and I'll break your legs!</p>
-      <p>Hopefully load a loan shark img inside here.</p> <br>
+      <p>I'm the loan shark, mess wit me and I'll break your legs!</p>
       <p>How many coins shall I loan you? $<input type="text" id="loanAmount"></input></p>
       
       <p id="totalCoins"></p>
