@@ -25,6 +25,7 @@ object fightNight {
 
   var playerHealth = 10.0
   var enemyHealth = 100.0
+  val maxEnemyHealth = enemyHealth
 
   var playerAtt = 10.0
   var playerDef = 10.0
@@ -44,6 +45,8 @@ object fightNight {
 
   var playerBullets = ArrayBuffer[Bullet]()
   var enemyBullets = ArrayBuffer[Bullet]()
+  
+  var gameState = 0
 
   def pageSetup(t: TamagoData, o: Int, enemyName: String): Unit = {
     $("#main-body").empty()
@@ -172,17 +175,27 @@ object fightNight {
       context.stroke()
       context.fill()
     })
-    context.fillStyle = "#0000FF"
-    context.fillRect(0, 0, 10, playerHealth)
+    context.fillStyle = "#FF0000" //red
+    context.fillRect(0,0, width/2,40)
+    context.fillStyle = "#32CD32" //green
+    context.fillRect(0, 0, (playerHealth/maxPlayerHealth) * (width/2), 40)
     
+    context.fillStyle = "#32CD32"
+    context.fillRect(width/2, 0, (width/2) , 40)
     context.fillStyle = "#FF0000"
-    context.fillRect(width-500, 0, 10, enemyHealth)
+    context.fillRect(width/2,0, (1- (enemyHealth/maxEnemyHealth)) * (width/2),40)
+    
+    context.fillStyle = "#000000"
+    context.fillRect(width/2, 0, 10,40)
   }
-
+  val maxPlayerHealth = playerHealth
   js.timers.setInterval(50) {
-    if (playerHealth > 0 && enemyHealth > 0) {
+    
+    gameState = 0
+    
+    if (playerHealth > -1&& enemyHealth > -1) {
       draw(dom.document.getElementById("fightNight").asInstanceOf[dom.raw.HTMLCanvasElement])
-
+      
       dom.window.onkeydown = (e: dom.KeyboardEvent) => {
         if (e.keyCode == 38) {
           //up
@@ -319,15 +332,41 @@ object fightNight {
 
     new Bullet(xp, yp, xv, yv, true, false)
   }
+  
+  def openWinWindow(t:TamagoData):Unit = {
+    $("#main-body").append($("<div id=\"page-mask\"></div>"))
+    $("#main-body").append($(winWindowStr))
+    $("#wonCoins").text(s"${(playerHealth/maxPlayerHealth).toInt + 50}")
+    $("#fightAgain").click(() => Battle.pageSetup(t))
+    $("#Quit").click(() => ProfilePage.pageSetup())
+  }
+  
+  def closeWindow(): Unit = {
+    $("#window").remove()
+    $("#page-mask").remove()
+  
+  }
 
   val str = """
     <span>
-                 
+  
+      
     <div id = "versus"> </div>
 		<canvas id="fightNight" width="1400" height="600"></canvas>
 		<br>
 		<br>
 	
 </span>
+  """
+  val winWindowStr = """
+  <div id = "window" class = "center">
+  <h3> YOU WON </h3>
+  <p> Congratulations on proving that you are worth more than worthless scum. </p>
+  <p> Here is your reward: </p>
+  <p id = "wonCoins"></p>
+  <br>
+  <div class = "center">
+  <button type = "button" id = "fightAgain" class = "button inline">Fight Again</button>
+  <button type = "button" id = "Quit" class = "button inline">Quit</button>
   """
 }
