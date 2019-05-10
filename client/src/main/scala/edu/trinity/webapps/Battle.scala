@@ -17,7 +17,6 @@ import org.scalajs.dom.raw.HTMLImageElement
 object Battle {
 
   def pageSetup(t: TamagoData): Unit = {
-    Player.clearData()
     $("#main-body").empty()
     $("#main-body").append($(str))
     $("#toma-chad").click(() => fightNight.pageSetup(t, 1,"Toma-Chad"))
