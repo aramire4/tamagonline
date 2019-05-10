@@ -34,7 +34,7 @@ object Battle {
 	<body>
     <div id="topDivPush"></div>
 
-		<h2>CHOOSE YOUR OPPONENT</h2>
+		<h2>Choose Your Opponent</h2>
 
 		<ul class = "center">
       <li id = "toma-chad"> toma-chad </li>

@@ -57,11 +57,16 @@ p {
 	font-size: 26px;
 	font-family: 'Chewy', cursive;
 }
+
 #topDivPush {
 	height: 200px;
 	width: 100%;
 }
 
+.smallTop {
+	height: 100px;
+	width: 100%;
+}
 ul {
 	padding-left: 0; 
 	text-align:center; 
