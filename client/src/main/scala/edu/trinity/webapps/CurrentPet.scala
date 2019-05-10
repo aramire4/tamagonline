@@ -28,7 +28,6 @@ object CurrentPet {
     $("#store").click(() => { pageActive = false; Store.pageSetup() })
     $("#help").click(() => { pageActive = false; Help.pageSetup() })
     $("#battle").click(() => { pageActive = false; Battle.pageSetup(t) })
-    $("#frolic").click(() => { pageActive = false; Frolic.pageSetup(t) })
     $("#train").click(() => { pageActive = false; Train.pageSetup(t) })
     $("#heal").click(() => healPage(t))
     $("#logout").click(() => Login.pageSetup())
@@ -235,7 +234,6 @@ object CurrentPet {
 		<br>
 		<div class="center">
       <button type="button" class="button inline" id="battle">Battle</button>
-      <button type="button" class="button inline" id="frolic">Frolic</button>
       <button type="button" class="button inline" id="train">Train</button>
       <button type="button" class="button inline" id="heal">Heal</button>
 		</div>
