@@ -12,6 +12,9 @@ import edu.trinity.webapps.shared.SharedTables._
 import org.scalajs.dom.html.Canvas
 import org.scalajs.dom.raw.HTMLImageElement
 
+import scala.collection.mutable.ArrayBuffer
+import scala.math._
+
 object fightNight {
   var plyImg = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
   var enemyImg = plyImg
@@ -19,14 +22,28 @@ object fightNight {
   var playLocY = 0.0
   var eneLocX = 0.0
   var eneLocY = 0.0
+
   var playerHealth = 10.0
   var enemyHealth = 100.0
+
   var playerAtt = 10.0
   var playerDef = 10.0
   var playerSpeed = 10.0
-  
+
+  var enemyAtt = 10.0
+  var enemyDef = 10.0
+  var enemySpeed = 10.0
+
+  var playerBulletSpeed = 10.0
+  var enemyBulletSpeed = 10.0
+
+  var timer = 30.0
+
   var width = 0
   var height = 0
+
+  var playerBullets = ArrayBuffer[Bullet]()
+  var enemyBullets = ArrayBuffer[Bullet]()
 
   def pageSetup(t: TamagoData, o: Int, enemyName: String): Unit = {
     $("#main-body").empty()
@@ -36,7 +53,9 @@ object fightNight {
     playerHealth = t.health
     playerAtt = t.attack
     playerDef = t.defense
-    playerSpeed = t.speed
+    playerSpeed = 5 + t.speed * .2
+    if (t.kneesbroken) playerSpeed = playerSpeed / 2
+
     val canvas = dom.document.getElementById("fightNight").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
     width = canvas.width
@@ -45,6 +64,7 @@ object fightNight {
     playLocY = canvas.height / 2
     eneLocX = canvas.width / 2 + 300
     eneLocY = canvas.height / 2
+    playerBulletSpeed = 7 + (playerSpeed * .1)
     setTamago(t)
     setEnemy(o)
 
@@ -99,18 +119,33 @@ object fightNight {
     o match {
       case 1 => {
         enemyImg = dom.document.getElementById("tamaChad").asInstanceOf[HTMLImageElement]
+        enemyAtt = 10.0
+        enemyDef = 2.0
+        enemySpeed = 5.0
       }
       case 2 => {
         enemyImg = dom.document.getElementById("tomamark").asInstanceOf[HTMLImageElement]
+        enemyAtt = 8.0
+        enemyDef = 4.0
+        enemySpeed = 20.0
       }
       case 3 => {
         enemyImg = dom.document.getElementById("tamaChamp").asInstanceOf[HTMLImageElement]
+        enemyAtt = 10.0
+        enemyDef = 10.0
+        enemySpeed = 10.0
       }
       case 4 => {
         enemyImg = dom.document.getElementById("StoreKeep").asInstanceOf[HTMLImageElement]
+        enemyAtt = 2.0
+        enemyDef = 1.0
+        enemySpeed = 5.0
       }
       case 5 => {
         enemyImg = dom.document.getElementById("loanShark").asInstanceOf[HTMLImageElement]
+        enemyAtt = 12.0
+        enemyDef = 5.0
+        enemySpeed = 15.0
       }
     }
 
@@ -121,69 +156,170 @@ object fightNight {
     context.clearRect(0, 0, canvas.width, canvas.height)
     context.drawImage(plyImg, playLocX, playLocY)
     context.drawImage(enemyImg, eneLocX, eneLocY)
+
+    playerBullets.foreach(bull => {
+      context.fillStyle = "#0000FF"
+      context.beginPath();
+      context.arc(bull.xPos, bull.yPos, 5, 0, 2 * math.Pi)
+      context.stroke()
+      context.fill()
+    })
+
+    enemyBullets.foreach(bull => {
+      context.fillStyle = "#FF0000"
+      context.beginPath();
+      context.arc(bull.xPos, bull.yPos, 5, 0, 2 * math.Pi)
+      context.stroke()
+      context.fill()
+    })
+    context.fillStyle = "#0000FF"
+    context.fillRect(0, 0, 10, playerHealth)
+    
+    context.fillStyle = "#FF0000"
+    context.fillRect(width-500, 0, 10, enemyHealth)
   }
 
   js.timers.setInterval(50) {
-    if (playerHealth > 0) {
+    if (playerHealth > 0 && enemyHealth > 0) {
       draw(dom.document.getElementById("fightNight").asInstanceOf[dom.raw.HTMLCanvasElement])
-      update()
-      
+
       dom.window.onkeydown = (e: dom.KeyboardEvent) => {
         if (e.keyCode == 38) {
           //up
-          playLocY -= (2 + (playerSpeed * .1))
+          if (checkBounds(playLocX, playLocY - playerSpeed))
+            playLocY -= playerSpeed
           //println("up")
         }
         if (e.keyCode == 40) {
           //down
-          playLocY += (2 + (playerSpeed * .1))
+          if (checkBounds(playLocX, playLocY + playerSpeed + 128))
+            playLocY += playerSpeed
           //println("down")
         }
         if (e.keyCode == 37) {
           //left
-          playLocX -= (2 + (playerSpeed * .1))
+          if (checkBounds(playLocX - playerSpeed, playLocY))
+            playLocX -= playerSpeed
           //println("left")
         }
         if (e.keyCode == 39) {
           //right
-          playLocX += (2 + (playerSpeed * .1))
+          if (checkBounds(playLocX + playerSpeed + 128, playLocY))
+            playLocX += playerSpeed
           //println("right")
         }
-        if(e.keyCode == 87){
+        if (e.keyCode == 87 && timer < 0) {
           //W shoot up
-        
+          makeBullet(playLocX + 64, playLocY + 64, 0, -playerBulletSpeed, true)
+          timer = 30.0
         }
-        if(e.keyCode == 83){
+        if (e.keyCode == 83 && timer < 0) {
           //S shoot down
-          
+          makeBullet(playLocX + 64, playLocY + 64, 0, playerBulletSpeed, true)
+          timer = 30.0
         }
-        if(e.keyCode == 65){
+        if (e.keyCode == 65 && timer < 0) {
           //A shoot left
-          
+          makeBullet(playLocX + 64, playLocY + 64, -playerBulletSpeed, 0, true)
+          timer = 30.0
         }
-        if(e.keyCode == 68){
+        if (e.keyCode == 68 && timer < 0) {
           //D shoot right
-          
+          makeBullet(playLocX + 64, playLocY + 64, playerBulletSpeed, 0, true)
+          timer = 30.0
         }
       }
-      
+
+      updateBullets()
+      val r = scala.util.Random
+      if (r.nextInt(100) + 1 < 10 + enemySpeed) {
+        var dir = r.nextInt(4) + 1
+        if (dir == 1) makeBullet(eneLocX + 64, eneLocY + 64, enemyBulletSpeed, 0, false)
+        else if (dir == 2) makeBullet(eneLocX + 64, eneLocY + 64, -enemyBulletSpeed, 0, false)
+        else if (dir == 3) makeBullet(eneLocX + 64, eneLocY + 64, 0, enemyBulletSpeed, false)
+        else makeBullet(eneLocX + 64, eneLocY + 64, 0, -enemyBulletSpeed, false)
+      }
+
+      val num = r.nextInt(4) + 1
+      if (num == 1) {
+        if (eneLocX < 1300) eneLocX += enemySpeed
+      } else if (num == 2) {
+        if (eneLocX > 50) eneLocX -= enemySpeed
+      } else if (num == 3) {
+        if (eneLocY < 500) eneLocY += enemySpeed
+      } else {
+        if (eneLocY > 50) eneLocY -= enemySpeed
+      }
+
+      timer -= playerSpeed
     }
 
   }
 
-  def update() {
+  def updateBullets() {
+    playerBullets.foreach(bull => {
+      bull.xPos += bull.xVel
+      bull.yPos += bull.yVel
+      bull.isActive = checkBounds(bull.xPos, bull.yPos)
+      if (!bull.isActive) { playerBullets -= bull }
+      bull.intersects = collisionHandler(bull, eneLocX, eneLocY)
+      if (bull.intersects) {
+        playerBullets -= bull
+        enemyHealth -= (playerAtt / (enemyDef / 2))
+        println("enemy " + enemyHealth)
+      }
+    })
 
+    enemyBullets.foreach(bull => {
+      bull.xPos += bull.xVel
+      bull.yPos += bull.yVel
+      bull.isActive = checkBounds(bull.xPos, bull.yPos)
+      if (!bull.isActive) { enemyBullets -= bull }
+      bull.intersects = collisionHandler(bull, playLocX, playLocY)
+      if (bull.intersects) {
+        enemyBullets -= bull
+        playerHealth -= (enemyAtt / (playerDef / 2))
+        println("player " + playerHealth)
+      }
+    })
   }
-  
-  def checkBounds(posX:Float, posY:Float):Boolean={
+  //true == player false == enemy
+  def checkBounds(posX: Double, posY: Double): Boolean = {
     return (posX >= 0 && posX <= width && posY >= 0 && posY <= height)
   }
-  
-  def collisionHandler(){
-    
+
+  def collisionHandler(bull: Bullet, xEne: Double, yEne: Double): Boolean = {
+    if (bull.xPos >= xEne &&
+      bull.xPos <= xEne + 128 &&
+      bull.yPos >= yEne &&
+      bull.yPos <= yEne + 128) {
+      true
+    } else { false }
+
   }
 
-  
+  def makeBullet(xp: Double, yp: Double, xv: Double, yv: Double, playerShot: Boolean) {
+
+    if (playerShot) {
+      playerBullets += shoot(xp, yp, xv, yv)
+    } else {
+      enemyBullets += shoot(xp, yp, xv, yv)
+    }
+  }
+
+  class Bullet(var xPos: Double, var yPos: Double, var xVel: Double, var yVel: Double, var isActive: Boolean, var intersects: Boolean) {
+    this.xPos = xPos
+    this.yPos = yPos
+    this.xVel = xVel
+    this.yVel = yVel
+    this.isActive = isActive
+    this.intersects = intersects
+  }
+  def shoot(xp: Double, yp: Double, xv: Double, yv: Double): Bullet = {
+
+    new Bullet(xp, yp, xv, yv, true, false)
+  }
+
   val str = """
     <span>
                  
