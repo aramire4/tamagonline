@@ -3,9 +3,8 @@
 # ~~~~
 
 # Login
-GET		   /								 edu.trinity.webapps.controllers.Login.login
-GET        /login                            edu.trinity.webapps.controllers.Login.login
-
+GET		   /								 edu.trinity.webapps.controllers.DBController.startApp
+GET        /login                            edu.trinity.webapps.controllers.DBController.startApp
 # Pages
 GET		   /profile							 edu.trinity.webapps.controllers.Application.profile
 GET        /playCenter					     edu.trinity.webapps.controllers.Application.playCenter
