@@ -116,7 +116,7 @@ object Store {
     <div id="window">
       <h3> Adopt Tamago </h3> <br>
       <p>Bring home a new tamago! New Tamagos cost """ + tamagoCost + """ coins</p> <br>
-      <p>What will you name it? $<input type="text" id="tamagoName"></input></p>
+      <p>What will you name it? <input type="text" id="tamagoName"></input></p>
       <br>
 
       <div class ="center">
@@ -168,13 +168,14 @@ object Store {
 			<a id="help">Help</a>
     </div>
 
+    <div id="topDivPush"></div>
+
 		<h2>Store</h2>
-    <canvas id="petCenter" width="1400" height="600" style="border: 3px solid"></canvas> <br>
     
     <div class="center">
-      <button id="payLoanButt" class="button inline">Pay Off Loan</button>
-      <button id="buyTamago" class="button inline">Adopt Tamago</button>
-      <button id="loanButt" class="button inline">Get Loan</button>
+      <button id="buyTamago" class="button">Adopt Tamago</button> <br> <br>
+      <button id="loanButt" class="button">Get Loan</button> <br> <br>
+      <button id="payLoanButt" class="button">Pay Off Loan</button> 
     </div>
 	<br>
 	"""

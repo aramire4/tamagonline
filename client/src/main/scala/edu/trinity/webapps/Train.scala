@@ -23,7 +23,7 @@ object Train {
     $("#trainAttack").click(() => openTrainAttack(t))
     $("#trainDefense").click(() => openTrainDefense(t))
     $("#trainSpeed").click(() => openTrainSpeed(t))
-    $("#backToProfile").click(() => ProfilePage.pageSetup)
+    $("#backToPet").click(() => CurrentPet.pageSetup(t))
   }
   
   //attack game homepage
@@ -639,20 +639,14 @@ object Train {
   
   //homepage html
   val str = """
-	<div class="topnav">
-			<a id="profile">Profile</a> 
-			<a id="store">Store</a>
-			<a id="help">Help</a>
-  </div>
   <h2 id="header">Train</h2>
     <div id="window" class="center">
-      <button id="trainAttack" class="button" style="margin: 20px;">Train Attack</button>
-      <br>
-      <button id="trainDefense" class="button" style="margin: 20px;">Train Defense</button>
-      <br>
-      <button id="trainSpeed" class="button" style="margin: 20px;">Train Speed</button>
-      <br>
-      <button id="backToProfile" class="button" style="margin: 20px;">Back to Profile</button>
+      <h3> Select a Stat to Train </h3> <br>
+      
+      <button id="trainAttack" class="button">Train Attack</button> <br> <br>
+      <button id="trainDefense" class="button">Train Defense</button> <br> <br>
+      <button id="trainSpeed" class="button">Train Speed</button> <br> <br>
+      <button id="backToPet" class="button">Back to Profile</button>
     </div>
 	<br>
 	"""
@@ -660,43 +654,54 @@ object Train {
   //attack home html
   val openTrainAttackStr = """
     <div id="window" class="center">
-      <button id="play" class="button" style="margin: 20px;">Play</button>
-      <br>
-      <button id="back" class="button" style="margin: 20px;">Back</button>
-      <br>
-      <p id="instructions" class="center" style="margin: 20px;">Instructions: Use arrow keys to move! Use spacebar to attack!</p>
+      <div class="smallTop"> </div>
+      <h3> Attack Training </h3> <br>
+      <p id="instructions" class="center">Instructions: Use arrow keys to move! Use spacebar to attack!</p> <br>
+      
+      <div class="center">
+        <button id="play" class="button inline">Play</button> 
+        <button id="back" class="button inline">Back</button>   
+      </div>
     </div>
   """
   
   //defense home html
   val openTrainDefenseStr = """
     <div id="window" class="center">
-      <button id="play" class="button" style="margin: 20px;">Play</button>
-      <br>
-      <button id="back" class="button" style="margin: 20px;">Back</button>
-      <br>
-      <p id="instructions" class="center" style="margin: 20px;">Instructions: Catch all of the falling things! Use arrow keys to move!</p>
+      <div class="smallTop"> </div>
+      <h3> Defense Training </h3>
+      <p id="instructions" class="center"">Instructions: Catch all of the falling things! Use arrow keys to move!</p> <br> 
+      
+      <div class="center">
+        <button id="play" class="button inline">Play</button>
+        <button id="back" class="button inline">Back</button>    
+      </div>
     </div>
   """
   
   //speed home html
   val openTrainSpeedStr = """
     <div id="window" class="center">
-      <button id="play" class="button" style="margin: 20px;">Play</button>
-      <br>
-      <button id="back" class="button" style="margin: 20px;">Back</button>
-      <br>
-      <p id="instructions" class="center" style="margin: 20px;">Instructions: Don't get hit! Use spacebar to jump!</p>
+      <div class="smallTop"> </div>
+      <h3> Speed Training </h3>
+      <p id="instructions" class="center">Instructions: Don't get hit! Use spacebar to jump!</p> <br>
+
+      <div class="center">
+        <button id="play" class="button inline">Play</button>
+        <button id="back" class="button inline">Back</button>
+      </div>
     </div>
   """
   
   val gameOverStr = """
     <div id="window" class="center">
-    <p class="center">Game Over</p>
+    <h3>Game Over</h3>
     <p id="gameOver" class="center"></p>
-    <button id="play" class="button" style="margin: 20px;">Play Again</button>
-    <br>
-    <button id="back" class="button" style="margin: 20px;">Back to Train</button>
+
+    <div class="center">
+      <button id="play" class="button inline">Play Again</button>
+      <button id="back" class="button inline">Back to Train</button>
+    </div>
     </div>
   """
   
