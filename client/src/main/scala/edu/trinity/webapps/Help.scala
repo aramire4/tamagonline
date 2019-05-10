@@ -19,6 +19,7 @@ object Help {
     $("#main-body").append($(str))
     $("#profile").click(() => ProfilePage.pageSetup())
     $("#store").click(() => Store.pageSetup())
+    $("#logout").click(() => Login.pageSetup())
   }
 
   val str = """
@@ -28,6 +29,7 @@ object Help {
 			<a id="profile">Profile</a> 
 			<a id="store">Store</a> 
 			<a id="help" class="active">Help</a>
+      <a id="logout">Logout</a>
     </div>
 
 		<h2>Help</h2> <br>

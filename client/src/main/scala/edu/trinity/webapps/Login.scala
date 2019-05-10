@@ -14,6 +14,7 @@ import scala.collection.mutable.ArrayBuffer
 object Login {
 
   def pageSetup(): Unit = {
+    $("#main-body").empty()
     $("#main-body").append($(s"<div id=${"login-page"}></div>"))
     $("#login-page").append($(str))
     $("#login").click(() => checkLogin())
