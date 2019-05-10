@@ -14,18 +14,19 @@ import org.scalajs.dom.raw.HTMLImageElement
 
 object fightNight {
   var plyImg = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
-  var enemyImg = plyImg 
-  var playLocX = 0
-  var playLocY = 0
-  var eneLocX = 0
-  var eneLocY = 0
-  var playerHealth = 10
-  var enemyHealth = 100
-  var playerAtt = 10
-  var playerDef = 10
-  var playerSpeed = 10
-
+  var enemyImg = plyImg
+  var playLocX = 0.0
+  var playLocY = 0.0
+  var eneLocX = 0.0
+  var eneLocY = 0.0
+  var playerHealth = 10.0
+  var enemyHealth = 100.0
+  var playerAtt = 10.0
+  var playerDef = 10.0
+  var playerSpeed = 10.0
   
+  var width = 0
+  var height = 0
 
   def pageSetup(t: TamagoData, o: Int, enemyName: String): Unit = {
     $("#main-body").empty()
@@ -38,16 +39,17 @@ object fightNight {
     playerSpeed = t.speed
     val canvas = dom.document.getElementById("fightNight").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
-     playLocX = canvas.width/2 - 300
-     playLocY = canvas.height / 2
-    eneLocX = canvas.width/2 + 300
+    width = canvas.width
+    height = canvas.height
+    playLocX = canvas.width / 2 - 300
+    playLocY = canvas.height / 2
+    eneLocX = canvas.width / 2 + 300
     eneLocY = canvas.height / 2
     setTamago(t)
     setEnemy(o)
-    
+
   }
-  
-  
+
   def setTamago(t: TamagoData) {
     t.age match {
       case 1 => {
@@ -90,7 +92,7 @@ object fightNight {
         println("This is an error")
       }
     }
-  
+
   }
 
   def setEnemy(o: Int) {
@@ -111,26 +113,77 @@ object fightNight {
         enemyImg = dom.document.getElementById("loanShark").asInstanceOf[HTMLImageElement]
       }
     }
-   
 
   }
-  
+
   def draw(canvas: Canvas) {
     val context = canvas.getContext("2d")
     context.clearRect(0, 0, canvas.width, canvas.height)
-    context.drawImage(plyImg, playLocX,playLocY)
+    context.drawImage(plyImg, playLocX, playLocY)
     context.drawImage(enemyImg, eneLocX, eneLocY)
   }
-  
 
   js.timers.setInterval(50) {
-     if(playerHealth > 0){
-       draw(dom.document.getElementById("fightNight").asInstanceOf[dom.raw.HTMLCanvasElement])
-       
-     }
+    if (playerHealth > 0) {
+      draw(dom.document.getElementById("fightNight").asInstanceOf[dom.raw.HTMLCanvasElement])
+      update()
+      
+      dom.window.onkeydown = (e: dom.KeyboardEvent) => {
+        if (e.keyCode == 38) {
+          //up
+          playLocY -= (2 + (playerSpeed * .1))
+          //println("up")
+        }
+        if (e.keyCode == 40) {
+          //down
+          playLocY += (2 + (playerSpeed * .1))
+          //println("down")
+        }
+        if (e.keyCode == 37) {
+          //left
+          playLocX -= (2 + (playerSpeed * .1))
+          //println("left")
+        }
+        if (e.keyCode == 39) {
+          //right
+          playLocX += (2 + (playerSpeed * .1))
+          //println("right")
+        }
+        if(e.keyCode == 87){
+          //W shoot up
+        
+        }
+        if(e.keyCode == 83){
+          //S shoot down
+          
+        }
+        if(e.keyCode == 65){
+          //A shoot left
+          
+        }
+        if(e.keyCode == 68){
+          //D shoot right
+          
+        }
+      }
+      
+    }
 
   }
 
+  def update() {
+
+  }
+  
+  def checkBounds(posX:Float, posY:Float):Boolean={
+    return (posX >= 0 && posX <= width && posY >= 0 && posY <= height)
+  }
+  
+  def collisionHandler(){
+    
+  }
+
+  
   val str = """
     <span>
 		<div class="topnav">
