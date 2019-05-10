@@ -647,7 +647,7 @@ object Train {
       t.speed, t.health, 
       t.kneesbroken, t.level, t.isclean, 
       t.isalive, t.age, t.respect, t.timeskneesbroken)
-      Player.tamagos.filter(tg => t != tg)
+      Player.tamagos = Player.tamagos.filter(tg => t != tg)
       Player.tamagos ::= newT
       val p = s"<p class='center'>Your tamago's attack has increased by ${(amt/2).toInt}</p>"
       $("#window").append($(p))
@@ -661,7 +661,7 @@ object Train {
       t.speed+(amt/2).toInt, t.health, 
       t.kneesbroken, t.level, t.isclean, 
       t.isalive, t.age, t.respect, t.timeskneesbroken)
-      Player.tamagos.filter(tg => t != tg)
+      Player.tamagos = Player.tamagos.filter(tg => t != tg)
       Player.tamagos ::= newT
       $("#window").append($(s"<p class='center'>Your tamago's defense has increased by ${(amt/2).toInt}</p>"))
     })
@@ -674,7 +674,7 @@ object Train {
       t.speed+(amt/2).toInt, t.health, 
       t.kneesbroken, t.level, t.isclean, 
       t.isalive, t.age, t.respect, t.timeskneesbroken)
-      Player.tamagos.filter(tg => t != tg)
+      Player.tamagos = Player.tamagos.filter(tg => t != tg)
       Player.tamagos ::= newT
       $("#window").append($(s"<p class='center'>Your tamago's speed has increased by ${(amt/2).toInt}</p>"))
     })

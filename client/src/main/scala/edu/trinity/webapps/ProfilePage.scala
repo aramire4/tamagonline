@@ -27,6 +27,58 @@ object ProfilePage {
     getTamagos()
   }
 
+  def checkDebt(): Unit = {
+    val debts = (Player.debt / shared.SharedTables.debtThresh) //how many tamagos should get knees broken
+    val numBrokes = Player.tamagos.filter(t => t.kneesbroken).length //+ (for (t<-Player.tamagos) yield t.timeskneesbroken).sum
+    if (debts != numBrokes) {
+      var affected = List[TamagoData]()
+      for (i <- 1 to (debts - numBrokes)) {
+        val unbrokens = Player.tamagos.filter(t => !t.kneesbroken)
+        if (unbrokens.length > 0) {
+          unbrokens.foreach(t => println("unbroken: " + t.name + " " + t.id))
+          val i = (scala.util.Random.nextInt(unbrokens.length))
+          val victim = unbrokens(i)
+          val updatedTama = TamagoData(victim.id, victim.name, victim.attack, victim.defense,
+            victim.speed, victim.health, true, victim.level, victim.isclean, victim.isalive,
+            victim.age, victim.respect, victim.timeskneesbroken + 1)
+          Player.tamagos = Player.tamagos.filter(t => t != victim)
+          Player.tamagos ::= updatedTama
+          affected ::= updatedTama
+          println(updatedTama.name + " " + updatedTama.id + " got knees broken in client")
+        }
+      }
+      affected.foreach(t => println(t.name))
+      var windowUp = false
+      for (victim <- affected) {
+        $.getJSON("/breakLegs/" + victim.id, success = (o, s, j) => {
+          val updatedTama = TamagoData(victim.id, victim.name, victim.attack, victim.defense,
+            victim.speed, victim.health, true, victim.level, victim.isclean, victim.isalive,
+            victim.age, victim.respect, victim.timeskneesbroken + 1)
+          Player.tamagos = Player.tamagos.filter(t => t != victim)
+          Player.tamagos ::= updatedTama
+          println(updatedTama.name + " " + updatedTama.id + " got knees broken in server")
+          if (!windowUp) {
+            $("#profile-page").append($("<div id=\"page-mask\"></div>"))
+            $("#profile-page").append($("<div id=\"window\"></div>"))
+            val butt = "<button class=\"button\" id=\"kneeClose\">Close</button>"
+            $("#window").append($(butt))
+            $("#kneeClose").click(() => {
+              $("#window").remove()
+              $("#page-mask").remove()
+            })
+            $("#window").append($("<h3>You're in debt! >:(</h3> <br>"))
+            $("#window").append($("<p class='center'>Because of your strenous debt, the loan shark has broken the knees of:</p>"))
+            $("#window").append($(s"<p class='center'>${victim.name}</p>"))
+            windowUp = true
+          } else {
+            $("#window").append($(s"<p class='center'>${victim.name}</p>"))
+          }
+        })
+      }
+
+    }
+  }
+
   def getTamagos(): Unit = {
     val canvas = dom.document.getElementById("petCenter").asInstanceOf[dom.raw.HTMLCanvasElement]
     val context = canvas.getContext("2d")
@@ -34,22 +86,27 @@ object ProfilePage {
     $.getJSON("/tamagos", success = (o, s, j) => {
       var count = 1
       for (t <- Json.parse(js.JSON.stringify(o)).as[Array[TamagoData]]) {
+        Player.tamagos ::= t
+      }
+      checkDebt()
+      for (t <- Player.tamagos) {
         val tamaPar = $(s"<li id = 't$count' class='hoverPet'> ${t.name}</li>")
-        val tamaStat = $(s"<li id = 'stat$count'> Health: ${t.health}, Attack: ${t.attack}, Defense: ${t.defense}, Speed: ${t.speed}</li>")
+        val knees = if (t.kneesbroken) "broken" else "working"
+        val tamaStat = $(s"<li id = 'stat$count'> Health: ${t.health}, Knees: ${knees}, Attack: ${t.attack}, Defense: ${t.defense}, Speed: ${t.speed}</li>")
         //put a link on name to CurrentPet
         $("#pets").append(tamaPar)
         $("#stats").append(tamaStat)
-        $("#t"+count).click(() => {
+        $("#t" + count).click(() => {
           CurrentPet.pageSetup(t)
         })
-        $("#stat"+count).click(() => {
+        $("#stat" + count).click(() => {
           CurrentPet.pageSetup(t)
         })
-        Player.tamagos ::= t
-        count+=1
+        count += 1
       }
       showTamago()
     })
+
   }
 
   def showTamago(): Unit = {
@@ -106,13 +163,13 @@ object ProfilePage {
       context.font = "20px Arial";
       context.fillText(t.name, x + 15, y);
 
-      count+=1
+      count += 1
       x += 200
       if (count % 6 == 0) {
         x = 100
         y += 200
         count = 0
-      } 
+      }
     }
   }
 

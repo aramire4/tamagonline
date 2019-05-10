@@ -42,7 +42,9 @@ object Battle {
       <li id = "toma-champ"> Toma-Champ </li>
       <li id = "LoanShark"> Loan Shark </li>
     </ul> <br>
-    <button id="backToPet" class="button center">Back to Profile</button>
+    <div class = "center">
+      <button id="backToPet" class="button center">Back to Profile</button>
+    </div>
 	</body>
 </span>"""
 

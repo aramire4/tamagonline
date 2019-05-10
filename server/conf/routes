@@ -29,10 +29,14 @@ GET			/coins							 edu.trinity.webapps.controllers.DBController.coins
 GET 		/submitLoan/:amt				 edu.trinity.webapps.controllers.DBController.submitLoan(amt:Int)
 GET			/submitLoanPayment/:amt		 	 edu.trinity.webapps.controllers.DBController.submitLoanPayment(amt:Int)
 GET			/newTamago/:name				 edu.trinity.webapps.controllers.DBController.newTamago(name:String)
+#by update, that really means add or subtract the amt
 GET			/updateCoins/:amt			     edu.trinity.webapps.controllers.DBController.updateCoins(amt:Int)
+GET			/removeCoins/:amt			     edu.trinity.webapps.controllers.DBController.updateCoins(amt:Int)
 GET			/updateAttack/:tid/:amt		 	 edu.trinity.webapps.controllers.DBController.updateAttack(tid:Int, amt:Int)
 GET 		/updateSpeed/:tid/:amt			 edu.trinity.webapps.controllers.DBController.updateSpeed(tid: Int, amt: Int)
 GET			/updateDefense/:tid/:amt		 edu.trinity.webapps.controllers.DBController.updateDefense(tid:Int, amt:Int)
+GET			/breakLegs/:tid					 edu.trinity.webapps.controllers.DBController.breakLegs(tid:Int)
+GET			/heal/:tid						 edu.trinity.webapps.controllers.DBController.heal(tid:Int)
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
 GET        /versionedAssets/*file        controllers.Assets.versioned(path="/public", file: Asset)

@@ -66,16 +66,16 @@ object Store {
           Player.coins -= amt.toInt
           $("#totalDebt").text("Total debt: " + Player.debt)
           $("#totalCoins").text("Total coins: " + Player.coins)
-          $("#payMssg").replaceWith($(s"<p>Congrats, you've paid off ${amt.toInt} coins.</p>"))
-          $("#amntPaid").replaceWith($(s"<p>${amt} coins have been removed from your account.</p>"))
+          $("#payMssg").text(s"Congrats, you've paid off ${amt.toInt} coins.")
+          $("#amntPaid").text(s"${amt} coins have been removed from your account.")
         } else {
-          $("#payMssg").replaceWith($("<p> You don't have enough money for that!</p>"))
-          $("#amntPaid").replaceWith($(s"<p></p>"))
+          $("#payMssg").text("You don't have enough money for that!")
+          $("#amntPaid").text("")
         }
       })
     } else {
-      $("#payMssg").replaceWith("<p>Give me a positive integer value or get lost!</p>")
-      $("#amntPaid").replaceWith($(s"<p></p>"))
+      $("#payMssg").text("Give me a positive integer value or get lost!")
+      $("#amntPaid").text("")
     }
     $("#payAmount").value("")
   }
@@ -89,20 +89,20 @@ object Store {
         Player.coins += amt.toInt
         $("#totalDebt").text("Total debt: " + Player.debt)
         $("#totalCoins").text("Total coins: " + Player.coins)
-        $("#amntOwed").replaceWith($(s"<p>Congrats, you now owe me ${(amt.toInt * 1.40).ceil.toInt} coins (40% interest rate).</p>"))
-        $("#amntAdded").replaceWith($(s"<p>${amt} coins have been added to you account.</p>"))
+        $("#amntOwed").text(s"Congrats, you now owe me ${(amt.toInt * 1.40).ceil.toInt} coins (40% interest rate).")
+        $("#amntAdded").text(s"${amt} coins have been added to you account.")
       })
     } else {
-      $("#amntOwed").replaceWith("<p>Give me a positive integer value or get lost!</p>")
-      $("#amntAdded").replaceWith($(s"<p></p>"))
+      $("#amntOwed").text("Give me a positive integer value or get lost!")
+      $("#amntAdded").text("")
     }
     $("#loanAmount").value("")
   }
 
   def submitAdopt(): Unit = {
     if (Player.numberOfTamagos >= 18) {
-      $("#succAdopt").replaceWith($("<p>You own too many tamagos already! Try getting one killed.</p>"))
-      $("#costAdopt").replaceWith($("<p></p>"))
+      $("#succAdopt").text("You own too many tamagos already! Try getting one killed :p")
+      $("#costAdopt").text("")
     }
     else {
       val name = $("#tamagoName").value()
@@ -113,10 +113,11 @@ object Store {
             $("#succAdopt").replaceWith($("<p>Congrats on your new baby.</p>"))
             $("#costAdopt").replaceWith($(s"<p>${tamagoCost} coins have been removed from you account</p>"))
             Player.tamagos ::= td
+            Player.coins -= tamagoCost
           }
           case None => {
-            $("#succAdopt").replaceWith($("<p>You're too poor to buy a tamago! Try getting a loan!</p>"))
-            $("#costAdopt").replaceWith($("<p></p>"))
+            $("#succAdopt").text("You're too poor to buy a tamago! Try getting a loan :)")
+            $("#costAdopt").text("")
           }
         }
       })
@@ -142,8 +143,7 @@ object Store {
     <div id="window">
       <h3> Pay Off Loan </h3> <br>
       <p>Finally ready to pay me back, eh?</p>
-      <p>I'm the loan shark, fucc wit me and I'll break your legs!</p>
-      <p>Hopefully load a loan shark img inside here.</p>
+      <p>I'm the loan shark, mess wit me and I'll break your legs!</p>
       <p>How much of your debt shall you repay? $<input type="text" id="payAmount"></input></p>
       
       <p id="totalCoins"></p>
@@ -162,8 +162,7 @@ object Store {
     <div id="window" class="center">
       <h3> Get Loan </h3> <br>
       <p>Need some money, eh? Well you've come to the right place.</p>
-      <p>I'm the loan shark, fucc wit me and I'll break your legs!</p>
-      <p>Hopefully load a loan shark img inside here.</p> <br>
+      <p>I'm the loan shark, mess wit me and I'll break your legs!</p>
       <p>How many coins shall I loan you? $<input type="text" id="loanAmount"></input></p>
       
       <p id="totalCoins"></p>
@@ -173,8 +172,8 @@ object Store {
       <div class ="center">
         <button type="button" id="submitLoan" class="button inline">Confirm Loan</button>
         <button id="closeWindow" class="button inline">Close</button>
+  
       </div>
-
        <p id="amntOwed"></p>
       <p id="amntAdded"></p>
     </div>"""
