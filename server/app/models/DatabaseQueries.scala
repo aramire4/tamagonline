@@ -77,6 +77,19 @@ object DatabaseQueries {
     })
   }
   
+  def updateHealth(db:Database, pid:Int, tid:Int)(implicit ec:ExecutionContext) = {
+    val currentHth = db.run {
+      (for (t <- Tamago; if t.id === tid && t.ownerid === pid) yield t.health).result.head
+    }
+    currentHth.map(a => {
+      val newHth = 1
+      db.run {
+        val pc = (for (t <- Tamago; if t.id === tid) yield t.health)
+        pc.update(newHth)
+      }
+    })
+  }
+  
    def updateSpeed(db:Database, pid:Int, tid:Int, amt:Int)(implicit ec:ExecutionContext) = {
     val currentSpd = db.run {
       (for (t <- Tamago; if t.id === tid && t.ownerid === pid) yield t.speed).result.head

@@ -36,6 +36,7 @@ GET 		/updateSpeed/:tid/:amt			 edu.trinity.webapps.controllers.DBController.upd
 GET			/updateDefense/:tid/:amt		 edu.trinity.webapps.controllers.DBController.updateDefense(tid:Int, amt:Int)
 GET			/breakLegs/:tid					 edu.trinity.webapps.controllers.DBController.breakLegs(tid:Int)
 GET			/heal/:tid						 edu.trinity.webapps.controllers.DBController.heal(tid:Int)
+GET			/updateHealth/:tid				 edu.trinity.webapps.controllers.DBController.updateHealth(tid:Int)
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
 GET        /versionedAssets/*file        controllers.Assets.versioned(path="/public", file: Asset)
