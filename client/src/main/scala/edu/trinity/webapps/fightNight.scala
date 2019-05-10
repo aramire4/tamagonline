@@ -250,22 +250,22 @@ object fightNight {
           if (e.keyCode == 87 && timer < 0) {
             //W shoot up
             makeBullet(playLocX + 64, playLocY + 64, 0, -playerBulletSpeed, true)
-            timer = 30.0
+            timer = 50.0
           }
           if (e.keyCode == 83 && timer < 0) {
             //S shoot down
             makeBullet(playLocX + 64, playLocY + 64, 0, playerBulletSpeed, true)
-            timer = 30.0
+            timer = 50.0
           }
           if (e.keyCode == 65 && timer < 0) {
             //A shoot left
             makeBullet(playLocX + 64, playLocY + 64, -playerBulletSpeed, 0, true)
-            timer = 30.0
+            timer = 50.0
           }
           if (e.keyCode == 68 && timer < 0) {
             //D shoot right
             makeBullet(playLocX + 64, playLocY + 64, playerBulletSpeed, 0, true)
-            timer = 30.0
+            timer = 50.0
           }
 
         }
@@ -307,6 +307,7 @@ object fightNight {
 
     } else if (gameState == 1) {
       openWinWindow(myTamago)
+      
       println(gameState)
       js.timers.clearInterval(hand)
 
@@ -393,7 +394,7 @@ object fightNight {
   def openWinWindow(t: TamagoData): Unit = {
     $("#main-body").append($("<div id=\"page-mask\"></div>"))
     $("#main-body").append($(winWindowStr))
-    $("#injured").text(s"${(playerHealth / maxPlayerHealth).toInt + 50}")
+    updateCoins(playerHealth.toInt + enemyAtt.toInt + enemyDef.toInt + enemySpeed.toInt, myTamago) 
     $("#fightAgain").click(() =>  Battle.pageSetup(t))
     $("#Quit").click(() => { closeWindow(); isActive = false; ProfilePage.pageSetup() })
   }
@@ -401,6 +402,7 @@ object fightNight {
   def openLossWindow(): Unit = {
     $("#main-body").append($("<div id=\"page-mask\"></div>"))
     $("#main-body").append($(lossWindowStr))
+    updateHealth(myTamago)
     $("#ToTheStore").click(() => Store.pageSetup())
     $("#Quit").click(() => { closeWindow(); isActive = false; ProfilePage.pageSetup() })
   }
@@ -410,6 +412,26 @@ object fightNight {
     $("#page-mask").remove()
 
   }
+  
+  def updateCoins(amt: Int,t:TamagoData) {
+    $.getJSON("/updateCoins/" + amt, success = (o, s, j) => {
+      Player.coins += amt
+    })
+    $("#window").append($(s"<p class='center'>${amt} coin(s) have been added to you account.</p>"))
+    
+  }
+  
+  def updateHealth(t:TamagoData) {
+    $.getJSON("/updateHealth/" + t.id, success = (o, s, j) => {
+      val tCopy = t
+      val newT = TamagoData(t.id, t.name, t.attack,t.defense,t.speed, 1 , t.kneesbroken,t.level,t.isclean,t.isalive,t.age,t.respect,t.timeskneesbroken)
+      Player.tamagos = Player.tamagos.filter(tg => t != tg)
+      Player.tamagos ::= newT
+      
+    $("#window").append($(s"<p class='center'>Your Health is Depleted!.</p>"))
+    })
+  }
+  
 
   val str = """
     <span>
@@ -426,7 +448,6 @@ object fightNight {
   <div id = "window" class = "center">
   <h3> YOU WON </h3>
   <p> Congratulations on proving that you are worth more than worthless scum. </p>
-  <p> Here is your reward: </p>
   <p id = "wonCoins"></p>
   <br>
   <div class = "center">
@@ -441,7 +462,7 @@ object fightNight {
   <p> You must go to the shop and fix him or choose another tomago and attempt to get revenge </p>
   <br>
   <div class = "center">
-  <button type = "button" id = "ToTheStore" class = "button inline">Heal</button>
-  <button type = "button" id = "Quit" class = "button inline">Revenge</button>
+  <button type = "button" id = "ToTheStore" class = "button inline">Store</button>
+  <button type = "button" id = "Quit" class = "button inline">Quit</button>
   """
 }

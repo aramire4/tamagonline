@@ -121,6 +121,13 @@ class DBController @Inject() (protected val dbConfigProvider: DatabaseConfigProv
     }.getOrElse(Future(Ok(views.html.disconnected())))
   }
    
+   def updateHealth(tid:Int) = Action.async { implicit request => 
+    request.session.get("pid").map{pid => 
+      DatabaseQueries.updateHealth(db, pid.toInt, tid).map(s => Ok(Json.toJson("")))
+    }.getOrElse(Future(Ok(views.html.disconnected())))
+  }
+   
+   
   def breakLegs(tid:Int) = Action.async { implicit request =>
     request.session.get("pid").map{ pid =>
       DatabaseQueries.breakLegs(db, pid.toInt, tid).map(b => Ok(Json.toJson(b)))
