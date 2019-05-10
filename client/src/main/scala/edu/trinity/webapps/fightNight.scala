@@ -14,6 +14,7 @@ import org.scalajs.dom.raw.HTMLImageElement
 
 import scala.collection.mutable.ArrayBuffer
 import scala.math._
+import scala.scalajs.js.timers.SetIntervalHandle
 
 object fightNight {
   var plyImg = dom.document.getElementById("tomahat").asInstanceOf[HTMLImageElement]
@@ -45,8 +46,12 @@ object fightNight {
 
   var playerBullets = ArrayBuffer[Bullet]()
   var enemyBullets = ArrayBuffer[Bullet]()
-  
+
   var gameState = 0
+  var gameRunning = true
+  var isActive: Boolean = true
+
+  var myTamago = null.asInstanceOf[TamagoData]
 
   def pageSetup(t: TamagoData, o: Int, enemyName: String): Unit = {
     $("#main-body").empty()
@@ -68,8 +73,12 @@ object fightNight {
     eneLocX = canvas.width / 2 + 300
     eneLocY = canvas.height / 2
     playerBulletSpeed = 7 + (playerSpeed * .1)
+    myTamago = t
     setTamago(t)
     setEnemy(o)
+    isActive = true
+    gameState = 0
+    print("PageSetup")
 
   }
 
@@ -176,70 +185,89 @@ object fightNight {
       context.fill()
     })
     context.fillStyle = "#FF0000" //red
-    context.fillRect(0,0, width/2,40)
+    context.fillRect(0, 0, width / 2, 40)
     context.fillStyle = "#32CD32" //green
-    context.fillRect(0, 0, (playerHealth/maxPlayerHealth) * (width/2), 40)
-    
+    context.fillRect(0, 0, (playerHealth / maxPlayerHealth) * (width / 2), 40)
+
     context.fillStyle = "#32CD32"
-    context.fillRect(width/2, 0, (width/2) , 40)
+    context.fillRect(width / 2, 0, (width / 2), 40)
     context.fillStyle = "#FF0000"
-    context.fillRect(width/2,0, (1- (enemyHealth/maxEnemyHealth)) * (width/2),40)
-    
+    context.fillRect(width / 2, 0, (1 - (enemyHealth / maxEnemyHealth)) * (width / 2), 40)
+
     context.fillStyle = "#000000"
-    context.fillRect(width/2, 0, 10,40)
+    context.fillRect(width / 2, 0, 10, 40)
   }
   val maxPlayerHealth = playerHealth
-  js.timers.setInterval(50) {
-    
-    gameState = 0
-    
-    if (playerHealth > -1&& enemyHealth > -1) {
-      draw(dom.document.getElementById("fightNight").asInstanceOf[dom.raw.HTMLCanvasElement])
-      
-      dom.window.onkeydown = (e: dom.KeyboardEvent) => {
-        if (e.keyCode == 38) {
-          //up
-          if (checkBounds(playLocX, playLocY - playerSpeed))
-            playLocY -= playerSpeed
-          //println("up")
-        }
-        if (e.keyCode == 40) {
-          //down
-          if (checkBounds(playLocX, playLocY + playerSpeed + 128))
-            playLocY += playerSpeed
-          //println("down")
-        }
-        if (e.keyCode == 37) {
-          //left
-          if (checkBounds(playLocX - playerSpeed, playLocY))
-            playLocX -= playerSpeed
-          //println("left")
-        }
-        if (e.keyCode == 39) {
-          //right
-          if (checkBounds(playLocX + playerSpeed + 128, playLocY))
-            playLocX += playerSpeed
-          //println("right")
-        }
-        if (e.keyCode == 87 && timer < 0) {
-          //W shoot up
-          makeBullet(playLocX + 64, playLocY + 64, 0, -playerBulletSpeed, true)
-          timer = 30.0
-        }
-        if (e.keyCode == 83 && timer < 0) {
-          //S shoot down
-          makeBullet(playLocX + 64, playLocY + 64, 0, playerBulletSpeed, true)
-          timer = 30.0
-        }
-        if (e.keyCode == 65 && timer < 0) {
-          //A shoot left
-          makeBullet(playLocX + 64, playLocY + 64, -playerBulletSpeed, 0, true)
-          timer = 30.0
-        }
-        if (e.keyCode == 68 && timer < 0) {
-          //D shoot right
-          makeBullet(playLocX + 64, playLocY + 64, playerBulletSpeed, 0, true)
-          timer = 30.0
+
+  /*if (playerHealth < -1) {
+    gameState = 2
+    gameRunning = false
+  } else if (enemyHealth < -1) {
+    gameState = 1
+    gameRunning = false
+  } else { gameState = 0; gameRunning = true; }
+*/
+  // if (gameRunning) {
+
+  var hand: SetIntervalHandle = js.timers.setInterval(50) {
+
+    if (isActive) {
+      if (playerHealth < 0) {
+        gameState = 2
+      } else if (enemyHealth < 0) {
+        gameState = 1
+      } else {
+
+        //if (playerHealth > -1 && enemyHealth > -1) {
+
+        draw(dom.document.getElementById("fightNight").asInstanceOf[dom.raw.HTMLCanvasElement])
+
+        dom.window.onkeydown = (e: dom.KeyboardEvent) => {
+          if (e.keyCode == 38) {
+            //up
+            if (checkBounds(playLocX, playLocY - playerSpeed))
+              playLocY -= playerSpeed
+            //println("up")
+          }
+          if (e.keyCode == 40) {
+            //down
+            if (checkBounds(playLocX, playLocY + playerSpeed + 128))
+              playLocY += playerSpeed
+            //println("down")
+          }
+          if (e.keyCode == 37) {
+            //left
+            if (checkBounds(playLocX - playerSpeed, playLocY))
+              playLocX -= playerSpeed
+            //println("left")
+          }
+          if (e.keyCode == 39) {
+            //right
+            if (checkBounds(playLocX + playerSpeed + 128, playLocY))
+              playLocX += playerSpeed
+            //println("right")
+          }
+          if (e.keyCode == 87 && timer < 0) {
+            //W shoot up
+            makeBullet(playLocX + 64, playLocY + 64, 0, -playerBulletSpeed, true)
+            timer = 30.0
+          }
+          if (e.keyCode == 83 && timer < 0) {
+            //S shoot down
+            makeBullet(playLocX + 64, playLocY + 64, 0, playerBulletSpeed, true)
+            timer = 30.0
+          }
+          if (e.keyCode == 65 && timer < 0) {
+            //A shoot left
+            makeBullet(playLocX + 64, playLocY + 64, -playerBulletSpeed, 0, true)
+            timer = 30.0
+          }
+          if (e.keyCode == 68 && timer < 0) {
+            //D shoot right
+            makeBullet(playLocX + 64, playLocY + 64, playerBulletSpeed, 0, true)
+            timer = 30.0
+          }
+
         }
       }
 
@@ -265,9 +293,38 @@ object fightNight {
       }
 
       timer -= playerSpeed
+      changeGameState(hand)
+      
     }
-
   }
+
+  def changeGameState(hand: SetIntervalHandle): Unit = {
+    if (gameState == 2) {
+
+      openLossWindow()
+      println(gameState)
+      js.timers.clearInterval(hand)
+
+    } else if (gameState == 1) {
+      openWinWindow(myTamago)
+      println(gameState)
+      js.timers.clearInterval(hand)
+
+    }
+  }
+
+  /* else {
+
+    if (gameState == 2) {
+      openLossWindow()
+      println(gameState)
+      println(gameRunning)
+    } else if (gameState == 1) {
+      openWinWindow(myTamago)
+      println(gameState)
+      println(gameRunning)
+    }
+  } */
 
   def updateBullets() {
     playerBullets.foreach(bull => {
@@ -332,19 +389,26 @@ object fightNight {
 
     new Bullet(xp, yp, xv, yv, true, false)
   }
-  
-  def openWinWindow(t:TamagoData):Unit = {
+
+  def openWinWindow(t: TamagoData): Unit = {
     $("#main-body").append($("<div id=\"page-mask\"></div>"))
     $("#main-body").append($(winWindowStr))
-    $("#wonCoins").text(s"${(playerHealth/maxPlayerHealth).toInt + 50}")
-    $("#fightAgain").click(() => Battle.pageSetup(t))
-    $("#Quit").click(() => ProfilePage.pageSetup())
+    $("#injured").text(s"${(playerHealth / maxPlayerHealth).toInt + 50}")
+    $("#fightAgain").click(() =>  Battle.pageSetup(t))
+    $("#Quit").click(() => { closeWindow(); isActive = false; ProfilePage.pageSetup() })
   }
-  
+
+  def openLossWindow(): Unit = {
+    $("#main-body").append($("<div id=\"page-mask\"></div>"))
+    $("#main-body").append($(lossWindowStr))
+    $("#ToTheStore").click(() => Store.pageSetup())
+    $("#Quit").click(() => { closeWindow(); isActive = false; ProfilePage.pageSetup() })
+  }
+
   def closeWindow(): Unit = {
     $("#window").remove()
     $("#page-mask").remove()
-  
+
   }
 
   val str = """
@@ -368,5 +432,16 @@ object fightNight {
   <div class = "center">
   <button type = "button" id = "fightAgain" class = "button inline">Fight Again</button>
   <button type = "button" id = "Quit" class = "button inline">Quit</button>
+  """
+
+  val lossWindowStr = """
+  <div id = "window" class = "center">
+  <h1> R.I.P </h1>
+  <p> Youre tomago is severely injured. </p>
+  <p> You must go to the shop and fix him or choose another tomago and attempt to get revenge </p>
+  <br>
+  <div class = "center">
+  <button type = "button" id = "ToTheStore" class = "button inline">Heal</button>
+  <button type = "button" id = "Quit" class = "button inline">Revenge</button>
   """
 }

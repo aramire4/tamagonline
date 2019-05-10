@@ -91,6 +91,30 @@ class DBController @Inject() (protected val dbConfigProvider: DatabaseConfigProv
     }.getOrElse(Future(Ok(views.html.disconnected())))
   }
   
+  def updateCoins(amt:Int) = Action.async { implicit request =>
+    request.session.get("pid").map { pid =>
+      DatabaseQueries.updateCoins(db, amt, pid.toInt).map(s => Ok)
+    }.getOrElse(Future(Ok(views.html.disconnected())))
+  }
+  
+  def updateAttack(tid:Int, amt:Int) = Action.async { implicit request => 
+    request.session.get("pid").map{pid => 
+      DatabaseQueries.updateAttack(db, pid.toInt, tid, amt).map(s => Ok(Json.toJson("")))
+    }.getOrElse(Future(Ok(views.html.disconnected())))
+  }
+  
+   def updateSpeed(tid:Int, amt:Int) = Action.async { implicit request => 
+    request.session.get("pid").map{pid => 
+      DatabaseQueries.updateSpeed(db, pid.toInt, tid, amt).map(s => Ok(Json.toJson("")))
+    }.getOrElse(Future(Ok(views.html.disconnected())))
+  }
+   
+   def updateDefense(tid:Int, amt:Int) = Action.async { implicit request => 
+    request.session.get("pid").map{pid => 
+      DatabaseQueries.updateDefense(db, pid.toInt, tid, amt).map(s => Ok(Json.toJson("")))
+    }.getOrElse(Future(Ok(views.html.disconnected())))
+  }
+  
   def startApp = Action { 
     Ok(views.html.scalajsTest())
   }
