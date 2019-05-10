@@ -23,7 +23,7 @@ object Store {
     $("#buyTamago").click(() => openBuyTamagoWindow())
     $("#profile").click(() => ProfilePage.pageSetup())
     $("#help").click(() => Help.pageSetup())
-
+    $("#logout").click(() => Login.pageSetup())
   }
 
   def openBuyTamagoWindow(): Unit = {
@@ -183,6 +183,7 @@ object Store {
 			<a id="profile">Profile</a> 
 			<a id="store" class="active">Store</a> 
 			<a id="help">Help</a>
+      <a id="logout">Logout</a>
     </div>
 
     <div id="topDivPush"></div>

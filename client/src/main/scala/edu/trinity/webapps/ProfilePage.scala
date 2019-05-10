@@ -23,6 +23,7 @@ object ProfilePage {
     $("#profile-page").append($(str))
     $("#store").click(() => Store.pageSetup())
     $("#help").click(() => Help.pageSetup())
+    $("#logout").click(() => Login.pageSetup())
     addPlayer()
     getTamagos()
   }
@@ -191,6 +192,7 @@ object ProfilePage {
 			<a id="profile" class="active">Profile</a> 
 			<a id="store">Store</a> 
 			<a id="help">Help</a>
+      <a id="logout">Logout</a>
     </div>
 
 		<div id="profHeader"></div>

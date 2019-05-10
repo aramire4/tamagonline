@@ -31,6 +31,7 @@ object CurrentPet {
     $("#frolic").click(() => { pageActive = false; Frolic.pageSetup(t) })
     $("#train").click(() => { pageActive = false; Train.pageSetup(t) })
     $("#heal").click(() => healPage(t))
+    $("#logout").click(() => Login.pageSetup())
     addPlayer()
     getTamago(t)
     pageActive = true
@@ -222,6 +223,7 @@ object CurrentPet {
 			<a id="profile">Profile</a> 
 			<a id="store">Store</a> 
 			<a id="help">Help</a>
+      <a id="logout">Logout</a>
     </div>
 
 		</div>
