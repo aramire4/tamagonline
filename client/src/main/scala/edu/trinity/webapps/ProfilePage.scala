@@ -34,13 +34,17 @@ object ProfilePage {
     $.getJSON("/tamagos", success = (o, s, j) => {
       var count = 1
       for (t <- Json.parse(js.JSON.stringify(o)).as[Array[TamagoData]]) {
-        val tamaPar = $(s"<li id = 't$count' class='hoverPet'> ${t.name} (health: ${t.health}) </li>")
+        val tamaPar = $(s"<li id = 't$count' class='hoverPet'> ${t.name}</li>")
+        val tamaStat = $(s"<li id = 'stat$count'> Health: ${t.health}, Attack: ${t.attack}, Defense: ${t.defense}, Speed: ${t.speed}</li>")
         //put a link on name to CurrentPet
         $("#pets").append(tamaPar)
+        $("#stats").append(tamaStat)
         $("#t"+count).click(() => {
           CurrentPet.pageSetup(t)
         })
-        
+        $("#stat"+count).click(() => {
+          CurrentPet.pageSetup(t)
+        })
         Player.tamagos ::= t
         count+=1
       }
@@ -99,7 +103,7 @@ object ProfilePage {
         }
       }
       context.drawImage(image, x, y)
-      context.font = "30px Arial";
+      context.font = "20px Arial";
       context.fillText(t.name, x + 15, y);
 
       count+=1
@@ -136,7 +140,14 @@ object ProfilePage {
 		<canvas id="petCenter" width="1400" height="600"
 			style="border: 3px solid"></canvas>
 		<br>
-  <ul id="pets" class="center"> <h3> Tamago List (Click to Interact) </h3> </ul>
+  <div class="center">
+			<div class = "inline half left center">
+        <ul id="pets" class="center"> <h3> Tamago List </h3> </ul>
+      </div>
+      <div class = "inline half right center">
+        <ul id="stats" class="center"> <h3> Stats </h3> </ul>
+      </div>
+  </div>
 	</body>
 </span>"""
 

@@ -32,7 +32,7 @@ object fightNight {
     $("#main-body").empty()
     $("#main-body").append($("<div id=\"fight\"></div>"))
     $("#fight").append($(str))
-    $("#versus").append($(s"<p>${t.name} VS.${enemyName}</p>"))
+    $("#versus").append($(s"<h2>${t.name} VS. ${enemyName}</h2>"))
     playerHealth = t.health
     playerAtt = t.attack
     playerDef = t.defense
@@ -186,14 +186,8 @@ object fightNight {
   
   val str = """
     <span>
-		<div class="topnav">
-		      <a id = "quit"> Quit </a>
-          <a id = "pause"> Pause </a>
-                                            
-    </div>
                  
-    <h2 id="title">FIGHT!</h2>
-    <p id = "versus"> </p>
+    <div id = "versus"> </div>
 		<canvas id="fightNight" width="1400" height="600"></canvas>
 		<br>
 		<br>
