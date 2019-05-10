@@ -19,6 +19,7 @@ object Player {
     tamagos = List()
   }
   
+  
   def kd:Int = kills/deaths
   
   def addData(pd:PlayerData):Unit = {

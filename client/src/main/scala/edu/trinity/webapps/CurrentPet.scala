@@ -28,8 +28,8 @@ object CurrentPet {
     $("#store").click(() => { pageActive = false; Store.pageSetup()})
     $("#help").click(() => { pageActive = false; Help.pageSetup()})
     $("#battle").click(() => { pageActive = false; Battle.pageSetup(t)})
-    $("#frolic").click(() => { pageActive = false; Frolic.pageSetup(t)})
-    $("#train").click(() => Train.pageSetup(t))
+    $("#frolic").click(() => { pageActive = false ; Frolic.pageSetup(t)})
+    $("#train").click(() => { pageActive = false; Train.pageSetup(t)})
     addPlayer()
     getTamago(t)
     pageActive = true

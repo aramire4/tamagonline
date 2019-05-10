@@ -16,14 +16,27 @@ import org.scalajs.dom.raw.HTMLImageElement
 
 object Train {
  
+  var canvas = null.asInstanceOf[Canvas]
+  var ctx = null.asInstanceOf[dom.CanvasRenderingContext2D]
+  
   //train homepage
   def pageSetup(t: TamagoData):Unit = { 
+    $(canvas).remove()
     $("#main-body").empty()
     $("#main-body").append($(str))
     $("#trainAttack").click(() => openTrainAttack(t))
     $("#trainDefense").click(() => openTrainDefense(t))
     $("#trainSpeed").click(() => openTrainSpeed(t))
-    $("#backToPet").click(() => CurrentPet.pageSetup(t))
+    $("#backToPet").click(() => {
+      $(canvas).remove()
+      CurrentPet.pageSetup(t)
+    })
+    canvas = dom.document.createElement("canvas").asInstanceOf[Canvas]
+    ctx = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
+    canvas.width = (1 * dom.window.innerWidth).toInt
+    canvas.height = (1 * dom.window.innerHeight).toInt
+  //  $("#main-body").append(canvas)
+    dom.document.body.appendChild(canvas)
   }
   
   //attack game homepage
@@ -62,11 +75,7 @@ object Train {
     $("#back").click(() => pageSetup(t))
   }
   
-  val canvas = dom.document.createElement("canvas").asInstanceOf[Canvas]
-  val ctx = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
-  canvas.width = (1 * dom.window.innerWidth).toInt
-  canvas.height = (1 * dom.window.innerHeight).toInt
-  dom.document.body.appendChild(canvas)
+
   
   var intervalCount = 1
   
@@ -153,7 +162,7 @@ object Train {
         image = dom.document.getElementById("tomaskitters").asInstanceOf[HTMLImageElement]
       }
       case _ => {
-        println("This is an error")
+        println("Error inside client/Train.scala")
       }
     }
     ctx.drawImage(image, x, y)
@@ -208,8 +217,8 @@ object Train {
   	ctx.clearRect(0, 0, canvas.width, canvas.height)
   	$("#main-body").append($(gameOverStr))
   	$("#gameOver").text("final score: " + attackScore)
-  	updateCoins(attackScore)
-  	updateAttack(attackScore)
+  	updateCoins(attackScore, t)
+  	updateSpeed(attackScore, t)
   	$("#play").click(() => attackPlay(t))
     $("#back").click(() => pageSetup(t))
   }
@@ -342,8 +351,8 @@ object Train {
     	ctx.clearRect(0, 0, canvas.width, canvas.height)
     	$("#main-body").append($(gameOverStr))
     	$("#gameOver").text("final score: " + defenseScore)
-    	updateCoins(defenseScore)
-    	updateDefense(defenseScore)
+    	updateCoins(defenseScore, t)
+    	updateDefense(defenseScore, t)
     	$("#play").click(() => defensePlay(t))
       $("#back").click(() => pageSetup(t))
    }
@@ -493,8 +502,8 @@ object Train {
   	ctx.clearRect(0, 0, canvas.width, canvas.height)
   	$("#main-body").append($(gameOverStr))
     $("#gameOver").text("final score: " + speedScore)
-    updateCoins(speedScore)
-    updateSpeed(speedScore)
+    updateCoins(speedScore, t)
+    updateAttack(speedScore, t)
     $("#play").click(() => speedPlay(t))
     $("#back").click(() => pageSetup(t))
   }
@@ -623,24 +632,52 @@ object Train {
     }
   
   
-  def updateCoins(amt: Int) {
-    $.getJSON("/submitLoan/" + amt, success = (o, s, j) => {
+  def updateCoins(amt: Int, t:TamagoData) {
+    $.getJSON("/updateCoins/" + amt, success = (o, s, j) => {
         Player.coins += amt
     })
-    $("#window").append($(s"<p class='center' style='margin: 80px;'>${amt} coin(s) have been added to you account.</p>"))
+    $("#window").append($(s"<p class='center'>${amt} coin(s) have been added to you account.</p>"))
+    //$("#window").append($(s"<p class='center'>Your tamago's attack has increased by ${(amt/2).toInt}</p>"))
   }
   
-  //hi dillon this is where it goes!!
-  def updateAttack(score: Int) {
-    
+  def updateAttack(amt: Int, t:TamagoData) {
+    $.getJSON("/updateAttack/" + t.id + "/" + (amt/2).toInt, success = (o, s, j) => {
+      val tCopy = t
+      val newT = TamagoData(t.id, t.name, t.attack+(amt/2).toInt, t.defense, 
+      t.speed, t.health, 
+      t.kneesbroken, t.level, t.isclean, 
+      t.isalive, t.age, t.respect, t.timeskneesbroken)
+      Player.tamagos.filter(tg => t != tg)
+      Player.tamagos ::= newT
+      val p = s"<p class='center'>Your tamago's attack has increased by ${(amt/2).toInt}</p>"
+      $("#window").append($(p))
+    })
   }
   
-  def updateDefense(score: Int) {
-    
+  def updateDefense(amt: Int, t:TamagoData) {
+    $.getJSON("/updateDefense/" + t.id + "/" + (amt/2).toInt, success = (o, s, j) => {
+      val tCopy = t
+      val newT = TamagoData(t.id, t.name, t.attack, t.defense, 
+      t.speed+(amt/2).toInt, t.health, 
+      t.kneesbroken, t.level, t.isclean, 
+      t.isalive, t.age, t.respect, t.timeskneesbroken)
+      Player.tamagos.filter(tg => t != tg)
+      Player.tamagos ::= newT
+      $("#window").append($(s"<p class='center'>Your tamago's defense has increased by ${(amt/2).toInt}</p>"))
+    })
   }
   
-  def updateSpeed(score: Int) {
-    
+  def updateSpeed(amt: Int, t:TamagoData) {
+    $.getJSON("/updateSpeed/" + t.id + "/" + (amt/2).toInt, success = (o, s, j) => {
+      val tCopy = t
+      val newT = TamagoData(t.id, t.name, t.attack, t.defense, 
+      t.speed+(amt/2).toInt, t.health, 
+      t.kneesbroken, t.level, t.isclean, 
+      t.isalive, t.age, t.respect, t.timeskneesbroken)
+      Player.tamagos.filter(tg => t != tg)
+      Player.tamagos ::= newT
+      $("#window").append($(s"<p class='center'>Your tamago's speed has increased by ${(amt/2).toInt}</p>"))
+    })
   }
   
   
@@ -708,13 +745,11 @@ object Train {
     <div class="smallTop"> </div>
     <h3>Game Over</h3> <br>
 
-    <div class="center">
       <button id="play" class="button inline">Play Again</button>
       <button id="back" class="button inline">Back to Train</button>
     </div>
-    </div>
   """
-  
+  //<div class = center
 }
 
 
